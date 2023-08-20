@@ -1,0 +1,240 @@
+<!-- actions -->
+<div class="page-actions">
+  <!-- country -->
+  <app-country-select (selected)="countryFilter($event)"></app-country-select>
+  <!-- share -->
+  <button class="btn btn-outline-light btn-action" (click)="share()">
+    <svg-icon class="tw-text-gray-500" src="assets/icons/share-outline.svg"></svg-icon>
+    Share
+  </button>
+  <!-- export -->
+  <button class="btn btn-outline-light btn-action" (click)="export()" [style.pointer-events]="loadingExport ? 'none' : 'auto'">
+    <svg-icon *ngIf="!loadingExport" src="assets/icons/arrow-down.svg"></svg-icon>
+    Export
+    <div *ngIf="loadingExport" class="spinner-border spinner-border-sm">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </button>
+</div>
+
+<ng-container *ngIf="!loading && outlook">
+  <app-breadcrumb [items]="[{ title: 'Markets', routerLink: '/markets' }, { title: outlook.name }]"></app-breadcrumb>
+  <div class="tw-mt-6 tw-text-2xl">{{ outlook.name }}</div>
+  <hr class="page-line" />
+
+  <div class="page-layout">
+    <!-- LEFT SIDE -->
+    <div>
+      <!-- <div class="tw-mt-4 tw-flex tw-gap-4">
+        <div class="tw-w-full">
+          <div class="tw-mb-[6px] tw-font-medium tw-text-gray-700">Markets</div>
+          <ng-select
+            bindLabel="name"
+            [searchable]="false"
+            [clearable]="false"
+            [items]="outlookCategories$ | async"
+            [loading]="(outlookCategoryPaginator.loading$ | async)!"
+            (change)="marketFilter($event)"
+          >
+          </ng-select>
+        </div>
+        <div class="tw-w-full">
+          <div class="tw-mb-[6px] tw-font-medium tw-text-gray-700">Region</div>
+          <ng-select
+            bindLabel="name"
+            [searchable]="false"
+            [clearable]="false"
+            [items]="countries$ | async"
+            [loading]="(countryPaginator.loading$ | async)!"
+            (change)="countryFilter($event)"
+          >
+            <ng-template ng-label-tmp ng-option-tmp let-item="item">
+              <div class="tw-flex tw-items-center tw-gap-2">
+                <ng-container *ngIf="item === 'All'; else allTpl">
+                  <svg-icon class="[&_svg]:tw-w-5" [src]="'assets/icons/globe-02.svg'"></svg-icon> Worldwide
+                </ng-container>
+                <ng-template #allTpl>
+                  <div class="rounded-flag">
+                    <svg-icon [src]="'assets/flags/' + item.name + '.svg'"></svg-icon>
+                  </div>
+                  {{ item.name }}
+                </ng-template>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="tw-w-full">
+          <div class="tw-mb-[6px] tw-font-medium tw-text-gray-700">Compare</div>
+          <ng-select placeholder="Select Trend">
+            <ng-option *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8]">Trend {{ item }}</ng-option>
+          </ng-select>
+        </div>
+      </div> -->
+
+      <div class="tw-w-full tw-rounded-lg tw-border tw-border-gray-200 tw-p-5">
+        <div class="tw-ml-3 tw-mb-5 tw-text-2xl tw-font-bold">Highlights</div>
+        <div class="tw-ml-7 tw-mr-3 tw-max-w-2xl">
+          <ul>
+            <li *ngFor="let item of outlook.highlights">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let item of charts">
+        <app-chart-tabs [charts]="item"></app-chart-tabs>
+      </ng-container>
+
+      <div *ngIf="outlook.analystOpinion as v" class="tw-mt-10 tw-w-full tw-rounded-lg tw-border tw-border-gray-200 tw-p-5">
+        <div class="tw-ml-3 tw-mb-5 tw-text-2xl tw-font-bold">Analyst Opinion</div>
+        <div class="tw-ml-7 tw-mr-3 tw-max-w-2xl" [innerHTML]="v"></div>
+      </div>
+
+      <div *ngIf="outlook.methodology as v" class="tw-mt-10 tw-w-full tw-rounded-lg tw-border tw-border-gray-200 tw-p-5">
+        <div class="tw-ml-3 tw-mb-5 tw-text-2xl tw-font-bold">Methodology</div>
+        <div class="tw-ml-7 tw-mr-3 tw-max-w-2xl" [innerHTML]="v"></div>
+      </div>
+    </div>
+    <!-- RIGHT SIDE -->
+    <div class="tw-flex tw-w-full tw-grow tw-flex-col tw-gap-[70px]">
+      <!-- info card -->
+      <div class="tw-flex tw-flex-col tw-items-center tw-rounded-md tw-border tw-border-gray-cool-200 tw-py-[22px]">
+        <div class="tw-mt-5 tw-flex tw-w-full tw-px-6 tw-font-semibold tw-text-blue-600">{{ outlook.name }}</div>
+
+        <div class="tw-mt-5 tw-flex tw-w-full tw-px-6 tw-text-xs tw-font-semibold">
+          <!-- right col -->
+          <div>
+            <!-- <ng-container>
+              <div class="tw-text-gray-400">Number of companies</div>
+              <div class="tw-mt-[3px] tw-text-gray-neutral-700">0</div>
+            </ng-container> -->
+
+            <ng-container *ngIf="outlook.location as v">
+              <div class="tw-mt-4 tw-text-sm tw-font-semibold tw-text-gray-400">Market</div>
+              <div class="tw-mt-[3px] tw-text-gray-neutral-700">{{ v }}</div>
+            </ng-container>
+
+            <ng-container *ngIf="outlook.location as v">
+              <div class="tw-mt-4 tw-text-sm tw-font-semibold tw-text-gray-400">Market leader</div>
+              <div class="tw-mt-[3px] tw-text-gray-neutral-700">{{ v }}</div>
+            </ng-container>
+          </div>
+          <!-- left col -->
+          <div class="tw-ml-10">
+            <ng-container *ngIf="outlook.revenueTotal as v">
+              <div class="tw-text-sm tw-font-semibold tw-text-gray-400">{{ v.title }}</div>
+              <div class="tw-mt-[3px] tw-text-gray-neutral-700">{{ v.value }}</div>
+            </ng-container>
+
+            <ng-container *ngIf="outlook.revenueChangeTotal as v">
+              <div class="tw-mt-4 tw-text-sm tw-font-semibold tw-text-gray-400">{{ v.title }}</div>
+              <div class="tw-mt-[3px] tw-text-gray-neutral-700">{{ v.value }}</div>
+            </ng-container>
+
+            <!-- <div class="NA tw-mt-4 tw-text-sm tw-font-semibold tw-text-gray-400">Total Employment</div>
+            <div class="tw-mt-[3px] tw-text-gray-neutral-700">0</div> -->
+          </div>
+        </div>
+
+        <!-- <div class="tw-px-6">
+          <div class="tw-mt-4 tw-text-xs tw-font-semibold tw-text-gray-400">Market Description</div>
+          <div class="tw-mt-[3px] tw-text-sm">--------no data---------------------------------------------------------------------------------------</div>
+
+          <div class="NA tw-mt-4 tw-text-xs tw-font-semibold tw-text-gray-400">Market Keywords</div>
+          <div class="tw-mt-[6px] tw-flex tw-flex-wrap tw-gap-3 tw-text-[10px] tw-font-semibold tw-text-gray-400">
+            <div class="tw-w-fit tw-rounded-[4px] tw-bg-gray-blue-100 tw-px-[10px] tw-py-[3px]" *ngFor="let item of [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]">
+              Logistics
+            </div>
+            <div class="tw-w-fit tw-rounded-[4px] tw-bg-black tw-px-[10px] tw-py-[3px] tw-text-white">Fire Safety</div>
+          </div>
+        </div> -->
+      </div>
+
+      <!-- Market Definition -->
+      <div *ngIf="outlook.marketDefinition as v" class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-py-[22px]">
+        <div class="tw-ml-3 tw-text-lg tw-font-medium">Market Definition</div>
+        <div class="tw-mx-6 tw-mt-6" [innerHTML]="v"></div>
+      </div>
+
+      <!-- Market Expections -->
+      <div *ngIf="outlook.scopes as v" class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-py-[22px]">
+        <div class="tw-ml-3 tw-text-lg tw-font-medium">Market Expections</div>
+
+        <div class="tw-ml-7 tw-mr-3">
+          <div class="tw-my-6 tw-font-bold">Covered</div>
+          <ul>
+            <li *ngFor="let item of v.inScopes">{{ item }}</li>
+          </ul>
+
+          <div class="tw-my-6 tw-font-bold">Not Covered</div>
+          <ul>
+            <li *ngFor="let item of v.outScopes">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- related markets -->
+      <div class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-[14px] tw-pt-[13px] tw-pb-2" *ngIf="rMarkets?.length">
+        <div class="NA tw-flex">
+          <svg-icon class="tw-ml-2 tw-text-[#A5E57D]" src="assets/icons/trend-up-01.svg"></svg-icon>
+          <div class="tw-ml-2 tw-text-base tw-font-medium">Related Markets</div>
+        </div>
+        <hr class="tw-mx-2 tw-mt-2 tw-mb-4 tw-text-gray-iron-400" />
+
+        <div class="tw-flex tw-flex-wrap tw-gap-x-[26px] tw-gap-y-[14px]">
+          <div
+            *ngFor="let item of rMarkets"
+            class="tw-flex tw-w-fit tw-items-center tw-rounded-lg tw-border tw-border-gray-300 tw-py-2 tw-px-4 tw-text-gray-700"
+          >
+            <!-- <svg-icon class="tw-mr-2" src="assets/icons/building-03.svg"></svg-icon> -->
+            <div>{{ item.attributes.name }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Like / Dislike -->
+      <!-- <div class="tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-[18px] tw-pt-[11px] tw-pb-1">
+        <div>Was this report helpful?</div>
+        <div class="tw-mt-6 tw-flex tw-items-center tw-gap-[35px]">
+          <button class="btn btn-light tw-py-2 tw-px-6" (click)="vote('inc')">
+            <svg-icon src="assets/icons/like.svg"></svg-icon>
+          </button>
+          <button class="btn btn-light tw-py-2 tw-px-6" (click)="vote('dec')">
+            <svg-icon src="assets/icons/dislike.svg"></svg-icon>
+          </button>
+        </div>
+        <div class="tw-mt-[14px] tw-mb-[5px] tw-text-[10px] tw-font-light">*All feedback is private and annonymous</div>
+      </div> -->
+
+      <!-- Industry Leaders -->
+      <!-- <div class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-py-[22px]">
+        <div class="tw-ml-3 tw-text-lg tw-font-medium">Industry Leaders</div>
+
+        <div class="tw-ml-4 tw-mt-[26px] tw-flex tw-flex-col tw-gap-6" *ngFor="let item of [0, 0, 0, 0, 0]">
+          <div class="tw-flex">
+            <div class="tw-w-[48px]">
+              <img class="tw-w-full tw-cursor-pointer tw-rounded-[6px]"
+                [src]="'assets/images/jeff.png' || 'assets/images/user-placeholder.png'" />
+            </div>
+            <div class="tw-ml-3">
+              <div class="tw-flex tw-items-center">
+                <div class="tw-cursor-pointer tw-font-medium tw-text-gray-700">Jeff</div>
+                <div class="tw-ml-2 tw-mt-[2px] tw-text-xs tw-text-gray-600">123 followers</div>
+              </div>
+              <div class="tw-text-gray-600">Chairman</div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- similar companies -->
+      <!-- <app-similar-companies></app-similar-companies> -->
+
+      <!-- most followed Companies -->
+      <app-most-followed-companies></app-most-followed-companies>
+    </div>
+  </div>
+</ng-container>
+
+<div *ngIf="loading" class="tw-mt-28 tw-flex tw-justify-center">
+  <div class="spinner-border spinner-border tw-text-gray-400"></div>
+</div>

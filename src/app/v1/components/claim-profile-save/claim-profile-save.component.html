@@ -1,0 +1,66 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <div class="modal-header">
+    <h4 class="modal-title">Claim your profile</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+  </div>
+  <div class="modal-body mb-3">
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <input type="text" formControlName="firstName" class="form-control tw-text-gray-900" placeholder="First Name" />
+        <ng-container *ngIf="hasError('firstName') as c">
+          <div class="field-error" *ngIf="c.hasError('required')">First name must not be empty.</div>
+        </ng-container>
+      </div>
+      <div class="col-md-6">
+        <input type="text" formControlName="lastName" class="form-control tw-text-gray-900" placeholder="Last Name" />
+        <ng-container *ngIf="hasError('lastName') as c">
+          <div class="field-error" *ngIf="c.hasError('required')">Last name not be empty.</div>
+        </ng-container>
+      </div>
+    </div>
+
+    <select class="form-select mt-3" formControlName="gender">
+      <option [disabled]="true" [selected]="true">Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <ng-container *ngIf="hasError('gender') as c">
+      <div class="field-error" *ngIf="c.hasError('required')">Gender must not be empty.</div>
+    </ng-container>
+
+    <input type="text" formControlName="email" class="form-control mt-3 tw-text-gray-900" placeholder="Email" />
+    <ng-container *ngIf="hasError('email') as c">
+      <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+      <div class="field-error" *ngIf="c.hasError('email')">This email is incorrect.</div>
+    </ng-container>
+
+    <input type="text" formControlName="position" class="form-control mt-3 tw-text-gray-900" placeholder="Position" />
+    <ng-container *ngIf="hasError('position') as c">
+      <div class="field-error" *ngIf="c.hasError('required')">Position must not be empty.</div>
+    </ng-container>
+
+    <input type="text" formControlName="linkedIn" class="mt-3 form-control tw-text-gray-900" placeholder="LinkedIn profile url" />
+    <ng-container *ngIf="hasError('linkedIn') as c">
+      <div class="field-error" *ngIf="c.hasError('required')">LinkedIn must not be empty.</div>
+      <div class="field-error" *ngIf="c.hasError('pattern')">Url is not valid</div>
+    </ng-container>
+
+    <input type="text" formControlName="twitter" class="mt-3 form-control tw-text-gray-900" placeholder="Twitter profile url" />
+    <ng-container *ngIf="hasError('twitter') as c">
+      <div class="field-error" *ngIf="c.hasError('required')">Twitter must not be empty.</div>
+      <div class="field-error" *ngIf="c.hasError('pattern')">Url is not valid</div>
+    </ng-container>
+
+    <input type="text" formControlName="facebook" class="mt-3 form-control tw-text-gray-900" placeholder="Faceook profile url" />
+    <ng-container *ngIf="hasError('facebook') as c">
+      <div class="field-error" *ngIf="c.hasError('required')">Facebook must not be empty.</div>
+      <div class="field-error" *ngIf="c.hasError('pattern')">Url is not valid</div>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <div class="spinner-border" role="status" *ngIf="loading">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <button *ngIf="!loading" type="submit" class="btn btn-dark tw-w-auto tw-bg-primary-600 md:tw-w-auto lg:tw-w-auto">Save</button>
+  </div>
+</form>

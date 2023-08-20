@@ -1,0 +1,47 @@
+button.discover {
+  width: 220px;
+  height: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+button.signup {
+  background: #404040;
+  color: white;
+  width: 150px;
+  height: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+button.integration {
+  background: #404040;
+  color: white;
+  width: 180px;
+  height: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.xtools {
+  max-width: 600px;
+
+  img {
+    width: 60px;
+  }
+}
+
+.featured-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 20px;
+
+  /* Primary/100 */
+  background: #f4ebff;
+  /* Primary/50 */
+  border: 8px solid #f9f5ff;
+  border-radius: 28px;
+}

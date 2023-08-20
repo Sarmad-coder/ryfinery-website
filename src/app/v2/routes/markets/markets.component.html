@@ -1,0 +1,371 @@
+<!-- actions -->
+<div class="page-actions">
+  <!-- <button class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-rounded-md tw-px-2 tw-py-[6px] tw-text-sm">
+      <div class="tw-mr-2 tw-rounded-md tw-bg-gray-cool-100 tw-p-[6px]">
+        <svg-icon class="tw-text-black" src="assets/icons/watchlist.svg"></svg-icon>
+      </div>
+      <span class="tw-mr-10">Watchlist</span>
+      <span class="tw-mr-1 tw-text-black">0</span>
+    </button> -->
+
+  <!-- <button class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm">
+      <svg-icon class="tw-text-gray-700 [&_svg]:tw-w-5" src="assets/icons/filter-funnel-02.svg"></svg-icon>
+      Filters
+    </button> -->
+
+  <!-- <div ngbDropdown>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm tw-text-gray-700 after:tw-content-none"
+        id="country-dropdown"
+        ngbDropdownToggle
+      >
+        <svg-icon class="tw-text-black [&_svg]:tw-w-5" src="assets/icons/globe-05.svg"></svg-icon>
+        <span>GCC</span>
+        <svg-icon class="[&_svg]:tw-h-5 [&_svg]:tw-w-5" src="assets/icons/chevron-down.svg"></svg-icon>
+      </button>
+
+      <div ngbDropdownMenu aria-labelledby="country-dropdown">
+        <button ngbDropdownItem class="tw-flex tw-items-center tw-gap-[6px]" *ngFor="let item of countries" (click)="countryFilter(item)">
+          <div class="rounded-flag">
+            <svg-icon [ngClass]="{ '-tw-mt-[3px] [&_svg]:tw-w-4': item.name == 'All' }" [src]="item.icon"></svg-icon>
+          </div>
+          {{ item.name }}
+        </button>
+      </div>
+    </div> -->
+
+  <!-- export -->
+  <button class="btn btn-outline-light btn-action">
+    <svg-icon src="assets/icons/arrow-down.svg"></svg-icon>
+    Export
+  </button>
+</div>
+
+<app-breadcrumb [items]="[{ title: 'Markets', routerLink: '/markets' }]"></app-breadcrumb>
+<div class="tw-mt-6 tw-text-2xl">{{ 'Markets' }}</div>
+<hr class="page-line" />
+
+<div class="page-layout">
+  <!-- LEFT SIDE -->
+  <div class="tw-flex tw-grow tw-flex-col tw-gap-[180px]">
+    <!-- Discover Industry insights -->
+    <div *ngIf="true">
+      <div class="tw-flex tw-flex-wrap tw-justify-between tw-gap-5">
+        <div>
+          <div class="tw-flex tw-items-start tw-text-lg tw-font-medium">
+            Discover Industry insights
+            <svg-icon class="tw-ml-[2px] tw-mt-1" src="assets/icons/info-circle-2.svg"></svg-icon>
+          </div>
+          <div class="tw-text-xs tw-text-gray-true-400 lg:tw-max-w-sm">
+            Get current and forecasted data about Sectors, revenues and the number of enterprises from our easily accessible industry markets.
+          </div>
+        </div>
+        <!-- <div ngbDropdown class="tw-float-right">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm tw-text-gray-700 after:tw-content-none"
+                id="country-dropdown"
+                ngbDropdownToggle
+              >
+                <svg-icon class="tw-text-black [&_svg]:tw-w-5" src="assets/icons/globe-05.svg"></svg-icon>
+                <span>GCC</span>
+                <svg-icon class="[&_svg]:tw-h-5 [&_svg]:tw-w-5" src="assets/icons/chevron-down.svg"></svg-icon>
+              </button>
+
+              <div ngbDropdownMenu aria-labelledby="country-dropdown">
+              </div>
+            </div> -->
+      </div>
+      <div class="tw-mt-5 tw-flex tw-flex-col tw-justify-between tw-divide-y tw-divide-gray-200">
+        <div
+          *ngFor="let item of discoverIndustryInsights"
+          class="tw-grid tw-grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_1fr)_auto] tw-items-center tw-whitespace-nowrap tw-py-2 tw-text-xs md:tw-text-base"
+        >
+          <a
+            class="tw-flex tw-w-fit tw-rounded-lg tw-bg-gray-warm-800 tw-px-[10px] tw-py-[8px] tw-font-medium !tw-text-white"
+            [routerLink]="['/market', item.id, item.name | slugify]"
+            >{{ item.name }}
+          </a>
+          <span class="tw-justify-self-center tw-font-medium lg:tw-justify-start">{{ item.location }}</span>
+          <app-growth [value]="item.revenueChangeTotal.value" [fill]="true" size="lg"></app-growth>
+          <svg-icon class="tw-cursor-pointer tw-text-gray-modern-500 [&_svg]:tw-w-6" src="assets/icons/plus-circle.svg"></svg-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Country wide Leading Industries -->
+    <div *ngIf="true">
+      <div class="tw-flex tw-flex-wrap tw-justify-between tw-gap-5">
+        <div>
+          <div class="tw-flex tw-items-start tw-text-lg tw-font-medium">
+            Country wide Leading Industries
+            <svg-icon class="tw-ml-[2px] tw-mt-1" src="assets/icons/info-circle-2.svg"></svg-icon>
+          </div>
+          <div class="tw-text-xs tw-text-gray-true-400 lg:tw-max-w-sm">
+            Compare regional Sectors and trends. In the GCC choose from over 160 Sectors and industries with up to 10,000 Data points per country.
+          </div>
+        </div>
+        <!-- <div ngbDropdown class="tw-float-right">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm tw-text-gray-700 after:tw-content-none"
+                id="country-dropdown"
+                ngbDropdownToggle
+              >
+                <svg-icon class="tw-text-black [&_svg]:tw-w-5" src="assets/icons/globe-05.svg"></svg-icon>
+                <span>GCC</span>
+                <svg-icon class="[&_svg]:tw-h-5 [&_svg]:tw-w-5" src="assets/icons/chevron-down.svg"></svg-icon>
+              </button>
+
+              <div ngbDropdownMenu aria-labelledby="country-dropdown">
+              </div>
+            </div> -->
+      </div>
+      <div class="tw-mt-5 tw-flex tw-flex-col tw-justify-between tw-divide-y tw-divide-gray-200 tw-text-xs md:tw-text-base">
+        <div *ngFor="let item of countryWideLeadingIndustries" class="tw-flex tw-items-center tw-justify-between tw-whitespace-nowrap tw-py-4">
+          <div class="tw-flex tw-w-full tw-items-center tw-gap-3">
+            <div class="tw-flex tw-w-auto tw-flex-row tw-items-center tw-gap-2">
+              <img class="tw-h-3 tw-rounded-[3px]" src="assets/flags/{{ item.name }}.png" />
+              <!-- <svg-icon class="[&_svg]:tw-w-[36px] [&_svg]:tw-rounded" [src]="'assets/flags/' + item.name + '.png'"></svg-icon> -->
+              <div class="tw-font-medium">{{ item.name }}</div>
+            </div>
+            <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-center tw-gap-3 tw-text-xs tw-font-medium tw-text-gray-400 md:tw-text-sm">
+              <div class="tw-w-fit tw-rounded-[4px] tw-bg-gray-cool-100 tw-px-[10px] tw-py-[3px] tw-text-gray-true-700" *ngFor="let item of item.outlooks">
+                {{ item.name }}
+              </div>
+            </div>
+          </div>
+          <svg-icon class="tw-cursor-pointer tw-text-gray-modern-500 [&_svg]:tw-w-6" src="assets/icons/plus-circle.svg"></svg-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leading Companies By Industry -->
+    <div *ngIf="true">
+      <div class="tw-flex tw-flex-wrap tw-justify-between tw-gap-5 lg:tw-flex-nowrap">
+        <div>
+          <div class="tw-flex tw-items-start tw-text-lg tw-font-medium">
+            Leading Companies By Industry
+            <svg-icon class="tw-ml-[2px] tw-mt-1" src="assets/icons/info-circle-2.svg"></svg-icon>
+          </div>
+          <div class="tw-text-xs tw-text-gray-true-400 lg:tw-max-w-sm">List of Makret leaders in the GCC bay.</div>
+        </div>
+        <ng-select
+          class="market-filter-field tw-max-w-xs"
+          [formControl]="leadingCompaniesControl"
+          bindLabel="name"
+          [searchable]="false"
+          [clearable]="false"
+          [items]="leadingCompaniesPaginator.data$ | async"
+          [loading]="(leadingCompaniesPaginator.loading$ | async)!"
+          (search)="leadingCompaniesPaginator.textSearch($event.term)"
+          (scrollToEnd)="leadingCompaniesPaginator.next()"
+        >
+        </ng-select>
+      </div>
+
+      <div *ngIf="leadingCompaniesControl.value" class="tw-mt-5 tw-flex tw-flex-col tw-justify-between tw-divide-y tw-divide-gray-200">
+        <div
+          *ngFor="let item of leadingCompanies"
+          class="tw-grid tw-grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_1fr)_auto] tw-items-center tw-whitespace-nowrap tw-py-2 tw-text-xs md:tw-text-base"
+        >
+          <!-- <div>
+                {{ item | json }}
+              </div> -->
+
+          <div class="tw-flex tw-items-center tw-gap-[14px]">
+            <img class="tw-h-[45px] tw-w-[45px] tw-rounded-md tw-border tw-border-gray-cool-300 tw-p-1" [src]="'assets/images/image-placeholder.png'" alt="" />
+            <div class="tw-text-sm">{{ item.key }}</div>
+          </div>
+          <span class="tw-justify-self-center tw-font-medium lg:tw-justify-start">{{ item.revenue }}</span>
+          <div class="tw-text-sm tw-text-gray-500">{{ item.unit }}</div>
+          <!-- <app-growth value="20%" [fill]="true" size="lg"></app-growth> -->
+          <svg-icon class="tw-cursor-pointer tw-text-gray-modern-500 [&_svg]:tw-w-6" src="assets/icons/plus-circle.svg"></svg-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Market trends -->
+    <!-- <div *ngIf="false">
+          <div class="tw-flex tw-flex-wrap tw-justify-between tw-gap-5">
+            <div>
+              <div class="tw-flex tw-items-start tw-text-lg tw-font-medium">Market trends</div>
+              <div class="tw-mt-[14px] tw-flex tw-gap-2">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm tw-font-medium tw-text-gray-true-600"
+                  [ngClass]="{ '!tw-bg-[#E8F0FE] !tw-text-[#1A73E8]': true }"
+                >
+                  <svg-icon class="[&_svg]:tw-w-5" src="assets/icons/bar-chart.svg"></svg-icon>
+                  <span>Most active</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm tw-font-medium tw-text-gray-true-600"
+                >
+                  <svg-icon class="tw-text-[#188038] [&_svg]:tw-w-5" src="assets/icons/trend-up-01.svg"></svg-icon>
+                  <span>Trending</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm tw-font-medium tw-text-gray-true-600"
+                >
+                  <svg-icon class="tw-text-[#D93025] [&_svg]:tw-w-5" src="assets/icons/trend-down-01.svg"></svg-icon>
+                  <span>Losers</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="tw-mt-5 tw-flex tw-flex-col tw-justify-between tw-divide-y tw-divide-gray-200">
+            <div
+              *ngFor="let item of ['Snap Inc', 'AT&T Inc.', 'Intel Corporation', 'Paypal Holdings Inc', 'NVIDIA Corporation', 'Visa Inc']"
+              class="tw-grid tw-grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_1fr)_auto] tw-items-center tw-whitespace-nowrap tw-py-2 tw-text-xs md:tw-text-base"
+            >
+              <div class="tw-flex tw-items-center tw-gap-[14px]">
+                <img
+                  class="tw-h-[45px] tw-w-[45px] tw-rounded-md tw-border tw-border-gray-cool-300 tw-p-1"
+                  [src]="(company.logo.data?.attributes.url | imageUrl) || 'assets/images/image-placeholder.png'"
+                  alt=""
+                />
+                <div class="tw-text-sm">{{ item }}</div>
+              </div>
+              <span class="tw-justify-self-center tw-font-medium lg:tw-justify-start">$10.51</span>
+              <app-growth value="20%" [fill]="true" size="lg"></app-growth>
+              <svg-icon class="tw-cursor-pointer tw-text-gray-modern-500 [&_svg]:tw-w-6" src="assets/icons/plus-circle.svg"></svg-icon>
+            </div>
+          </div>
+        </div> -->
+
+    <!-- Company Ranking -->
+    <div *ngIf="companyRankingOptions.show || true">
+      <div class="tw-flex tw-flex-wrap tw-justify-between tw-gap-5">
+        <div>
+          <div class="tw-flex tw-items-start tw-text-lg tw-font-medium">
+            Sector Ranking
+            <svg-icon class="tw-ml-[2px] tw-mt-1" src="assets/icons/info-circle-2.svg"></svg-icon>
+          </div>
+          <div class="tw-text-xs tw-text-gray-true-400 lg:tw-max-w-sm">Ranking is based on Revenue By Company and Online Social and news trends</div>
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-[14px]">
+          <button class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm">
+            <svg-icon class="tw-text-gray-700 [&_svg]:tw-w-5" src="assets/icons/filter-funnel-02.svg"></svg-icon>
+            Filters
+          </button>
+          <div ngbDropdown class="tw-float-right">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-gap-2 tw-rounded-md tw-px-4 tw-text-sm tw-text-gray-700 after:tw-content-none"
+              id="country-dropdown"
+              ngbDropdownToggle
+            >
+              <svg-icon class="tw-text-black [&_svg]:tw-w-5" src="assets/icons/layout-grid-01.svg"></svg-icon>
+              <span>Construction</span>
+              <svg-icon class="[&_svg]:tw-h-5 [&_svg]:tw-w-5" src="assets/icons/chevron-down.svg"></svg-icon>
+            </button>
+
+            <div ngbDropdownMenu aria-labelledby="country-dropdown">
+              <!-- <button ngbDropdownItem class="tw-flex tw-items-center tw-gap-[6px]" *ngFor="let item of countries" (click)="countryFilter(item)">
+                    <div class="rounded-flag">
+                      <svg-icon [ngClass]="{ '-tw-mt-[3px] [&_svg]:tw-w-4': item.name == 'All' }" [src]="item.icon"></svg-icon>
+                    </div>
+                    {{ item.name }}
+                  </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tw-mt-5 tw-h-[540px]">
+        <canvas
+          baseChart
+          [type]="companyRankingOptions.type"
+          [data]="companyRankingOptions.data"
+          [datasets]="companyRankingOptions.data.datasets"
+          [options]="companyRankingOptions.options"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <!-- RIGHT SIDE -->
+  <div class="tw-flex tw-w-full tw-grow tw-flex-col tw-gap-[70px]">
+    <!-- related markets -->
+    <!-- <div class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-[14px] tw-pt-[13px] tw-pb-2">
+          <div class="tw-flex">
+            <svg-icon class="tw-ml-2 tw-text-[#A5E57D]" src="assets/icons/trend-up-01.svg"></svg-icon>
+            <div class="tw-ml-2 tw-text-base tw-font-medium">Market Insights</div>
+          </div>
+          <hr class="tw-mx-2 tw-mt-2 tw-mb-4 tw-text-gray-iron-400" />
+          <div class="tw-flex tw-flex-wrap tw-gap-x-[26px] tw-gap-y-[14px]">
+            <div
+              *ngFor="let item of outlookCategories"
+              class="tw-flex tw-w-fit tw-cursor-pointer tw-items-center tw-rounded-lg tw-border tw-border-gray-300 tw-py-2 tw-px-4 tw-text-gray-700"
+              (click)="openIndustry(item)"
+            >
+              <div>{{ item?.attributes.name }}</div>
+            </div>
+          </div>
+        </div> -->
+
+    <!-- similar companies -->
+    <!-- <app-similar-companies></app-similar-companies> -->
+
+    <!-- most followed Companies -->
+    <app-most-followed-companies></app-most-followed-companies>
+  </div>
+</div>
+
+<!-- Discover what Refinery... -->
+<div class="tw-mx-auto tw-mt-40 tw-flex tw-flex-col tw-text-center [&_img]:tw-h-12 [&_img]:tw-w-12">
+  <span class="tw-text-xs tw-font-semibold tw-text-[#00C389]">On-demand Market insights</span>
+  <span class="tw-mt-[10px] tw-text-[26px] tw-font-bold">Discover what Refinery Industry Market Insights Covers</span>
+  <div class="tw-mt-10 tw-flex tw-flex-wrap tw-justify-center tw-gap-3">
+    <div class="tw-border- gray-iron-100 tw-flex tw-h-[64px] tw-w-[168px] tw-items-center tw-gap-3 tw-rounded-lg tw-border tw-px-2">
+      <img src="assets/images/hotspot-svgrepo-com.png" alt="" />
+      <span class="tw-font-medium tw-text-[#00C389]">Coverage</span>
+    </div>
+
+    <div class="tw-flex tw-h-[64px] tw-w-[168px] tw-items-center tw-gap-3">
+      <img src="assets/images/check-box.png" alt="" />
+      Benefits
+    </div>
+
+    <div class="tw-flex tw-h-[64px] tw-w-[168px] tw-items-center tw-gap-3">
+      <img src="assets/images/location.png" alt="" />
+      Countries
+    </div>
+
+    <div class="tw-flex tw-h-[64px] tw-w-[168px] tw-items-center tw-gap-3">
+      <img src="assets/images/activity-svgrepo-com.png" alt="" />
+      Industries
+    </div>
+
+    <div class="tw-flex tw-h-[64px] tw-w-[168px] tw-items-center tw-gap-3">
+      <img src="assets/images/calendar-cells.png" alt="" />
+      Releases
+    </div>
+
+    <div class="tw-flex tw-h-[64px] tw-w-[168px] tw-items-center tw-gap-3">
+      <img src="assets/images/process.png" alt="" />
+      Our Process
+    </div>
+  </div>
+</div>
+
+<div
+  class="tw-mt-[60px] tw-grid tw-gap-10 tw-rounded-[20px] tw-border tw-border-gray-iron-200 tw-bg-gray-warm-50 tw-px-10 tw-pt-[59px] tw-pb-10 lg:tw-grid-cols-2 lg:tw-gap-0 lg:tw-pb-0"
+>
+  <img class="tw-w-72 tw-justify-self-center" src="assets/images/inspection.png" alt="" />
+  <div class="tw-flex tw-max-w-md tw-flex-col tw-gap-10">
+    <div class="tw-flex tw-flex-col tw-text-[40px] tw-font-bold">
+      <span class="tw-text-[#00C389]">Inspections</span>
+      <span>Turning issues into opportunities</span>
+    </div>
+
+    <div class="tw-text-base tw-font-medium tw-text-gray-true-500">
+      <span class="tw-font-bold tw-text-gray-true-700">Inspections</span> helps your team quickly identify problems and effortlessly generate work orders. While
+      your team works, seamless data collection powers insights that let you see what’s working, and what isn’t.
+    </div>
+    <button class="btn btn-primary tw-w-fit tw-border-0 tw-bg-[#00C389]">Discover Inspections</button>
+  </div>
+</div>

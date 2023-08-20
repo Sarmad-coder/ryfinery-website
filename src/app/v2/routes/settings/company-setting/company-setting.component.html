@@ -1,0 +1,534 @@
+<div class="container tw-mt-32">
+  <div class="d-flex" style="flex-direction: column">
+    <span class="fs30 fw600">Companies</span>
+    <span class="fs16 tw-mb-8">Manage your Companies</span>
+  </div>
+  <div class="tw-mb-8 tw-w-full tw-border-b tw-border-gray-200"></div>
+
+  <!-- <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Company Name</th>
+          <th scope="col" class="!tw-pl-16">Action</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of companies; let i=index">
+          <th scope="row">{{i}}</th>
+          <td>{{item.attributes.name}}</td>
+          <td class="colspan=2">
+            <button type="button" class="btn btn-warning tw-mr-2" (click)="editCompany(item.id)">Edit</button>
+            <button type="button" class="btn btn-danger" (click)="dltCompany(item.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->
+  <div class="tw-mb-6 tw-text-end">
+    <button type="submit" class="btn btn-dark tw-ml-2 tw-bg-primary-600" (click)="openLg(content)">Add New Company</button>
+  </div>
+  <div class="tw-flex tw-grow tw-flex-col tw-gap-4">
+    <div
+      class="table-wrapper tw-rounded-xl tw-border tw-border-gray-200"
+      [style.box-shadow]="'0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)'"
+    >
+      <table class="table table-responsive tw-mb-0 tw-whitespace-nowrap tw-shadow-sm [&_td]:!tw-py-4">
+        <thead>
+          <tr>
+            <!-- <th class="tw-w-[20px] !tw-pr-0"><input class="form-check-input tw-mt-0 tw-text-xl" type="checkbox" /></th> -->
+            <th scope="col">#</th>
+            <th class="tw-w-2/5 !tw-pl-3" scope="col">Company Name</th>
+            <th class="tw-w-full !tw-pl-3" scope="col">Status</th>
+            <!-- <th scope="col">
+            <div class="tw-flex tw-gap-1">
+              Role <svg-icon class="tw-text-gray-400 [&_svg]:tw-h-4 [&_svg]:tw-w-4" src="assets/icons/help-circle.svg"></svg-icon>
+            </div>
+          </th> -->
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of companies; let i = index">
+            <!-- <td class="tw-w-[20px] !tw-pr-0"><input class="form-check-input tw-mt-0 tw-text-xl" type="checkbox" /></td> -->
+            <td scope="" class="!tw-pt-20">{{ i + 1 }}</td>
+            <td class="!tw-pl-3 tw-font-medium tw-text-gray-900">
+              <div class="tw-flex tw-gap-3">
+                <!-- <img class="tw-w-10 tw-rounded-full" [src]="item.attributes.logo.data?.attributes.url" alt="" /> -->
+                <div>
+                  <div class="tw-font-medium tw-text-gray-900">{{ item.attributes.name }}</div>
+
+                  <!-- <div class="tw-text-gray-600">Status: Active</div> -->
+                </div>
+              </div>
+            </td>
+            <td class="!tw-pl-3 tw-font-medium tw-text-gray-900">
+              <div class="tw-text-gray-600">Active</div>
+            </td>
+            <!-- <td class="tw-text-gray-600">Admin</td> -->
+            <!-- Role: Admin, Read Only -->
+            <td class="">
+              <ng-template #popContent>
+                <p>Are you sure to delete this Company?</p>
+                <div class="tw-flex tw-justify-end">
+                  <button class="btn btn-outline-light btn-sm tw-mr-2 tw-flex tw-items-center" style="pointer-events: auto">Cancel</button>
+
+                  <button class="btn btn-dark btn-sm tw-ml-2 tw-bg-primary-600" (click)="deleteCompany(item.id)">Delete</button>
+                </div>
+              </ng-template>
+              <ng-template #popTitle><b>Delete</b>?</ng-template>
+              <span class="tw-cursor-pointer tw-font-semibold tw-text-gray-600" [ngbPopover]="popContent" [popoverTitle]="popTitle">Delete</span>
+              <span class="tw-ml-3 tw-cursor-pointer tw-font-semibold tw-text-primary-700" (click)="editCompany(item.id)" (click)="openLg(content)">Edit</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- <hr /> -->
+
+  <ng-template #content let-modal>
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ editForm ? 'Edit your Company' : 'Add your Company' }}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click'); clickClose()"></button>
+      </div>
+      <div class="modal-body tw-p-12">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="d-flex" style="justify-content: space-between">
+              <span class="fs18 fw600">Company info</span>
+              <span>
+                <img src="assets/temp/greythreedots.png" height="13px" alt="" srcset="" />
+              </span>
+            </div>
+            <div class="d-flex" style="flex-direction: column">
+              <span class="fs14">Your company information</span>
+              <div style="border-radius: 8px; border: 1px solid #eaecf0; margin-top: 15px">
+                <div style="padding: 24px">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="Companyname" class="fs14 fw500 grey700">Company Name</label>
+                      <input type="text" formControlName="name" class="mt-1 fs16 form-control" placeholder="Enter Company Name" />
+                      <ng-container *ngIf="hasError('name') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Name must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="Company Size" class="fs14 fw500 grey700 tw-mt-6 md:tw-mt-0">Company Size</label>
+                      <div class="input-group">
+                        <select class="form-select fs16 fw500 grey900 mt-1" formControlName="employees">
+                          <option value="1">1 Employee</option>
+                          <option value="2-10">2-10 Employees</option>
+                          <option value="11-50">11-50 Employees</option>
+                          <option value="51-200">51-200 Employees</option>
+                          <option value="201-500">201-500 Employees</option>
+                          <option value="501-1000">501-1000 Employees</option>
+                          <option value="1001-5000">1001-5000 Employees</option>
+                          <option value="5001-10000">5001-10000 Employees</option>
+                          <option value="10000+">10000+ Employees</option>
+                        </select>
+                      </div>
+                      <ng-container *ngIf="hasError('employees') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Company size must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="email" class="fs14 fw500 grey700 c-mt-24">Email</label>
+                      <input
+                        type="text"
+                        formControlName="contactEmail"
+                        class="mt-1 form-control prefix email tw-w-full"
+                        id="autoSizingInputGroup"
+                        placeholder="Email"
+                      />
+                      <ng-container *ngIf="hasError('contactEmail') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+                        <div class="field-error" *ngIf="c.hasError('email')">Email is not valid.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="email" class="fs14 fw500 grey700 c-mt-24">Phone</label>
+                      <input
+                        type="text"
+                        formControlName="phoneNumber"
+                        class="mt-1 form-control prefix mobile"
+                        aria-label="Amount (to the nearest dollar)"
+                        placeholder="Phone number"
+                      />
+                      <ng-container *ngIf="hasError('phoneNumber') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Phone must not be empty.</div>
+                      </ng-container>
+                      <div class="fs14 tw-mt-1" style="color: #475467">Your phone will be used for OTP verification</div>
+                    </div>
+
+                    <app-image-upload [src]="imgUrl" (browsed)="browsed($event)"></app-image-upload>
+
+                    <div class="col-lg-12">
+                      <label for="Topic" class="fs14 fw500 grey700 tw-mt-6 md:tw-mt-6">Topics</label>
+                      <ng-select class="mt-1" formControlName="topics" [multiple]="true" placeholder="Please Select">
+                        <ng-option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</ng-option>
+                      </ng-select>
+                      <ng-container *ngIf="hasError('topics') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Topics must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Industry" class="fs14 fw500 grey700 tw-mt-6 md:tw-mt-6">Industry</label>
+                      <ng-select class="mt-1" formControlName="industry">
+                        <ng-option *ngFor="let industry of industries" [value]="industry.id">{{ industry.name }}</ng-option>
+                      </ng-select>
+                      <ng-container *ngIf="hasError('industry') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Industry must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label class="fs14 fw500 grey700 c-mt-24">Founding Year</label>
+                      <input type="text" formControlName="foundingDate" class="mt-1 fs16 form-control" placeholder="Enter Founding Year" />
+                      <ng-container *ngIf="hasError('foundingDate') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Founding year must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label class="fs14 fw500 grey700 c-mt-24">Annual Revenue</label>
+                      <input type="text" formControlName="revenue" class="mt-1 fs16 form-control" placeholder="Enter Annual Revenue" />
+                      <ng-container *ngIf="hasError('revenue') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Annual Revenue must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Country" class="fs14 fw500 grey700 c-mt-24">Operating Status</label>
+                      <div class="input-group">
+                        <select formControlName="operatingStatus" class="form-select fs16 fw500 grey900 mt-1" style="border-radius: 8px">
+                          <option *ngFor="let item of operatingStatus" [value]="item">{{ item }}</option>
+                        </select>
+                      </div>
+                      <ng-container *ngIf="hasError('operatingStatus') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Operating Status must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Country" class="fs14 fw500 grey700 c-mt-24">IPO Status</label>
+                      <div class="input-group">
+                        <select formControlName="IPOStatus" class="form-select fs16 fw500 grey900 mt-1" style="border-radius: 8px">
+                          <option *ngFor="let item of IPOStatus" [value]="item">{{ item }}</option>
+                        </select>
+                      </div>
+                      <ng-container *ngIf="hasError('IPOStatus') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">IPO Status must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label class="fs14 fw500 grey700 c-mt-24">ISIC</label>
+                      <input type="text" formControlName="isic" class="mt-1 fs16 form-control" placeholder="Enter ISIC" />
+                      <ng-container *ngIf="hasError('isic') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">ISIC must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label class="fs14 fw500 grey700 c-mt-24">State</label>
+                      <input type="text" formControlName="state" class="mt-1 fs16 form-control" placeholder="Enter State" />
+                      <ng-container *ngIf="hasError('state') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">State must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label class="fs14 fw500 grey700 c-mt-24">Address</label>
+                      <div class="form-floating mt-1">
+                        <textarea
+                          class="form-control"
+                          formControlName="streetAddress"
+                          rows="4"
+                          style="border-radius: 8px; height: 116px"
+                          style="height: 100px"
+                        ></textarea>
+                        <ng-container *ngIf="hasError('streetAddress') as c">
+                          <div class="field-error" *ngIf="c.hasError('required')">Address must not be empty.</div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="c-mt-24 grey200 m-0 p-0" style="height: 1px" />
+                <!-- <div class="d-fex justify-content-end" style="padding: 16px 24px; float: right">
+
+                <button type="submit" class="btn btn-dark tw-ml-2 tw-bg-primary-600">Save Changes</button>
+              </div> -->
+              </div>
+            </div>
+            <div class="col-lg-3"></div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 60px">
+          <div class="col-lg-12">
+            <div class="d-flex" style="justify-content: space-between">
+              <span class="fs18 fw600">Personal Info</span>
+              <span>
+                <img src="assets/temp/greythreedots.png" height="13px" alt="" srcset="" />
+              </span>
+            </div>
+            <div class="d-flex" style="flex-direction: column">
+              <span class="fs14">Update your photo and personal details here.</span>
+              <div style="border-radius: 8px; border: 1px solid #eaecf0; margin-top: 15px">
+                <div style="padding: 24px">
+                  <div class="row">
+                    <div class="col-1">
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" formControlName="isMatched" type="checkbox" id="flexSwitchCheckChecked" />
+                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                      </div>
+                    </div>
+                    <div class="col-11">
+                      <div class="d-flex flex-column">
+                        <span class="fs14 fw500 grey700">Match my Company with other potential Candidates.</span>
+                        <span class="fs14 fw400 grey600">Sending you monthly matches of Future employees and VC’s.</span>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="username" class="fs14 fw500 grey700 c-mt-24">Slug</label>
+                      <div class="input-group">
+                        <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                          <span class="grey600">Ryfinery.com/</span>
+                        </div>
+                        <input
+                          type="text"
+                          formControlName="slug"
+                          class="grey900 mt-1 fs16 form-control"
+                          id="autoSizingInputGroup"
+                          placeholder="Enter Username"
+                        />
+                      </div>
+                      <ng-container *ngIf="hasError('slug') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Slug must not be empty.</div>
+                        <div class="field-error" *ngIf="c.hasError('invalidSlug')">Slug is not in correct format</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Website" class="fs14 fw500 grey700 c-mt-24">Website</label>
+                      <div class="input-group">
+                        <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                          <span class="grey600">http://</span>
+                        </div>
+                        <input
+                          type="text"
+                          formControlName="website"
+                          class="grey900 mt-1 fs16 form-control"
+                          id="autoSizingInputGroup"
+                          placeholder="Enter Website"
+                        />
+                      </div>
+                      <ng-container *ngIf="hasError('website') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Website must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Linkedin" class="fs14 fw500 grey700 c-mt-24">Linkedin</label>
+                      <div class="input-group">
+                        <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                          <span class="grey600">http://</span>
+                        </div>
+                        <input
+                          type="text"
+                          formControlName="linkedin"
+                          class="grey900 mt-1 fs16 form-control"
+                          id="autoSizingInputGroup"
+                          placeholder="Enter Linkedin Url"
+                        />
+                      </div>
+                      <ng-container *ngIf="hasError('linkedin') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Linkedin must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Twitter" class="fs14 fw500 grey700 c-mt-24">Twitter</label>
+                      <div class="input-group">
+                        <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                          <span class="grey600">http://</span>
+                        </div>
+                        <input
+                          type="text"
+                          formControlName="twitter"
+                          class="grey900 mt-1 fs16 form-control"
+                          id="autoSizingInputGroup"
+                          placeholder="Enter Twitter Url"
+                        />
+                      </div>
+                      <ng-container *ngIf="hasError('twitter') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Twitter must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Facebook" class="fs14 fw500 grey700 c-mt-24">Facebook</label>
+                      <div class="input-group">
+                        <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                          <span class="grey600">http://</span>
+                        </div>
+                        <input
+                          type="text"
+                          formControlName="facebook"
+                          class="grey900 mt-1 fs16 form-control"
+                          id="autoSizingInputGroup"
+                          placeholder="Enter Facebook Url"
+                        />
+                      </div>
+                      <ng-container *ngIf="hasError('facebook') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Facebook must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <div class="col-12">
+                      <label for="Youtube" class="fs14 fw500 grey700 c-mt-24">Youtube</label>
+                      <div class="input-group">
+                        <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                          <span class="grey600">http://</span>
+                        </div>
+                        <input
+                          type="text"
+                          formControlName="youtube"
+                          class="grey900 mt-1 fs16 form-control"
+                          id="autoSizingInputGroup"
+                          placeholder="Enter Youtube Url"
+                        />
+                      </div>
+                      <ng-container *ngIf="hasError('youtube') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Youtube must not be empty.</div>
+                      </ng-container>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="desc" class="fs14 fw500 grey700 c-mt-24">Description</label>
+                      <div class="form-floating mt-1">
+                        <textarea
+                          class="form-control"
+                          formControlName="description"
+                          rows="4"
+                          style="border-radius: 8px; height: 116px"
+                          id="floatingTextarea2"
+                          style="height: 100px"
+                        ></textarea>
+                        <ng-container *ngIf="hasError('description') as c">
+                          <div class="field-error" *ngIf="c.hasError('required')">Description must not be empty.</div>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="Country" class="fs14 fw500 grey700 c-mt-24">Country</label>
+                      <div class="input-group">
+                        <select formControlName="country" class="form-select fs16 fw500 grey900 mt-1" style="border-radius: 8px">
+                          <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
+                        </select>
+                      </div>
+                      <ng-container *ngIf="hasError('country') as c">
+                        <div class="field-error" *ngIf="c.hasError('required')">Country must not be empty.</div>
+                      </ng-container>
+                    </div>
+                    <!-- <div class="col-12">
+                  <label for="Country" class="fs14 fw500 grey700 c-mt-24">Attach your Startup</label>
+                  <div class="input-group">
+                    <select class="form-select fs16 fw500 grey900 mt-1" style="border-radius: 8px">
+                      <option selected>Choose a startup from the list</option>
+                      <option value="1">Phoenix Baker <span style="color: #475467 !important">@phoenix</span></option>
+                      <option value="2">Olivia Rhye <span style="color: #475467 !important">@olivia</span></option>
+                    </select>
+                  </div>
+                </div> -->
+                  </div>
+                </div>
+                <hr class="c-mt-24 grey200 m-0 p-0" style="height: 1px" />
+                <div class="d-fex justify-content-end" style="padding: 16px 24px; float: right">
+                  <!-- <button class="btn btn-outline-light">Cancel</button> -->
+                </div>
+              </div>
+              <div class="d-flex" style="background-color: black; padding: 24px; margin-top: 63px; border-radius: 8px">
+                <div class="col-10 text-white">
+                  <span class="fs18 fw600">Add more information </span>
+                  <span class="fs14 fw400">Add Education, Work History, Startup History, Success Habits, Books you read. </span>
+                </div>
+
+                <div class="col-2">
+                  <div ngbDropdown>
+                    <button
+                      ngbDropdownToggle
+                      id="dropdownBasic1"
+                      class="btn btn-secondary"
+                      style="width: 45px; border-radius: 100%; background-color: white; float: right; text-align: center"
+                      type="button"
+                    >
+                      <img src="assets/temp/plus.png" style="margin-left: -8px !important" height="25px" width="25px" alt="" srcset="" />
+                    </button>
+
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <div ngbDropdownItem class="tw-flex tw-w-full tw-items-center tw-justify-between tw-py-3">
+                        <div class="tw-flex tw-items-center">
+                          <img src="assets/temp/cap.png" height="16px " alt="" />
+                          <span class="fs14 fw500 tw-ml-2">Education</span>
+                        </div>
+                        <img src="assets/temp/ktoe.png" height="13px" alt="" srcset="" />
+                      </div>
+
+                      <div ngbDropdownItem class="tw-flex tw-w-full tw-items-center tw-justify-between tw-py-3">
+                        <div class="tw-flex tw-items-center">
+                          <img src="assets/temp/laptop.png" height="16px " alt="" />
+                          <span class="fs14 fw500 tw-ml-2">Work History</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktow.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+
+                      <div ngbDropdownItem class="tw-flex tw-w-full tw-items-center tw-justify-between tw-py-3">
+                        <div class="tw-flex tw-items-center">
+                          <img src="assets/temp/startupic.png" height="16px " alt="" />
+                          <span class="fs14 fw500 tw-ml-2">Startup history</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/commands.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+
+                      <div ngbDropdownItem class="tw-flex tw-w-full tw-items-center tw-justify-between tw-py-3">
+                        <div class="tw-flex tw-items-center">
+                          <img src="assets/temp/scan.png" height="16px " alt="" />
+                          <span class="fs14 fw500 tw-ml-2">Sucess Habits </span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktoh.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+
+                      <div ngbDropdownItem class="tw-flex tw-w-full tw-items-center tw-justify-between tw-py-3">
+                        <div class="tw-flex tw-items-center">
+                          <img src="assets/temp/bookopen.png" height="16px " alt="" />
+                          <span class="fs14 fw500 tw-ml-2">Books i am reading</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktob.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+
+                      <div ngbDropdownItem class="tw-flex tw-w-full tw-items-center tw-justify-between tw-py-3">
+                        <div class="tw-flex tw-items-center">
+                          <img src="assets/temp/bookopen.png" height="16px " alt="" />
+                          <span class="fs14 fw500 tw-ml-2">Add Investment</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktoi.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="modal.dismiss('Cross click'); clickClose()" class="btn btn-outline-light">Cancel</button>
+        <button type="submit" class="btn btn-dark tw-ml-2 tw-bg-primary-600" (click)="modal.close('Close click')">Save Changes</button>
+      </div>
+    </form>
+  </ng-template>
+</div>

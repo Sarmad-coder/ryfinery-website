@@ -1,0 +1,17 @@
+<div class="tw-hidden tw-flex-wrap tw-items-end tw-justify-between tw-gap-3 md:tw-flex">
+  <div>
+    <ng-container *ngIf="total">
+      <span class="tw-mr-1 tw-font-bold">{{ total }}</span>
+      <span>{{ totalName }}</span>
+    </ng-container>
+  </div>
+
+  <div [formGroup]="form" class="btn-group" role="group">
+    <ng-container *ngFor="let sort of sorts; index as index">
+      <input type="radio" class="btn-check" name="sort" [id]="'btnSort' + index" formControlName="sort" [value]="sort.value" />
+      <label class="btn btn-outline-dark !tw-border-gray-300 !tw-font-medium" [for]="'btnSort' + index">
+        <svg-icon class="tw-mr-2" [src]="'assets/icons/' + sort.icon + '.svg'"></svg-icon>{{ sort.name }}
+      </label>
+    </ng-container>
+  </div>
+</div>

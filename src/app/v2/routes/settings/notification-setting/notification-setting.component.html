@@ -1,0 +1,192 @@
+<div class="tw-mt-[76px]">
+  <div class="tw-text-[30px] tw-font-semibold tw-text-gray-900">Notification settings</div>
+  <div class="tw-mt-1 tw-text-base tw-text-gray-600">
+    We may still send you important notifications about your account outside of your notification settings.
+  </div>
+  <form [formGroup]="notificationForm">
+    <!-- Market Alerts -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">Market Alerts</div>
+        <div class="sub-title">These are notifications for comments on your posts and replies to your comments.</div>
+      </div>
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="market_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="market_email" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="market_sms" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Company Alerts -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">Company Alerts</div>
+        <div class="sub-title">These are notifications for when someone tags you in a comment, post or story.</div>
+      </div>
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="company_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="company_email" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="company_sms" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- People Alerts -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">People Alerts</div>
+        <div class="sub-title">These are notifications to remind you of updates you might have missed.</div>
+      </div>
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="people_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="people_email" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="people_sms" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trends -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">Trends</div>
+        <div class="sub-title">These are notifications for posts on your profile, likes and other reactions to your posts, and more.</div>
+      </div>
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="trend_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="trend_push" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="trend_push" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">Newsletter</div>
+        <div class="sub-title">These are notifications for comments on your posts and replies to your comments.</div>
+      </div>
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="newsletter_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="newsletter_email" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="newsletter_sms" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data updates -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">Data updates</div>
+        <div class="sub-title">These are notifications for when someone tags you in a comment, post or story.</div>
+      </div>
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="update_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="update_email" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="update_sms" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Billing and account -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">Billing and account</div>
+        <div class="sub-title">These are notifications to remind you of updates you might have missed.</div>
+      </div>
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="billing_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="billing_email" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="billing_sms" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ryfinery Updates -->
+    <div class="line"></div>
+    <div class="notification">
+      <div class="text">
+        <div class="title">Ryfinery Updates</div>
+        <div class="sub-title">These are notifications to remind you of updates you might have missed.</div>
+      </div>
+
+      <div class="control">
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="ryfinery_push" type="checkbox" role="switch" id="market_push" checked />
+          <label class="label" for="market_push">Push</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="ryfinery_email" type="checkbox" role="switch" id="market_email" checked />
+          <label class="form-check-label" for="market_email">Email</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" formControlName="ryfinery_sms" type="checkbox" role="switch" id="market_sms" />
+          <label class="form-check-label" for="market_sms">SMS</label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

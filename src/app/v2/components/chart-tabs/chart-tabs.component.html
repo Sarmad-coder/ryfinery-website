@@ -1,0 +1,54 @@
+<div *ngIf="chartOptions.length" class="tw-relative tw-mt-10 tw-block tw-w-full tw-rounded-lg tw-border tw-border-gray-200 tw-p-5">
+  <div class="tw-mx-4 tw-mt-2 tw-flex tw-items-start tw-justify-between">
+    <ul ngbNav #nav="ngbNav" [destroyOnHide]="true" [activeId]="0" class="tw-flex tw-gap-4">
+      <li *ngFor="let chart of chartOptions; index as index" [ngbNavItem]="index">
+        <a
+          ngbNavLink
+          class="tw-rounded-lg tw-px-3 tw-py-2 tw-text-base tw-font-semibold tw-text-gray-700"
+          [ngClass]="{ 'tw-bg-gray-100 tw-text-gray-900': index === nav.activeId }"
+        >
+          {{ chart.title }}
+        </a>
+        <ng-template ngbNavContent>
+          <div class="tw-flex tw-items-center tw-justify-between">
+            <div class="tw-mb-4 tw-mt-5 tw-ml-7 tw-text-gray-modern-500">{{ chart.unit }}</div>
+            <div class="chart-options tw-absolute tw-top-0 tw-right-0 tw-mt-10 tw-mr-10">
+              <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, chart)"></svg-icon>
+              <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, chart)"></svg-icon>
+            </div>
+          </div>
+
+          <!-- {{ $any(chart).id }} -->
+          <!-- {{ chart.options.data.datasets | json }} -->
+
+          <div class="tw-h-[{{ chart.height }}px]">
+            <canvas
+              baseChart
+              #chartCanvas="base-chart"
+              [type]="chart.options.type"
+              [data]="chart.options.data"
+              [labels]="chart.options.data.labels"
+              [datasets]="chart.options.data.datasets"
+              [options]="chart.options.options"
+              [plugins]="chart.options.plugins"
+            >
+            </canvas>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+
+  <div [ngbNavOutlet]="nav"></div>
+</div>
+
+<!-- FULL SCREEN MODAL -->
+<ng-template #fullScreenModalTpl let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ fullScreenImageName }}</h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <img class="tw-w-full tw-py-6 tw-px-12" [src]="fullScreenImage" />
+  </div>
+</ng-template>

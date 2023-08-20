@@ -1,0 +1,9 @@
+.tab {
+  @apply tw-rounded-lg tw-font-semibold tw-text-gray-800;
+  .text {
+    @apply tw-flex tw-gap-2;
+    .counter {
+      @apply tw-h-fit tw-rounded-full tw-bg-gray-200 tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-text-gray-700;
+    }
+  }
+}

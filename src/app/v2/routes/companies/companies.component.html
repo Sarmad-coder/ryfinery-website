@@ -1,0 +1,153 @@
+<!-- actions -->
+<div class="page-actions">
+  <!-- mobile filter -->
+  <button class="btn btn-outline-light btn-action lg:!tw-hidden" (click)="showMobileFilter = !showMobileFilter">
+    <svg-icon src="assets/icons/filter-funnel-02.svg"></svg-icon>Filters
+  </button>
+  <!-- country filter -->
+  <app-country-select (selected)="countryFilter($event)"></app-country-select>
+  <!-- export -->
+  <button class="btn btn-outline-light btn-action" (click)="export()" [style.pointer-events]="loadingExport ? 'none' : 'auto'">
+    <svg-icon *ngIf="!loadingExport" src="assets/icons/arrow-down.svg"></svg-icon>
+    Export
+    <div *ngIf="loadingExport" class="spinner-border spinner-border-sm">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </button>
+</div>
+
+<app-breadcrumb [items]="[{ title: 'Companies', routerLink: '/companies' }]"></app-breadcrumb>
+<div class="tw-mt-6 tw-text-2xl">{{ 'Companies' }}</div>
+<hr class="page-line" />
+
+<div class="page-layout" *ngIf="paginator">
+  <div>
+    <div class="tw-mb-[26px]" *ngIf="paginator.meta$ | async as meta">
+      <span class="tw-font-semibold">{{ meta?.total | number }}</span>
+      <span class="tw-ml-1 tw-font-medium">
+        Results found <span *ngIf="searchText as v">of {{ v }}</span>
+      </span>
+    </div>
+
+    <!-- loading -->
+    <div *ngIf="paginator.loading$ | async" class="tw-mt-5 tw-flex tw-justify-center">
+      <div class="spinner-border spinner-border-sm tw-text-gray-400"></div>
+    </div>
+
+    <ng-container *ngIf="!(paginator.loading$ | async)">
+      <!-- companies -->
+      <div class="tw-flex tw-flex-col tw-gap-9">
+        <div class="tw-flex tw-items-start tw-gap-[14px] md:tw-gap-[18px]" *ngFor="let company of paginator.data$ | async">
+          <!-- image -->
+          <!-- <div>
+            <div class="tw-h-[50px] tw-w-[50px] tw-rounded-md tw-border tw-border-gray-200 tw-bg-gray-iron-25 tw-p-3 md:tw-h-[90px] md:tw-w-[90px]">
+              <img class="tw-w-full" [src]="(company?.logo.data?.attributes.url | imageUrl) || 'assets/images/image-placeholder.png'" />
+            </div>
+          </div> -->
+          <div>
+            <div class="tw-flex tw-items-center tw-gap-4">
+              <a class="tw-font-semibold" [routerLink]="['/company', company.id, company.name | slugify]">{{ company.name }}</a>
+              <img class="tw-h-3 tw-rounded-[3px]" src="assets/flags/{{ company?.country }}.png" />
+            </div>
+            <div class="tw-mt-1 tw-text-gray-iron-500 tw-line-clamp-2">{{ company.fullDescription }}</div>
+            <div class="tw-mt-2 tw-flex tw-items-center tw-whitespace-nowrap">
+              <svg-icon src="assets/icons/mark.svg"></svg-icon>
+              <div class="attributes">
+                <div *ngFor="let item of getIndustryNames(company) | slice : 0 : 6" class="tw-py-1 !tw-text-xs">{{ item }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- pagination -->
+      <ng-container *ngIf="paginator.meta$ | async as meta">
+        <!-- line -->
+        <hr class="tw-m-0 tw-mt-[60px] tw-mb-5 tw-w-full tw-text-gray-neutral-400" />
+        <ngb-pagination
+          [size]="'sm'"
+          [maxSize]="5"
+          [rotate]="true"
+          [collectionSize]="meta.total"
+          [pageSize]="meta.pageSize"
+          [page]="meta.page"
+          (pageChange)="paginator.changePage($event)"
+        >
+          <ng-template ngbPaginationPrevious><svg-icon src="assets/icons/arrow-left.svg"></svg-icon>Previous</ng-template>
+          <ng-template ngbPaginationNext>Next<svg-icon src="assets/icons/arrow-right.svg"></svg-icon></ng-template>
+        </ngb-pagination>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <!-- left filters -->
+  <div class="tw-hidden lg:tw-block">
+    <ng-container *ngTemplateOutlet="filters"></ng-container>
+  </div>
+</div>
+
+<!-- mobile sidebar -->
+<div class="offcanvas offcanvas-start" [ngClass]="{ show: showMobileFilter }" tabindex="-1">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Filters</h5>
+    <button type="button" class="btn-close" (click)="showMobileFilter = false"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ng-container *ngIf="showMobileFilter">
+      <ng-container *ngTemplateOutlet="filters"></ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #filters>
+  <ng-container [formGroup]="filterForm">
+    <div class="tw-mt-[24px] tw-mb-[6px] tw-font-medium">Industries</div>
+    <ng-select
+      formControlName="industry"
+      placeholder="Select Industry"
+      bindLabel="name"
+      [items]="industryPaginator.data$ | async"
+      [loading]="(industryPaginator.loading$ | async)!"
+      (search)="industryPaginator.textSearch($event.term)"
+      (change)="industryFilter($event)"
+      (scrollToEnd)="industryPaginator.next()"
+    >
+    </ng-select>
+    <div class="tw-mt-2 tw-text-gray-600">This is a hint text to help user.</div>
+
+    <div class="tw-mt-[24px] tw-mb-[6px] tw-font-medium">Trends</div>
+    <ng-select placeholder="Select Trend">
+      <ng-option *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8]">Trend {{ item }}</ng-option>
+    </ng-select>
+    <div class="tw-mt-2 tw-text-gray-600">This is a hint text to help user.</div>
+
+    <div class="tw-mt-[24px] tw-mb-[6px] tw-font-medium">Revenue</div>
+    <ng-select placeholder="Select Revenue">
+      <ng-option>1M to 10M</ng-option>
+      <ng-option>10M to 50M</ng-option>
+      <ng-option>50M to 100M</ng-option>
+      <ng-option>100M to 250M</ng-option>
+      <ng-option>250M to 500M</ng-option>
+      <ng-option>500M to 1000M</ng-option>
+    </ng-select>
+    <div class="tw-mt-2 tw-text-gray-600">This is a hint text to help user.</div>
+
+    <div class="tw-mt-[24px] tw-mb-[6px] tw-font-medium">IPO Status</div>
+    <ng-select formControlName="IPOStatus" placeholder="Select IPO Status" (change)="IPOStatusFilter($event)">
+      <ng-option *ngFor="let item of IPOStatus">{{ item }}</ng-option>
+    </ng-select>
+    <div class="tw-mt-2 tw-text-gray-600">This is a hint text to help user.</div>
+
+    <div class="tw-mt-[24px] tw-mb-[6px] tw-font-medium">Operating Status</div>
+    <ng-select formControlName="operatingStatus" placeholder="Select Operating Status" (change)="operatingStatusFilter($event)">
+      <ng-option *ngFor="let item of operatingStatus">{{ item }}</ng-option>
+    </ng-select>
+    <div class="tw-mt-2 tw-text-gray-600">This is a hint text to help user.</div>
+
+    <div class="tw-mt-[24px] tw-mb-[6px] tw-font-medium">Founding Year</div>
+    <ng-select formControlName="foundingDate" placeholder="Select Founding Year" (change)="foundingDateFilter($event)">
+      <ng-option *ngFor="let year of getYearsList()">{{ year }}</ng-option>
+    </ng-select>
+    <div class="tw-mt-2 tw-text-gray-600">This is a hint text to help user.</div>
+  </ng-container>
+</ng-template>

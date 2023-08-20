@@ -1,0 +1,34 @@
+<!-- most followed Companies -->
+<div *ngIf="mostFollowedCompanies.length" class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-[12px] tw-pt-[14px] tw-pb-5">
+  <div class="tw-text-lg tw-font-medium">Most Followed Companies</div>
+
+  <div
+    class="tw-mx-2 tw-mt-[14px] tw-mb-1 tw-flex tw-items-center tw-justify-between tw-border-t tw-border-gray-cool-200 tw-pt-7"
+    *ngFor="let item of mostFollowedCompanies"
+  >
+    <div>
+      <div class="tw-w-44 tw-cursor-pointer tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-font-medium" (click)="routeCompany(item)">
+        {{ item.name }}
+      </div>
+      <div class="gray-true-500 tw-text-[13px]">{{ item.followers || 0 }} following</div>
+    </div>
+    <div class="tw-flex tw-items-center tw-gap-7">
+      <app-growth [value]="item.lastRevenueGrowth" [fill]="true"></app-growth>
+      <svg-icon
+        *ngIf="!item.hasFollowed"
+        ngbTooltip="Follow"
+        (click)="follow(item, 'follow')"
+        class="tw-cursor-pointer tw-text-gray-modern-500"
+        src="assets/icons/plus-circle.svg"
+        [svgStyle]="{ 'height.px': 20 }"
+      ></svg-icon>
+      <svg-icon
+        *ngIf="item.hasFollowed"
+        ngbTooltip="Following"
+        class="tw-text-black"
+        src="assets/icons/check-circle.svg"
+        [svgStyle]="{ 'height.px': 20 }"
+      ></svg-icon>
+    </div>
+  </div>
+</div>

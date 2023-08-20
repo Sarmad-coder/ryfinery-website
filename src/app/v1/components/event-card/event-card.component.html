@@ -1,0 +1,59 @@
+<div class="event-card-shadow tw-flex tw-rounded-lg tw-bg-white tw-py-8 tw-pl-9 tw-pr-8">
+  <div class="tw-relative tw-h-fit">
+    <img class="tw-w-[208px] tw-rounded-lg" src="assets/images/event.png" alt="" />
+    <div class="event-card-image-blur tw-absolute tw-inset-x-0 tw-bottom-0 tw-h-32 tw-w-full tw-rounded-lg"></div>
+    <div class="tw-absolute tw-inset-x-0 tw-bottom-0 tw-flex tw-items-end tw-justify-between tw-p-2">
+      <div class="tw-rounded-full tw-bg-white tw-px-2">
+        <svg-icon class="tw-mr-1 tw-text-primary-500" [svgStyle]="{ 'width.px': 12 }" src="assets/icons/award-02.svg"></svg-icon>
+        <span class="tw-text-xs tw-font-medium tw-text-primary-700">Rare find</span>
+      </div>
+    </div>
+  </div>
+  <div class="tw-flex tw-w-full tw-justify-between tw-pl-4">
+    <div>
+      <!-- <div class="tw-mt-1 tw-font-semibold tw-text-primary-600">Entire apartment rental in Collingwood</div> -->
+      <div class="tw-mt-1 tw-text-2xl tw-font-medium tw-text-gray-900">The People's Brownstone</div>
+      <div class="tw-flex tw-items-center tw-text-primary-600">
+        <svg-icon class="tw-mr-[6px]" [svgStyle]="{ 'width.px': 18 }" src="assets/icons/marker-pin-01.svg"></svg-icon>
+        <span class="tw-text-base">1995 Broadway, New York</span>
+      </div>
+
+      <div class="tw-mt-2 tw-max-w-md tw-text-base tw-text-gray-iron-500">
+        Wifi • Air conditioning • Kitchen • Heating • Smokers • Parking • Balcony • Animal friendly
+      </div>
+
+      <div class="tw-mt-3 tw-flex tw-gap-3">
+        <div class="tw-w-fit tw-rounded-xl tw-bg-blue-dark-500 tw-bg-opacity-10 tw-py-2 tw-px-4 tw-text-[10px] tw-font-medium tw-text-blue-dark-500">
+          New Building
+        </div>
+        <div class="tw-w-fit tw-rounded-xl tw-bg-green-500 tw-bg-opacity-10 tw-py-2 tw-px-4 tw-text-[10px] tw-font-medium tw-text-green-500">
+          Common Friends
+        </div>
+        <div class="tw-w-fit tw-rounded-xl tw-bg-rose-500 tw-bg-opacity-10 tw-py-2 tw-px-4 tw-text-[10px] tw-font-medium tw-text-rose-500">New Building</div>
+      </div>
+
+      <div class="tw-mt-4 tw-flex tw-items-center tw-gap-2">
+        <span class="tw-text-xl tw-font-medium tw-text-gray-900">4.9</span>
+        <ng-rating-bar [value]="3.5" [ratingCount]="5" colorActive="#2B67F6" [styles]="{ fontSize: '18px' }"></ng-rating-bar>
+        <span class="tw-text-primary-700">(7 Reviews)</span>
+        <div class="tw-ml-2">
+          <img
+            *ngFor="let item of [0, 0, 0, 0, 0, 0, 0] | slice : 0 : 6"
+            class="-tw-ml-2 tw-w-8 tw-rounded-full tw-border-[3px] tw-border-solid tw-border-white"
+            [src]="(item | imageUrl) || 'assets/images/jeff.png'"
+          />
+          <span *ngIf="[0, 0, 0, 0, 0, 0, 0].length - 6 > 0" class="tw-ml-2 tw-text-blue-600">+ {{ 6 }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="tw-flex tw-h-full tw-flex-col tw-items-end tw-justify-between">
+      <button type="button" class="btn btn-outline-light tw-rounded-full !tw-border-0 tw-bg-gray-50 tw-p-2">
+        <svg-icon src="assets/icons/heart.svg"></svg-icon>
+      </button>
+      <div>
+        <span class="tw-mr-2 tw-text-xl tw-font-semibold tw-text-gray-900">$540</span>
+        <span class="tw-text-base tw-text-gray-600">3 Days</span>
+      </div>
+    </div>
+  </div>
+</div>

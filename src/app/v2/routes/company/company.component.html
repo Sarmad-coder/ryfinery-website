@@ -1,0 +1,803 @@
+<ng-container *ngIf="company">
+  <!-- actions -->
+  <div class="page-actions">
+    <!-- follow -->
+    <button class="btn btn-outline-light btn-action" (click)="follow(company, company.hasFollowed ? 'unfollow' : 'follow')">
+      <svg-icon class="tw-text-gray-500" src="assets/icons/rocket-02.svg"></svg-icon>
+      {{ company.hasFollowed ? 'Following' : 'Follow' }}
+    </button>
+    <!-- share -->
+    <button class="btn btn-outline-light btn-action" (click)="shareProfile()">
+      <svg-icon class="tw-text-gray-500" src="assets/icons/share-outline.svg"></svg-icon>
+      Share
+    </button>
+    <!-- export -->
+    <button class="btn btn-outline-light btn-action" (click)="export()" [style.pointer-events]="loadingExport ? 'none' : 'auto'">
+      <svg-icon *ngIf="!loadingExport" src="assets/icons/arrow-down.svg"></svg-icon>
+      Export
+      <div *ngIf="loadingExport" class="spinner-border spinner-border-sm">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </button>
+  </div>
+
+  <app-breadcrumb [items]="[{ title: 'Companies', routerLink: '/companies' }, { title: company.name }]"></app-breadcrumb>
+  <!-- title -->
+  <div class="tw-mt-6 tw-flex tw-flex-wrap tw-items-center tw-gap-[42px]">
+    <div class="tw-flex tw-items-center tw-gap-[14px]">
+      <!-- <img
+        class="tw-h-[60px] tw-w-[60px] tw-rounded-md tw-border tw-border-gray-cool-300 tw-p-1"
+        [src]="(company.logo.data?.attributes.url | imageUrl) || 'assets/images/image-placeholder.png'"
+        alt=""
+      /> -->
+      <span class="tw-text-2xl">{{ company.name }}</span>
+    </div>
+    <div class="tw-flex tw-flex-wrap tw-gap-[18px]">
+      <a class="btn btn-sm btn-dark tw-flex tw-items-center tw-rounded-md tw-px-4 tw-font-light !tw-text-white">
+        <svg-icon class="tw-mr-2 tw-text-white" src="assets/icons/graph-outline.svg" [svgStyle]="{ 'width.px': 18 }"></svg-icon>
+        <span class="tw-mt-[2px]">Overview</span>
+      </a>
+
+      <div class="tw-relative">
+        <a class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-rounded-md tw-px-4 tw-font-light !tw-text-gray-700">
+          <svg-icon class="tw-mr-2 tw-text-gray-500" src="assets/icons/news-outline.svg" [svgStyle]="{ 'width.px': 18 }"></svg-icon>
+          <span class="tw-mt-[2px]">News</span>
+        </a>
+        <div
+          class="tw-absolute tw-top-0 tw-right-0 -tw-mt-[10px] -tw-mr-3 tw-rounded-[4px] tw-bg-gray-true-800 tw-px-[6px] tw-py-[1px] tw-text-[9px] tw-text-white"
+        >
+          soon
+        </div>
+      </div>
+
+      <div class="tw-relative">
+        <a class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-rounded-md tw-px-4 tw-font-light !tw-text-gray-700">
+          <svg-icon class="tw-mr-2 tw-text-gray-500" src="assets/icons/graph-outline.svg" [svgStyle]="{ 'width.px': 18 }"></svg-icon>
+          <span class="tw-mt-[2px]">Social</span>
+        </a>
+        <div
+          class="tw-absolute tw-top-0 tw-right-0 -tw-mt-[10px] -tw-mr-3 tw-rounded-[4px] tw-bg-gray-true-800 tw-px-[6px] tw-py-[1px] tw-text-[9px] tw-text-white"
+        >
+          soon
+        </div>
+      </div>
+
+      <div class="tw-relative">
+        <a (click)="compareModel(content)" class="btn btn-sm btn-outline-light tw-flex tw-items-center tw-rounded-md tw-px-4 tw-font-light !tw-text-gray-700">
+          <svg-icon class="tw-mr-2 tw-text-gray-500" src="assets/icons/compare-outline.svg" [svgStyle]="{ 'width.px': 18 }"></svg-icon>
+          <span class="tw-mt-[2px]">Compare</span>
+        </a>
+        <!-- <div
+          class="tw-absolute tw-top-0 tw-right-0 -tw-mt-[10px] -tw-mr-3 tw-rounded-[4px] tw-bg-gray-true-800 tw-px-[6px] tw-py-[1px] tw-text-[9px] tw-text-white"
+        >
+          soon
+        </div> -->
+      </div>
+    </div>
+    <!-- <a class="btn btn-primary" href="#" role="button">Overview</a> -->
+  </div>
+  <!-- line -->
+  <hr class="page-line tw-mx-auto" />
+
+  <div class="page-layout">
+    <!-- LEFT SIDE -->
+    <div>
+      <div class="tw-grid tw-gap-12" [ngClass]="{ 'lg:tw-grid-cols-2': revenueChartOptions.show && employeeChartOptions.show }">
+        <!-- revenue chart -->
+        <div class="tw-w-full" *ngIf="revenueChartOptions.show">
+          <div class="chart-header">
+            <div class="chart-title">Revenue <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+            <div class="chart-options">
+              <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Revenue')"></svg-icon>
+              <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Revenue')"></svg-icon>
+            </div>
+          </div>
+          <div class="tw-mb-5 tw-text-gray-modern-500">Company revenue</div>
+          <div class="tw-h-72">
+            <canvas
+              baseChart
+              #chartCanvas="base-chart"
+              [type]="revenueChartOptions.type"
+              [data]="revenueChartOptions.data"
+              [labels]="revenueChartOptions.data.labels"
+              [datasets]="revenueChartOptions.data.datasets"
+              [options]="revenueChartOptions.options"
+              [plugins]="revenueChartOptions.plugins"
+            >
+            </canvas>
+          </div>
+          <ng-container *ngIf="revenueGrowth.length">
+            <!-- table -->
+            <div class="tw-mt-11 tw-flex tw-items-center tw-text-lg tw-font-medium">
+              Revenue YoY growth <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400" src="assets/icons/info-circle-fill.svg"></svg-icon>
+            </div>
+            <div class="tw-mb-5 tw-text-gray-modern-500">Per Year In Percentage (%)</div>
+            <div class="tw-mt-4">
+              <ng-container *ngFor="let item of revenueGrowth">
+                <div class="tw-mx-6 tw-flex">
+                  <div class="tw-grow">{{ item.year }}</div>
+                  <app-growth [value]="item.value"></app-growth>
+                </div>
+                <hr class="tw-mx-auto tw-my-2 tw-w-[96%] tw-justify-self-center tw-border-b tw-px-6 tw-text-gray-true-300" />
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+        <!-- employee chart -->
+        <div class="tw-w-full" *ngIf="employeeChartOptions.show">
+          <div class="chart-header">
+            <div class="chart-title">Employees <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+            <div class="chart-options">
+              <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Employees')"></svg-icon>
+              <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Employees')"></svg-icon>
+            </div>
+          </div>
+          <div class="tw-mb-5 tw-text-gray-modern-500">Yearly Employee Count</div>
+          <div class="tw-h-72">
+            <canvas
+              baseChart
+              #chartCanvas="base-chart"
+              [type]="employeeChartOptions.type"
+              [data]="employeeChartOptions.data"
+              [labels]="employeeChartOptions.data.labels"
+              [datasets]="employeeChartOptions.data.datasets"
+              [options]="employeeChartOptions.options"
+              [plugins]="employeeChartOptions.plugins"
+            >
+            </canvas>
+          </div>
+
+          <!-- table -->
+          <ng-container *ngIf="revenuePerEmployee.length">
+            <div class="tw-mt-11 tw-flex tw-items-center tw-text-lg tw-font-medium">
+              Revenue per employee <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400" src="assets/icons/info-circle-fill.svg"></svg-icon>
+            </div>
+            <div class="tw-mb-5 tw-text-gray-modern-500">Per Year In Thousand USD (US$)</div>
+            <div class="tw-mt-4">
+              <ng-container *ngFor="let item of revenuePerEmployee">
+                <div class="tw-mx-6 tw-flex">
+                  <div class="tw-grow">{{ item.year }}</div>
+                  <div *ngIf="!item.value.includes('-')" class="tw-flex tw-w-[74px] tw-items-center tw-justify-between tw-text-green-700">
+                    <svg-icon src="assets/icons/increment.svg"></svg-icon>
+                    <div>{{ item.value }}</div>
+                  </div>
+                  <div *ngIf="item.value.includes('-')" class="tw-flex tw-w-[74px] tw-items-center tw-justify-between tw-text-orange-dark-800">
+                    <svg-icon src="assets/icons/decrement.svg"></svg-icon>
+                    <div>{{ item.value }}</div>
+                  </div>
+                </div>
+                <hr class="tw-mx-auto tw-my-2 tw-w-[96%] tw-justify-self-center tw-border-b tw-px-6 tw-text-gray-true-300" />
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Profitability Metrics Overview Headers table -->
+      <ng-container *ngIf="profitabilityMetricsOverviewHeaders.length">
+        <div class="tw-mt-11 tw-flex tw-items-center tw-text-lg tw-font-medium">
+          Overview <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400" src="assets/icons/info-circle-fill.svg"></svg-icon>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">Yearly company overview</div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col" *ngFor="let header of profitabilityMetricsOverviewHeaders">
+                  <div class="tw-flex tw-items-center">
+                    {{ header }} <svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="tw-font-semibold tw-text-black">
+              <tr *ngFor="let title of profitabilityMetricsOverviewTitles">
+                <td>
+                  <div class="tw-flex tw-items-center">
+                    {{ title }}<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+                  </div>
+                </td>
+                <td *ngFor="let header of profitabilityMetricsOverviewHeaders">{{ profitabilityMetricsOverview[title][header] }}</td>
+
+                <!-- <td>
+              <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-green-700">
+                <svg-icon class="-tw-mt-[2px]" src="assets/icons/increment.svg"></svg-icon>
+                <div>20%</div>
+              </div>
+            </td> -->
+              </tr>
+              <!-- <tr>
+            <td>
+              <div class="tw-flex tw-items-center">
+                Return on average equity<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+              </div>
+            </td>
+            <td>121.23B</td>
+            <td>121.23B</td>
+            <td>121.23B</td>
+            <td>121.23B</td>
+            <td>
+              <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-orange-dark-800">
+                <svg-icon class="-tw-mt-[2px]" src="assets/icons/decrement.svg"></svg-icon>
+                <div>-120%</div>
+              </div>
+            </td>
+          </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <!-- Ebitda & Ebit chart -->
+      <ng-container *ngIf="ebitdaEbitOptions.show">
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">EBITDA and EBIT <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'EBITDA and EBIT')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'EBITDA and EBIT')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">With Earnings YOY growth and EBITDA margins</div>
+        <div class="tw-h-[500px]">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="ebitdaEbitOptions.type"
+            [data]="ebitdaEbitOptions.data"
+            [labels]="ebitdaEbitOptions.data.labels"
+            [datasets]="ebitdaEbitOptions.data.datasets"
+            [options]="ebitdaEbitOptions.options"
+            [plugins]="ebitdaEbitOptions.plugins"
+          >
+          </canvas>
+        </div>
+      </ng-container>
+
+      <!-- Abandon rate chart -->
+      <ng-container *ngIf="abandonRateChartOptions.show">
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">Abandon rate <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Abandon rate')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Abandon rate')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mt-2 tw-text-2xl">70.00%</div>
+        <div class="tw-mt-1 tw-mb-7 tw-flex tw-items-center tw-gap-1">
+          <svg-icon class="tw-text-green-700" src="assets/icons/arrow-down.svg" [svgStyle]="{ 'width.px': 16 }"></svg-icon>
+          <span class="tw-text-green-600">9.34%</span>
+          <span class="tw-text-gray-cool-400">from</span>
+          <span>75.00%</span>
+        </div>
+        <div class="tw-h-[350px]">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="abandonRateChartOptions.type"
+            [data]="abandonRateChartOptions.data"
+            [labels]="abandonRateChartOptions.data.labels"
+            [datasets]="abandonRateChartOptions.data.datasets"
+            [options]="abandonRateChartOptions.options"
+            [plugins]="abandonRateChartOptions.plugins"
+          >
+          </canvas>
+        </div>
+      </ng-container>
+
+      <!-- Liquidity chart -->
+      <ng-container *ngIf="liquidityChartOptions.show">
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">Liquidity <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Liquidity')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Liquidity')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">Company liquidity</div>
+        <div class="tw-h-72">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="liquidityChartOptions.type"
+            [data]="liquidityChartOptions.data"
+            [labels]="liquidityChartOptions.data.labels"
+            [datasets]="liquidityChartOptions.data.datasets"
+            [options]="liquidityChartOptions.options"
+            [plugins]="liquidityChartOptions.plugins"
+          >
+          </canvas>
+        </div>
+
+        <!-- table -->
+        <div class="table-wrapper tw-mt-8" *ngIf="liquidityMetricsOverviewHeaders.length">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col" *ngFor="let header of liquidityMetricsOverviewHeaders">
+                  <div class="tw-flex tw-items-center">
+                    {{ header }} <svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="tw-font-semibold tw-text-black">
+              <tr *ngFor="let title of liquidityMetricsOverviewTitles">
+                <td>
+                  <div class="tw-flex tw-items-center">
+                    {{ title }}<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+                  </div>
+                </td>
+                <td *ngFor="let header of liquidityMetricsOverviewHeaders">{{ liquidityMetricsOverview[title][header] }}</td>
+
+                <!-- <td>
+              <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-green-700">
+                <svg-icon class="-tw-mt-[2px]" src="assets/icons/increment.svg"></svg-icon>
+                <div>20%</div>
+              </div>
+            </td> -->
+              </tr>
+              <!-- <tr>
+            <td>
+              <div class="tw-flex tw-items-center">
+                Return on average equity<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+              </div>
+            </td>
+            <td>121.23B</td>
+            <td>121.23B</td>
+            <td>121.23B</td>
+            <td>121.23B</td>
+            <td>
+              <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-orange-dark-800">
+                <svg-icon class="-tw-mt-[2px]" src="assets/icons/decrement.svg"></svg-icon>
+                <div>-120%</div>
+              </div>
+            </td>
+          </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <!-- Earnings chart -->
+      <ng-container *ngIf="earningsChartOptions.show">
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">Earnings <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Earnings')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Earnings')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">PER YEAR IN BILLION USD (US$)</div>
+        <div class="tw-h-72">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="earningsChartOptions.type"
+            [data]="earningsChartOptions.data"
+            [labels]="earningsChartOptions.data.labels"
+            [datasets]="earningsChartOptions.data.datasets"
+            [options]="earningsChartOptions.options"
+            [plugins]="earningsChartOptions.plugins"
+          >
+          </canvas>
+        </div>
+      </ng-container>
+
+      <!-- Total expenses, Total liabilities and Total debt chart -->
+      <ng-container *ngIf="expensesLiabilitiesDebtChartOptions.show">
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">Total expenses, Total liabilities and Total debt <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Total expenses, Total liabilities and Total debt')"></svg-icon>
+            <svg-icon
+              src="assets/icons/full-screen.svg"
+              (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Total expenses, Total liabilities and Total debt')"
+            ></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">PER YEAR IN BILLION USD (US$)</div>
+        <div class="tw-h-72">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="expensesLiabilitiesDebtChartOptions.type"
+            [data]="expensesLiabilitiesDebtChartOptions.data"
+            [labels]="expensesLiabilitiesDebtChartOptions.data.labels"
+            [datasets]="expensesLiabilitiesDebtChartOptions.data.datasets"
+            [options]="expensesLiabilitiesDebtChartOptions.options"
+            [plugins]="expensesLiabilitiesDebtChartOptions.plugins"
+          >
+          </canvas>
+        </div>
+      </ng-container>
+
+      <!-- Quick ratio and Current ratio -->
+      <ng-container *ngIf="quickRatioAndCurrentRatioChartOptions.show">
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">Quick ratio and Current ratio <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Quick ratio and Current ratio')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Quick ratio and Current ratio')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">As Ratio</div>
+        <div class="tw-mt-8 tw-h-[350px]">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="quickRatioAndCurrentRatioChartOptions.type"
+            [data]="quickRatioAndCurrentRatioChartOptions.data"
+            [labels]="quickRatioAndCurrentRatioChartOptions.data.labels"
+            [datasets]="quickRatioAndCurrentRatioChartOptions.data.datasets"
+            [options]="quickRatioAndCurrentRatioChartOptions.options"
+            [plugins]="quickRatioAndCurrentRatioChartOptions.plugins"
+          >
+          </canvas></div
+      ></ng-container>
+
+      <!-- Key stock performance metrics -->
+      <ng-container *ngIf="keyStockPerformanceMetricsOverviewHeaders.length">
+        <div class="tw-mt-11 tw-flex tw-items-center tw-text-lg tw-font-medium">
+          Key stock performance metrics <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400" src="assets/icons/info-circle-fill.svg"></svg-icon>
+        </div>
+
+        <div class="tw-mt-8 tw-flex tw-gap-4">
+          <div *ngFor="let item of keyStockPerformanceMetrics" class="tw-w-full tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-4 tw-py-3">
+            <div class="tw-flex tw-items-center tw-font-medium">
+              {{ item.key }}
+              <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400" src="assets/icons/info-circle-fill.svg"></svg-icon>
+            </div>
+            <div class="tw-mt-[6px]">{{ item.value }}</div>
+          </div>
+        </div>
+
+        <div class="table-wrapper tw-mt-8">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col" *ngFor="let header of keyStockPerformanceMetricsOverviewHeaders">
+                  <div class="tw-flex tw-items-center">
+                    {{ header }} <svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="tw-font-semibold tw-text-black">
+              <tr *ngFor="let title of keyStockPerformanceMetricsOverviewTitles">
+                <td>
+                  <div class="tw-flex tw-items-center">
+                    {{ title }}<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+                  </div>
+                </td>
+                <td *ngFor="let header of keyStockPerformanceMetricsOverviewHeaders">{{ keyStockPerformanceMetricsOverview[title][header] }}</td>
+
+                <!-- <td>
+                    <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-green-700">
+                      <svg-icon class="-tw-mt-[2px]" src="assets/icons/increment.svg"></svg-icon>
+                      <div>20%</div>
+                    </div>
+                  </td> -->
+              </tr>
+              <!-- <tr>
+                  <td>
+                    <div class="tw-flex tw-items-center">
+                      Return on average equity<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+                    </div>
+                  </td>
+                  <td>121.23B</td>
+                  <td>121.23B</td>
+                  <td>121.23B</td>
+                  <td>121.23B</td>
+                  <td>
+                    <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-orange-dark-800">
+                      <svg-icon class="-tw-mt-[2px]" src="assets/icons/decrement.svg"></svg-icon>
+                      <div>-120%</div>
+                    </div>
+                  </td>
+                </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <!-- line chart -->
+      <!-- <div class="tw-mt-20 tw-h-[350px]" *ngIf="!lineChartOptions.show">
+        <canvas
+          baseChart
+          #chartCanvas="base-chart"
+          [type]="lineChartOptions.type"
+          [data]="lineChartOptions.data"
+          [labels]="lineChartOptions.data.labels"
+          [datasets]="lineChartOptions.data.datasets"
+          [options]="lineChartOptions.options"
+          [plugins]="lineChartOptions.plugins"
+        >
+        </canvas>
+      </div> -->
+
+      <!-- Expenses chart -->
+      <ng-container *ngIf="expensesChartOptions.show">
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">Expenses <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Expenses')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Expenses')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">Monthly company expenses</div>
+        <div class="tw-h-[350px]">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="expensesChartOptions.type"
+            [data]="expensesChartOptions.data"
+            [labels]="expensesChartOptions.data.labels"
+            [datasets]="expensesChartOptions.data.datasets"
+            [options]="expensesChartOptions.options"
+            [plugins]="expensesChartOptions.plugins"
+          >
+          </canvas>
+        </div>
+      </ng-container>
+
+      <!-- Company Ranking -->
+      <ng-container *ngIf="companyRankingOptions.show">
+        <!-- <div class="tw-mt-20 tw-text-lg tw-font-bold">Company Ranking</div>
+      <div class="tw-text-xs">Ranking is based on Revenue and industry growth</div> -->
+        <div class="chart-header tw-mt-11">
+          <div class="chart-title">Company Ranking <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Company Ranking')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg" (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Company Ranking')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">Ranking is based on Revenue and industry growth</div>
+        <div class="tw-h-[540px]">
+          <canvas
+            baseChart
+            #chartCanvas="base-chart"
+            [type]="companyRankingOptions.type"
+            [data]="companyRankingOptions.data"
+            [datasets]="companyRankingOptions.data.datasets"
+            [options]="companyRankingOptions.options"
+          >
+          </canvas>
+        </div>
+      </ng-container>
+
+      <!-- Not what you're looking for ? -->
+      <div class="container tw-mt-12 tw-flex tw-flex-col tw-items-center tw-rounded-lg tw-bg-gray-50 tw-py-12 tw-text-center">
+        <div class="tw-flex tw-items-end">
+          <img class="tw-w-10 tw-rounded-full tw-border-2 tw-border-white" src="assets/images/avatar-3.png" alt="" />
+          <img class="tw-z-10 -tw-mx-4 tw-w-12 tw-rounded-full tw-border-2 tw-border-white" src="assets/images/avatar-1.png" alt="" />
+          <img class="tw-w-10 tw-rounded-full tw-border-2 tw-border-white" src="assets/images/avatar-2.png" alt="" />
+        </div>
+        <div class="tw-mt-4 tw-text-xl tw-font-semibold tw-text-gray-900">Not what you're looking for ?</div>
+        <div class="tw-mt-1 tw-text-lg tw-text-gray-600">Can't find the answer you're looking for? chat to our friendly team, we are here to help.</div>
+        <button class="btn btn-dark tw-mt-8 tw-bg-primary-600">Get in touch</button>
+      </div>
+    </div>
+    <!-- RIGHT SIDE -->
+    <div class="tw-flex tw-grow tw-flex-col tw-gap-[70px]">
+      <!-- like card -->
+      <div class="tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-[18px] tw-pt-[11px] tw-pb-1">
+        <div>How do you feel about this company?</div>
+        <div class="tw-mt-6 tw-flex tw-items-center tw-gap-[35px]">
+          <button
+            class="btn btn-light tw-py-2 tw-px-6"
+            [ngClass]="{ 'tw-bg-black tw-text-white': userVote?.attributes.type === 'like' }"
+            (click)="vote('like')"
+          >
+            <svg-icon src="assets/icons/like.svg"></svg-icon>
+          </button>
+          <button
+            class="btn btn-light tw-py-2 tw-px-6"
+            [ngClass]="{ 'tw-bg-black tw-text-white': userVote?.attributes.type === 'dislike' }"
+            (click)="vote('dislike')"
+          >
+            <svg-icon src="assets/icons/dislike.svg"></svg-icon>
+          </button>
+
+          <span class="tw-ml-4 tw-text-base">{{ company.likes || 0 }} &nbsp; Votes</span>
+        </div>
+        <div class="tw-mt-[14px] tw-mb-[5px] tw-text-[10px] tw-font-light">*All feedback is private and annonymous</div>
+      </div>
+
+      <!-- info card -->
+      <div class="tw-flex tw-flex-col tw-items-center tw-rounded-md tw-border tw-border-gray-cool-200 tw-py-[22px]">
+        <!-- <a *ngIf="company.name as v" [href]="v" class="tw-flex tw-items-center tw-gap-1 tw-px-[40px]">
+          <img class="tw-h-[19px] tw-w-[19px]" src="assets/images/facebook.png" alt="" />
+          {{ 'asdasda' }}
+        </a> -->
+
+        <div class="tw-flex tw-items-center tw-gap-3">
+          <img class="tw-h-[40px] tw-w-[40px]" [src]="(company.logo.data?.attributes.url | imageUrl) || 'assets/images/image-placeholder.png'" alt="" />
+          <span class="tw-w-52 tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap">{{ company.name }}</span>
+        </div>
+
+        <div
+          *ngIf="company.youtube || company.twitter || company.facebook || company.linkedin || company.website"
+          class="tw-mx-auto tw-mt-6 tw-flex tw-gap-[16px] tw-text-gray-600 [&_path]:tw-w-[16px]"
+        >
+          <a class="tw-text-current" *ngIf="company.youtube as v" [href]="v | url" target="_blank">
+            <svg-icon src="assets/icons/fi_youtube.svg"></svg-icon>
+          </a>
+          <a class="tw-text-current" *ngIf="company.twitter as v" [href]="v | url" target="_blank">
+            <svg-icon src="assets/icons/fi_twitter.svg"></svg-icon>
+          </a>
+          <a class="tw-text-current" *ngIf="company.facebook as v" [href]="v | url" target="_blank">
+            <svg-icon src="assets/icons/fi_facebook.svg"></svg-icon>
+          </a>
+          <a class="tw-text-current" *ngIf="company.linkedin as v" [href]="v | url" target="_blank">
+            <svg-icon src="assets/icons/fi_linkedin.svg"></svg-icon>
+          </a>
+          <a class="tw-text-current" *ngIf="company.website as v" [href]="v | url" target="_blank">
+            <svg-icon src="assets/icons/fi_globe.svg"></svg-icon>
+          </a>
+        </div>
+
+        <div class="tw-mt-7 tw-flex tw-w-full tw-gap-10 tw-px-6">
+          <!-- right col -->
+          <div class="tw-flex tw-flex-col tw-gap-4">
+            <div *ngIf="company.phoneNumber as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">Contact</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.industries?.data[0]?.attributes.name as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">Main Industry</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.city as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">City</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.country as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">Headquarters</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.foundingDate as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">Founding Year</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.revenue as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">Annual Revenue</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+          </div>
+          <!-- left col -->
+          <div class="tw-flex tw-flex-col tw-gap-4">
+            <div *ngIf="company.founders.data[0]?.attributes.fullname as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">CEO/Chairman</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.employees as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">Employees</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.isic as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">ISIC</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.IPOStatus as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">IPO Status</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v }}</div>
+            </div>
+
+            <div *ngIf="company.isOperating as v">
+              <div class="tw-text-[13px] tw-font-semibold tw-text-gray-400">Operating Status</div>
+              <div class="tw-mt-[3px] tw-text-xs tw-font-semibold tw-text-gray-neutral-700">{{ v ? 'Active' : 'Inactive' }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tw-px-6">
+          <ng-container *ngIf="company.fullDescription as v">
+            <div class="tw-mt-4 tw-text-[13px] tw-font-semibold tw-text-gray-400">Company Description</div>
+            <div class="tw-mt-[3px] tw-text-sm">
+              {{ v }}
+            </div>
+          </ng-container>
+
+          <!-- <div class="tw-mt-4 tw-text-sm tw-font-semibold tw-text-gray-400">Company Keywords</div>
+          <div class="tw-mt-[6px] tw-flex tw-flex-wrap tw-gap-3 tw-text-[10px] tw-font-semibold tw-text-gray-400">
+            <div class="tw-w-fit tw-rounded-[4px] tw-bg-gray-blue-100 tw-px-[10px] tw-py-[3px]" *ngFor="let item of [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]">
+              Logistics
+            </div>
+            <div class="tw-w-fit tw-rounded-[4px] tw-bg-black tw-px-[10px] tw-py-[3px] tw-text-white">Fire Safety</div>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- company contacts -->
+      <div *ngIf="company.founders.data.length" class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-py-[22px]">
+        <div class="tw-ml-3 tw-text-lg tw-font-medium">Company Key Contacts</div>
+
+        <div class="tw-ml-4 tw-mt-[26px] tw-flex tw-flex-col tw-gap-6">
+          <div class="tw-flex" *ngFor="let item of company.founders.data">
+            <div class="tw-w-[48px]">
+              <img
+                class="tw-w-full tw-cursor-pointer tw-rounded-[6px]"
+                [src]="(item.attributes.image.data?.attributes.url | imageUrl) || 'assets/images/user-placeholder.png'"
+                [routerLink]="['/people', item.id]"
+              />
+            </div>
+            <div class="tw-ml-3">
+              <div class="tw-flex tw-items-center">
+                <div class="tw-cursor-pointer tw-font-medium tw-text-gray-700" [routerLink]="['/people', item.id]">{{ item.attributes.fullname }}</div>
+                <!-- <div class="tw-ml-2 tw-mt-[2px] tw-text-xs tw-text-gray-600">0 followers</div> -->
+              </div>
+              <div class="tw-text-gray-600">{{ item.attributes.position }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- related markets -->
+      <div class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-[14px] tw-pt-[13px] tw-pb-2">
+        <div class="tw-flex">
+          <svg-icon class="tw-ml-2 tw-text-[#A5E57D]" src="assets/icons/trend-up-01.svg"></svg-icon>
+          <div class="tw-ml-2 tw-text-base tw-font-medium">Related Markets</div>
+        </div>
+        <hr class="tw-mx-2 tw-mt-2 tw-mb-4 tw-text-gray-iron-400" />
+
+        <div class="tw-flex tw-flex-wrap tw-gap-x-[26px] tw-gap-y-[14px]">
+          <div
+            *ngFor="let item of company.industries?.data"
+            class="tw-flex tw-w-fit tw-cursor-pointer tw-items-center tw-rounded-lg tw-border tw-border-gray-300 tw-py-2 tw-px-4 tw-text-gray-700"
+            (click)="openIndustry(item)"
+          >
+            <!-- <svg-icon class="tw-mr-2" src="assets/icons/building-03.svg"></svg-icon> -->
+            <div>{{ item?.attributes.name }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- similar companies -->
+      <app-similar-companies *ngIf="company" [company]="company"></app-similar-companies>
+
+      <!-- most followed Companies -->
+      <app-most-followed-companies *ngIf="company" [company]="company"></app-most-followed-companies>
+    </div>
+  </div>
+</ng-container>
+
+<!-- FULL SCREEN MODAL -->
+<ng-template #fullScreenModalTpl let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ fullScreenImageName }}</h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <img class="tw-w-full tw-py-6 tw-px-12" [src]="fullScreenImage" />
+  </div>
+</ng-template>
+
+
+
+<ng-template #content let-modal>
+  
+    <div class="modal-header tw-border-0 tw-pb-0">
+      <h4 class="modal-title tw-w-full tw-text-center">Compare</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click');closeModel()"></button>
+    </div>
+    <div class="modal-body tw-p-7 tw-max-w-2xl tw-m-auto">
+      <div class="tw-text-center tw-mb-7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos, quasi nisi debitis eius repellat dolores harum ullam ipsam dignissimos ipsum soluta neque est, at numquam porro illo ipsa, minus quam?</div>
+      <app-search-field></app-search-field>
+    </div>
+    <div class="modal-footer tw-border-0 tw-justify-center">
+      <button type="button" (click)="modal.dismiss('Cross click');closeModel()" class="btn btn-outline-light">Cancel</button>
+      <button (click)="compare()" type="submit" class="btn btn-dark tw-ml-2 tw-bg-primary-600" (click)="modal.close('Close click')">Save Changes</button>
+    </div>
+
+</ng-template>

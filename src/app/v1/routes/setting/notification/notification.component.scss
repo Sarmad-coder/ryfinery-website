@@ -1,0 +1,16 @@
+.tabs:focus {
+  border-bottom: 1px solid #303030 !important;
+  color: #303030 !important;
+  cursor: pointer !important;
+}
+
+.tabs:hover {
+  border-bottom: 1px solid #303030 !important;
+  color: #303030 !important;
+  cursor: pointer !important;
+}
+
+.form-check-input:checked {
+  background-color: #404040;
+  border-color: #404040;
+}

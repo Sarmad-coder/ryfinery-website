@@ -1,0 +1,36 @@
+<div *ngIf="selectedFilters.size" class="tw-mt-6 tw-flex tw-flex-wrap tw-items-center tw-gap-3 tw-text-sm">
+  <div>Filtered by:</div>
+
+  <ng-container *ngFor="let item of $any(selectedFilters | keyvalue)">
+    <ng-container *ngIf="isArray(item.value); else filterElseTpl">
+      <ng-container *ngFor="let nested of item.value">
+        <div
+          class="tw-py tw-flex tw-items-center tw-justify-between tw-gap-2 tw-rounded-full tw-border tw-border-gray-true-200 tw-py-[1px] tw-pr-[8px] tw-pl-[12px]"
+        >
+          <div class="tw-whitespace-nowrap tw-text-sm tw-text-gray-true-500">{{ nested.name }}</div>
+          <svg-icon
+            (click)="onClear(item, nested)"
+            class="tw-cursor-pointer tw-text-sm tw-text-gray-true-400"
+            [svgStyle]="{ 'width.px': 16 }"
+            src="assets/icons/x-sm.svg"
+          ></svg-icon>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #filterElseTpl>
+      <div
+        class="tw-py tw-flex tw-items-center tw-justify-between tw-gap-2 tw-rounded-full tw-border tw-border-gray-true-200 tw-py-[1px] tw-pr-[8px] tw-pl-[12px]"
+      >
+        <div class="tw-whitespace-nowrap tw-text-sm tw-text-gray-true-500">{{ item.value.name }}</div>
+        <svg-icon
+          (click)="onClear(item)"
+          class="tw-cursor-pointer tw-text-sm tw-text-gray-true-400"
+          [svgStyle]="{ 'width.px': 16 }"
+          src="assets/icons/x-sm.svg"
+        ></svg-icon>
+      </div>
+    </ng-template>
+  </ng-container>
+  <button type="button" class="btn btn-link btn-sm" (click)="onClearAll()">Clear all</button>
+</div>

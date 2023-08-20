@@ -1,0 +1,30 @@
+<div class="tw-mt-8 tw-flex">
+  <!-- like/dislike -->
+  <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+    <button type="button" class="btn btn-dark tw-border-0 !tw-bg-gray-100 tw-py-1 tw-px-3 !tw-text-gray-400" (click)="voteUp.emit()">
+      <svg-icon src="assets/icons/plus.svg"></svg-icon>
+    </button>
+    <button type="button" class="btn btn-dark tw-border-0 !tw-bg-gray-100 tw-px-3 tw-pt-2 tw-pb-1 tw-font-bold !tw-text-primary-700 !tw-opacity-100" disabled>
+      {{ discussion.attributes.votes || 0 }}
+    </button>
+    <button type="button" class="btn btn-dark tw-border-0 !tw-bg-gray-100 tw-py-1 tw-px-3 !tw-text-gray-400" (click)="voteDown.emit()">
+      <svg-icon src="assets/icons/minus.svg"></svg-icon>
+    </button>
+  </div>
+  <div class="tw-ml-6 tw-w-full">
+    <div class="tw-flex tw-items-center tw-justify-between">
+      <div class="tw-flex tw-items-center tw-gap-4">
+        <img class="tw-h-8 tw-w-8 tw-rounded-full" [src]="discussion.attributes.user.data.attributes.image?.data.attributes.url | imageUrl" alt="" />
+        <div class="tw-text-base tw-font-semibold tw-text-gray-700">{{ discussion.attributes.user.data.attributes.username }}</div>
+        <div class="tw-text-gray-neutral-500">{{ discussion.attributes.createdAt | date }}</div>
+      </div>
+      <button *ngIf="reply.observed" class="btn btn-light tw-border-0 tw-bg-transparent tw-text-gray-800" (click)="reply.emit()">
+        <svg-icon class="tw-mr-2" src="assets/icons/reply.svg"></svg-icon>
+        Reply
+      </button>
+    </div>
+    <div class="tw-font-base tw-mt-3 tw-text-gray-neutral-500">
+      {{ discussion.attributes.message }}
+    </div>
+  </div>
+</div>

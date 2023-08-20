@@ -1,0 +1,46 @@
+<div class="tw-mt-20 tw-max-w-3xl">
+  <div class="tw-mb-12 tw-flex tw-items-start tw-gap-3">
+    <img class="tw-w-12 tw-rounded-full" [src]="(userService.user?.image?.url | imageUrl) || 'assets/images/user-placeholder.png'" alt="" />
+    <textarea class="form-control tw-w-full" [formControl]="discussControl" autosize [minRows]="1" placeholder="Add a comment..."></textarea>
+    <button class="btn btn-primary tw-bg-gray-700 tw-px-6" type="button" (click)="sendDiscuss()">SEND</button>
+  </div>
+
+  <ng-container *ngFor="let item of discussions">
+    <app-comment [discussion]="item" (reply)="reply(item)" (voteUp)="voteUp(item)" (voteDown)="voteDown(item)"></app-comment>
+    <div class="tw-ml-16 tw-block">
+      <div *ngIf="item.showReplyField" class="tw-mt-8 tw-flex tw-items-start tw-gap-3">
+        <img class="tw-w-12 tw-rounded-full" [src]="(userService.user?.image?.url | imageUrl) || 'assets/images/user-placeholder.png'" alt="" />
+        <textarea class="form-control tw-w-full" [formControl]="replyControl" autosize [minRows]="1" placeholder="Add a comment..."></textarea>
+        <button class="btn btn-primary tw-bg-gray-700 tw-px-6" (click)="sendReply(item)">REPLY</button>
+      </div>
+      <app-comment *ngFor="let reply of item.replies" [discussion]="reply" (voteUp)="voteUp(reply)" (voteDown)="voteDown(reply)"></app-comment>
+    </div>
+  </ng-container>
+
+  <app-load-more [paginator]="discussionPaginator"></app-load-more>
+
+  <!-- pagination -->
+  <!-- <div class="tw-mx-auto tw-mt-32 tw-flex tw-max-w-2xl tw-items-center tw-justify-between">
+    <button class="btn btn-outline-light btn-sm tw-rounded-lg tw-px-4">
+      <div class="tw-flex tw-items-center tw-gap-2">
+        <svg-icon [svgStyle]="{ 'width.px': 18 }" src="assets/icons/arrow-left.svg"></svg-icon>
+        <span>Previous</span>
+      </div>
+    </button>
+    <div>
+      <button class="btn btn-light btn-sm tw-border-0 tw-bg-transparent tw-text-gray-600">1</button>
+      <button class="btn btn-light btn-sm tw-border-0 tw-bg-transparent tw-text-gray-600">2</button>
+      <button class="btn btn-light btn-sm tw-border-0 tw-bg-transparent tw-text-gray-600">3</button>
+      <span class="tw-px-8">...</span>
+      <button class="btn btn-light btn-sm tw-border-0 tw-bg-transparent tw-text-gray-600">8</button>
+      <button class="btn btn-light btn-sm tw-border-0 tw-bg-transparent tw-text-gray-600">9</button>
+      <button class="btn btn-light btn-sm tw-border-0 tw-bg-transparent tw-text-gray-600">10</button>
+    </div>
+    <button class="btn btn-outline-light btn-sm tw-rounded-lg tw-px-4">
+      <div class="tw-flex tw-items-center tw-gap-2">
+        <span>Next</span>
+        <svg-icon [svgStyle]="{ 'width.px': 18 }" src="assets/icons/arrow-right.svg"></svg-icon>
+      </div>
+    </button>
+  </div> -->
+</div>

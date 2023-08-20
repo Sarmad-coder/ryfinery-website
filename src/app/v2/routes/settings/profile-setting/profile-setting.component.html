@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <div class="tw-mt-32">
+    <div class="tw-flex tw-flex-col">
+      <span class="tw-text-3xl tw-font-semibold">Profile Info</span>
+      <span class="tw-text-base">Change your profile info below.</span>
+    </div>
+
+    <div class="tw-mt-5">
+      <div class="col-lg-6">
+        <div class="tw-flex" style="flex-direction: column">
+          <div style="border-radius: 8px; border: 1px solid #eaecf0; margin-top: 15px">
+            <div style="padding: 24px">
+              <div class="row">
+                <div class="col-12">
+                  <label for="firstname" class="tw-text-sm tw-font-medium tw-text-gray-neutral-400">Full Name</label>
+                  <input type="text" formControlName="fullName" class="mt-1 form-control tw-text-base" placeholder="Enter Full Name" />
+                  <ng-container *ngIf="hasError('fullName') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Full name must not be empty.</div>
+                  </ng-container>
+                </div>
+
+                <div class="col-12">
+                  <label for="email" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Email</label>
+                  <input
+                    type="text"
+                    formControlName="email"
+                    class="mt-1 form-control prefix email tw-w-full"
+                    id="autoSizingInputGroup"
+                    placeholder="Enter Email"
+                  />
+                  <ng-container *ngIf="hasError('email') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+                    <div class="field-error" *ngIf="c.hasError('email')">Email is not valid.</div>
+                  </ng-container>
+                </div>
+
+                <app-image-upload [src]="imageSource" (browsed)="browsed($event)"></app-image-upload>
+              </div>
+            </div>
+            <hr class="m-0 p-0 tw-mt-6 tw-text-gray-200" style="height: 1px" />
+            <div class="d-fex justify-content-end" style="padding: 16px 24px; float: right">
+              <button type="button" class="btn btn-outline-light">Cancel</button>
+              <button type="submit" class="btn btn-dark tw-ml-2 tw-bg-primary-600">Save Changes</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+  </div>
+</form>

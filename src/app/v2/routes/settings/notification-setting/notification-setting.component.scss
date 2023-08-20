@@ -1,0 +1,27 @@
+.line {
+  @apply tw-mt-5 tw-w-full tw-max-w-4xl tw-border-b tw-border-gray-200;
+}
+.notification {
+  @apply tw-mt-6 tw-flex tw-gap-20;
+  .text {
+    @apply tw-w-[280px];
+    .title {
+      @apply tw-font-medium tw-text-gray-700;
+    }
+    .sub-title {
+      @apply tw-text-gray-600;
+    }
+  }
+
+  .control {
+    @apply tw-flex tw-flex-col tw-gap-4;
+
+    input {
+      @apply tw-text-[19px] checked:tw-border-primary-600 checked:tw-bg-primary-600;
+    }
+
+    label {
+      @apply tw-mt-1 tw-font-medium tw-text-gray-700;
+    }
+  }
+}

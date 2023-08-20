@@ -1,0 +1,46 @@
+<div class="container d-none d-md-block">
+  <div class="row my-5">
+    <div class="col-4">
+      <a routerLink=""><img class="transparent-logo" src="assets/images/transparent-logo.png" alt="" /></a>
+    </div>
+    <div class="col-4 offset-4 text-end">
+      <p>Don't have an account? <a href="javascript:void()" routerLink="/register">Sign up</a></p>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="justify-content-md-center tw-mx-auto tw-max-w-sm tw-pt-10 md:tw-pt-16">
+    <div class="text-center">
+      <img src="assets/images/app-logo.png" class="mb-4 mt-3" style="width: 60px" alt="" />
+      <h2 class="mb-3 tw-font-semibold tw-text-gray-900">Log in to your account</h2>
+      <p class="font-light tw-text-gray-modern-600">Welcome back! Please enter your details.</p>
+    </div>
+
+    <!-- login form -->
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="form-group tw-mt-8">
+        <label for="email" class="tw-text-gray-700">Email*</label>
+        <input type="email" formControlName="email" class="form-control tw-text-gray-900" id="email" placeholder="Enter your email" />
+        <ng-container *ngIf="hasError('email') as c">
+          <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+          <div class="field-error" *ngIf="c.hasError('pattern')">This email is incorrect.</div>
+          <div class="field-error" *ngIf="c.hasError('registered')">This email is not registered with us.</div>
+        </ng-container>
+      </div>
+      <button class="btn btn-primary w-100 mt-3" type="submit">Login with email</button>
+    </form>
+
+    <div class="tw-my-7 tw-flex tw-items-center">
+      <div class="bg tw-h-0.5 tw-flex-grow tw-bg-gray-200"></div>
+      <div class="text tw-mx-5 tw-flex-grow-0 tw-text-gray-modern-600">OR</div>
+      <div class="bg tw-h-0.5 tw-flex-grow tw-bg-gray-200"></div>
+    </div>
+
+    <app-social-login></app-social-login>
+
+    <div class="tw-mt-6 tw-text-center">
+      <span class="tw-mx-auto tw-text-gray-modern-600">Don't have an account?</span>
+      <span class="tw-ml-2 tw-cursor-pointer tw-font-semibold tw-text-gray-800" routerLink="/register">Sign up</span>
+    </div>
+  </div>
+</div>

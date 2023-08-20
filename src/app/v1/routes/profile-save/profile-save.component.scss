@@ -1,0 +1,154 @@
+// .form-control:focus {
+//   border-color: #d0d5dd !important;
+//   -webkit-box-shadow: none !important;
+//   box-shadow: none !important;
+// }
+
+// select:focus {
+//   border-color: #d0d5dd !important;
+//   -webkit-box-shadow: none !important;
+//   box-shadow: none !important;
+// }
+
+.fs12 {
+  font-size: 12px;
+}
+
+.fs14 {
+  font-size: 14px;
+}
+
+.fs14 {
+  font-size: 14px;
+}
+
+.fs16 {
+  font-size: 16px;
+}
+
+.fs18 {
+  font-size: 18px;
+}
+
+.fs30 {
+  font-size: 30px;
+}
+
+.fw400 {
+  font-weight: 400;
+}
+
+.fw500 {
+  font-weight: 500;
+}
+
+.fw600 {
+  font-weight: 600;
+}
+
+.c-mt-102 {
+  margin-top: 102px;
+}
+
+.c-mt-24 {
+  margin-top: 24px;
+}
+
+.blackcolor {
+  color: #303030;
+}
+
+.greycolor {
+  color: #475467;
+}
+
+.darkgreycolor {
+  color: #404040;
+}
+
+.grey200 {
+  color: #eaecf0;
+}
+
+.grey600 {
+  color: #475467;
+}
+
+.grey700 {
+  color: #344054;
+}
+
+.grey900 {
+  color: #101828;
+}
+
+.darkcolor {
+  color: #101828;
+}
+
+.form-check-input:checked {
+  background-color: #404040 !important;
+  border-color: #404040 !important;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.dropdown-menu.show {
+  display: block;
+  border-radius: 8px;
+  width: 240px !important;
+}
+
+@media screen and (max-width: 767px) {
+  .girlimage {
+    text-align: center !important;
+  }
+}
+
+// .input-group:focus-within {
+//   color: #212529;
+//   background-color: #fff;
+//   border-color: #86b7fe;
+//   outline: 0;
+//   box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+//   z-index: 3;
+//   border-radius: 0.25rem;
+// }
+// .input-group .form-control:focus {
+//   box-shadow: none !important;
+// }
+
+input.prefix {
+  background-repeat: no-repeat;
+  background-position: 16px center;
+  padding-left: 48px;
+
+  &.email {
+    background-image: url('/assets/temp/mess.png');
+    background-size: 18px;
+  }
+
+  &.mobile {
+    background-image: url('/assets/temp/greyphone.png');
+    background-size: 14px;
+  }
+}
+
+// .abc {
+//   background-image: url('assets/temp/mess.png'), url('assets/icons//images//arrow-down.png');
+//   background-repeat: no-repeat;
+//   background-size: 22px;
+//   background-position: left center, right center;
+//   background-origin: content-box;
+// }
+
+.ng-value-container {
+  height: 46px !important;
+}
+
+// .ng-select.ng-select-single .ng-select-container {
+//   border: 1px solid #e5e3e3 !important;
+//   height: 46px !important
+// }

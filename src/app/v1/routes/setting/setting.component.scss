@@ -1,0 +1,46 @@
+* {
+  background: #f9fafb;
+}
+
+.active-link {
+  background: #f2f4f7;
+  border-radius: 6px;
+  color: #344054;
+}
+
+.sidbarItem:hover {
+  color: #344054;
+  cursor: pointer;
+}
+
+.mainSidebar {
+  overflow: scroll;
+}
+
+.mainSidebar::-webkit-scrollbar {
+  width: 9px;
+  /* width of the entire scrollbar */
+  display: none; //for displaying none//
+}
+
+// .mainSidebar::-webkit-scrollbar-track {
+//   background: orange; /* color of the tracking area */
+// }
+
+.mainSidebar::-webkit-scrollbar-thumb {
+  background-color: #656768;
+  /* color of the scroll thumb */
+  border-radius: 10px;
+  /* roundness of the scroll thumb */
+}
+
+// .mainSidebar::-webkit-scrollbar {
+//   display: none;
+// }
+.mainSidebar::-webkit-scrollbar-corner {
+  display: none;
+}
+
+// .mainSidebar::-webkit-scrollbar-button {
+//   background-color: #3a3b3c;
+// }

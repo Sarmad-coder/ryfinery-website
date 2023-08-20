@@ -1,0 +1,40 @@
+<div *ngIf="founder?.attributes as value" class="card-shadow tw-flex tw-w-[300px] tw-flex-col tw-rounded-lg tw-bg-white tw-pb-6 tw-pt-3">
+  <div
+    *ngIf="value.isNew"
+    class="-tw-mb-6 tw-mr-3 tw-w-fit tw-self-end tw-rounded-lg tw-bg-green-50 tw-py-1 tw-px-2 tw-text-xs tw-font-medium tw-text-success-600"
+  >
+    New
+  </div>
+  <a (click)="view()" class="tw-mb-2 tw-w-28 tw-self-center tw-rounded-lg tw-border tw-border-solid tw-border-[#F5F5F5] tw-p-2">
+    <img class="tw-w-full" [src]="(value.image.data?.attributes.url | imageUrl) || 'assets/images/user-placeholder.png'" />
+  </a>
+  <div class="tw-mb-3 tw-flex tw-items-center tw-self-center">
+    <a (click)="view()" class="tw-mx-2 tw-text-center tw-text-xl tw-font-semibold tw-text-black">{{ value.fullname }}</a>
+    <img *ngIf="value.isVerified" class="tw-mr-2 tw-w-5" src="assets/images/check-verified-01.png" alt="" />
+  </div>
+  <div class="tw-mb-5 tw-flex tw-gap-2 tw-self-center">
+    <!-- *ngFor="let item of ['Mentor', 'Founder', 'Speaker']" -->
+    <div class="tw-rounded-sm tw-border tw-border-solid tw-border-gray-300 tw-px-2 tw-text-xs">
+      {{ value.currentCompany }}
+    </div>
+  </div>
+  <div class="tw-mb-5 tw-px-4">{{ value.position }}</div>
+
+  <!-- <div class="tw-border-y tw-border-x-0 tw-border-solid tw-border-gray-modern-100 tw-px-8 tw-pt-2 tw-pb-5">
+    <div class="tw-font-semibold">Interest topics</div>
+    <div class="tw-mt-4 tw-flex tw-flex-wrap tw-gap-2">
+      <div class="tw-h-fit tw-whitespace-nowrap tw-rounded-md tw-bg-moss-100 tw-px-2 tw-text-[10px] tw-font-medium">Chat</div>
+      <div class="tw-h-fit tw-whitespace-nowrap tw-rounded-md tw-bg-pink-200 tw-px-2 tw-text-[10px] tw-font-medium">Team Chat</div>
+      <div class="tw-h-fit tw-whitespace-nowrap tw-rounded-md tw-bg-gray-blue-200 tw-px-2 tw-text-[10px] tw-font-medium">
+        Collaboration Tool
+      </div>
+      <div class="tw-h-fit tw-whitespace-nowrap tw-rounded-md tw-bg-green-100 tw-px-2 tw-text-[10px] tw-font-medium">Group chat</div>
+    </div>
+  </div> -->
+  <div class="tw-flex tw-justify-between tw-p-5">
+    <button type="button" class="btn btn-outline-light tw-bg-gray-iron-100 tw-p-2" (click)="vote()">
+      <svg-icon src="assets/icons/heart.svg"></svg-icon>
+    </button>
+    <button type="button" class="btn btn-dark tw-font-light" (click)="view()">View Profile</button>
+  </div>
+</div>

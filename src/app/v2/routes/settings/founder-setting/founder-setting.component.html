@@ -1,0 +1,389 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <div class="tw-mt-32">
+    <div class="tw-flex tw-flex-col">
+      <span class="tw-text-3xl tw-font-semibold">Personal Info</span>
+      <span class="tw-text-base">Add your profile below and join the largest creators and innovators in the Gulf.</span>
+    </div>
+
+    <div class="tw-mt-5">
+      <div class="col-lg-6">
+        <!-- <div class="tw-flex" style="justify-content: space-between">
+          <span class="tw-text-lg tw-font-semibold">Personal Info</span>
+          <span>
+            <img src="assets/temp/greythreedots.png" height="13px" alt="" srcset="" />
+          </span>
+        </div> -->
+        <div class="tw-flex" style="flex-direction: column">
+          <!-- <span class="tw-text-sm">Update your photo and personal details here.</span> -->
+          <div style="border-radius: 8px; border: 1px solid #eaecf0; margin-top: 15px">
+            <div style="padding: 24px">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="firstname" class="tw-text-sm tw-font-medium tw-text-gray-neutral-400">First Name</label>
+                  <input type="text" formControlName="firstName" class="mt-1 form-control tw-text-base" placeholder="Enter First Name" />
+                  <ng-container *ngIf="hasError('firstName') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">First name must not be empty.</div>
+                  </ng-container>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="lastname" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400 md:tw-mt-0">Last Name</label>
+                  <input type="text" formControlName="lastName" class="mt-1 form-control tw-text-base" placeholder="Enter Last Name" />
+                  <ng-container *ngIf="hasError('lastName') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Last name must not be empty.</div>
+                  </ng-container>
+                </div>
+
+                <div class="col-12">
+                  <label for="email" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Email</label>
+                  <input
+                    type="text"
+                    formControlName="officialEmail"
+                    class="mt-1 form-control prefix email tw-w-full"
+                    id="autoSizingInputGroup"
+                    placeholder="Enter Email"
+                  />
+                  <ng-container *ngIf="hasError('officialEmail') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+                    <div class="field-error" *ngIf="c.hasError('email')">Email is not valid.</div>
+                  </ng-container>
+                </div>
+
+                <div class="col-12">
+                  <label for="email" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Phone</label>
+                  <input
+                    type="text"
+                    formControlName="phoneNumber"
+                    class="mt-1 form-control prefix mobile"
+                    aria-label="Amount (to the nearest dollar)"
+                    placeholder="Enter Phone number"
+                  />
+                  <ng-container *ngIf="hasError('phoneNumber') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Phone must not be empty.</div>
+                  </ng-container>
+                  <div class="tw-mt-1 tw-text-sm" style="color: #475467">Your phone will be used for OTP verification</div>
+                </div>
+
+                <app-image-upload [src]="imageSource" (browsed)="browsed($event)"></app-image-upload>
+
+                <div class="col-lg-12">
+                  <label for="Topic" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400 md:tw-mt-6">Topics</label>
+                  <ng-select class="mt-1" formControlName="topics" [multiple]="true" placeholder="Please Select">
+                    <ng-option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</ng-option>
+                  </ng-select>
+                  <ng-container *ngIf="hasError('topics') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Topics must not be empty.</div>
+                  </ng-container>
+                </div>
+                <div class="col-12">
+                  <label for="Industry" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Industry</label>
+                  <div class="input-group">
+                    <select class="form-select mt-1 tw-text-base tw-font-medium tw-text-gray-900" formControlName="industry">
+                      <option *ngFor="let industry of industries" [value]="industry.id">{{ industry.name }}</option>
+                    </select>
+                  </div>
+                  <ng-container *ngIf="hasError('industry') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Industry must not be empty.</div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <hr class="m-0 p-0 tw-mt-6 tw-text-gray-200" style="height: 1px" />
+          </div>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 60px">
+      <div class="col-lg-6">
+        <div class="tw-flex" style="justify-content: space-between">
+          <span class="tw-text-lg tw-font-semibold">Personal Info</span>
+          <span>
+            <img src="assets/temp/greythreedots.png" height="13px" alt="" srcset="" />
+          </span>
+        </div>
+        <div class="tw-flex" style="flex-direction: column">
+          <span class="tw-text-sm">Update your photo and personal details here.</span>
+          <div style="border-radius: 8px; border: 1px solid #eaecf0; margin-top: 15px">
+            <div style="padding: 24px">
+              <div class="row">
+                <div class="col-1">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
+                    <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                  </div>
+                </div>
+                <div class="col-11">
+                  <div class="flex-column tw-flex">
+                    <span class="tw-text-sm tw-font-medium tw-text-gray-neutral-400">Match me with other founders and VC’s</span>
+                    <span class="tw-text-sm tw-font-normal tw-text-gray-600">Looking to be matched with other Founders and VC’s to grow my Network.</span>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="username" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Slug</label>
+                  <div class="input-group">
+                    <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                      <span class="tw-text-gray-600">Ryfinery.com/</span>
+                    </div>
+                    <input
+                      type="text"
+                      formControlName="slug"
+                      class="mt-1 form-control tw-text-base tw-text-gray-900"
+                      id="autoSizingInputGroup"
+                      placeholder="Enter Username"
+                    />
+                  </div>
+                  <ng-container *ngIf="hasError('slug') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Slug must not be empty.</div>
+                    <div class="field-error" *ngIf="c.hasError('invalidSlug')">Slug is not in correct format</div>
+                  </ng-container>
+                </div>
+                <div class="col-12">
+                  <label for="Website" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Website</label>
+                  <div class="input-group">
+                    <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                      <span class="tw-text-gray-600">http://</span>
+                    </div>
+                    <input
+                      type="text"
+                      formControlName="website"
+                      class="mt-1 form-control tw-text-base tw-text-gray-900"
+                      id="autoSizingInputGroup"
+                      placeholder="Enter Website"
+                    />
+                  </div>
+                  <ng-container *ngIf="hasError('website') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Website must not be empty.</div>
+                  </ng-container>
+                </div>
+                <div class="col-12">
+                  <label for="Linkedin" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Linkedin</label>
+                  <div class="input-group">
+                    <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                      <span class="tw-text-gray-600">http://</span>
+                    </div>
+                    <input
+                      type="text"
+                      formControlName="linkedin"
+                      class="mt-1 form-control tw-text-base tw-text-gray-900"
+                      id="autoSizingInputGroup"
+                      placeholder="Enter Linkedin Url"
+                    />
+                  </div>
+                  <ng-container *ngIf="hasError('linkedin') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Linkedin must not be empty.</div>
+                  </ng-container>
+                </div>
+                <div class="col-12">
+                  <label for="Twitter" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Twitter</label>
+                  <div class="input-group">
+                    <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                      <span class="tw-text-gray-600">http://</span>
+                    </div>
+                    <input
+                      type="text"
+                      formControlName="twitter"
+                      class="mt-1 form-control tw-text-base tw-text-gray-900"
+                      id="autoSizingInputGroup"
+                      placeholder="Enter Twitter Url"
+                    />
+                  </div>
+                  <ng-container *ngIf="hasError('twitter') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Twitter must not be empty.</div>
+                  </ng-container>
+                </div>
+                <div class="col-12">
+                  <label for="Facebook" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Facebook</label>
+                  <div class="input-group">
+                    <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                      <span class="tw-text-gray-600">http://</span>
+                    </div>
+                    <input
+                      type="text"
+                      formControlName="facebook"
+                      class="mt-1 form-control tw-text-base tw-text-gray-900"
+                      id="autoSizingInputGroup"
+                      placeholder="Enter Facebook Url"
+                    />
+                  </div>
+                  <ng-container *ngIf="hasError('facebook') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Facebook must not be empty.</div>
+                  </ng-container>
+                </div>
+                <div class="col-12">
+                  <label for="Youtube" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Youtube</label>
+                  <div class="input-group">
+                    <div class="mt-1 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+                      <span class="tw-text-gray-600">http://</span>
+                    </div>
+                    <input
+                      type="text"
+                      formControlName="youtube"
+                      class="mt-1 form-control tw-text-base tw-text-gray-900"
+                      id="autoSizingInputGroup"
+                      placeholder="Enter Youtube Url"
+                    />
+                  </div>
+                  <ng-container *ngIf="hasError('youtube') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Youtube must not be empty.</div>
+                  </ng-container>
+                </div>
+
+                <div class="col-12">
+                  <label for="desc" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Description</label>
+                  <div class="form-floating mt-1">
+                    <textarea
+                      class="form-control"
+                      formControlName="description"
+                      rows="4"
+                      style="border-radius: 8px; height: 116px"
+                      id="floatingTextarea2"
+                      style="height: 100px"
+                    ></textarea>
+                    <ng-container *ngIf="hasError('description') as c">
+                      <div class="field-error" *ngIf="c.hasError('required')">Description must not be empty.</div>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="Country" class="tw-mt-6 tw-text-sm tw-font-medium tw-text-gray-neutral-400">Country</label>
+                  <div class="input-group">
+                    <select formControlName="country" class="form-select mt-1 tw-text-base tw-font-medium tw-text-gray-900" style="border-radius: 8px">
+                      <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
+                    </select>
+                  </div>
+                  <ng-container *ngIf="hasError('country') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">Country must not be empty.</div>
+                  </ng-container>
+                </div>
+
+                <!-- <div class="col-12">
+                  <label for="Country" class="tw-text-sm tw-font-medium tw-text-gray-neutral-400 tw-mt-6">Attach your Startup</label>
+                  <div class="input-group">
+                    <select class="form-select tw-text-base tw-font-medium tw-text-gray-900 mt-1" style="border-radius: 8px" aria-label="Default select example">
+                      <option selected>Choose a startup from the list</option>
+                      <option value="1">Phoenix Baker <span style="color: #475467 !important">@phoenix</span></option>
+                      <option value="2">Olivia Rhye <span style="color: #475467 !important">@olivia</span></option>
+                    </select>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <hr class="m-0 p-0 tw-mt-6 tw-text-gray-200" style="height: 1px" />
+            <div class="d-fex justify-content-end" style="padding: 16px 24px; float: right">
+              <button class="btn btn-outline-light">Cancel</button>
+              <button class="btn btn-dark tw-ml-2 tw-bg-primary-600">Save Changes</button>
+            </div>
+          </div>
+          <div class="tw-flex" style="background-color: black; padding: 24px; margin-top: 63px; border-radius: 8px">
+            <div class="col-10 text-white">
+              <span class="tw-text-lg tw-font-semibold">Add more information </span>
+              <span class="tw-text-sm tw-font-normal">Add Education, Work History, Startup History, Success Habits, Books you read. </span>
+            </div>
+
+            <div class="col-2">
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  style="width: 45px; border-radius: 100%; background-color: white; float: right; text-align: center"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <img src="assets/temp/plus.png" style="margin-left: -8px !important" height="25px" width="25px" alt="" srcset="" />
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="justify-content-between align-items-center tw-flex">
+                        <div class="align-items-center tw-flex">
+                          <img src="assets/temp/cap.png" height="16px " alt="" />
+                          <span class="mx-2 tw-text-sm tw-font-medium">Education</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktoe.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="justify-content-between align-items-center tw-flex">
+                        <div class="align-items-center tw-flex">
+                          <img src="assets/temp/laptop.png" height="16px " alt="" />
+                          <span class="mx-2 tw-text-sm tw-font-medium">Work History</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktow.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="justify-content-between align-items-center tw-flex">
+                        <div class="align-items-center tw-flex">
+                          <img src="assets/temp/startupic.png" height="16px " alt="" />
+                          <span class="mx-2 tw-text-sm tw-font-medium">Startup history</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/commands.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="justify-content-between align-items-center tw-flex">
+                        <div class="align-items-center tw-flex">
+                          <img src="assets/temp/scan.png" height="16px " alt="" />
+                          <span class="mx-2 tw-text-sm tw-font-medium">Sucess Habits </span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktoh.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="justify-content-between align-items-center tw-flex">
+                        <div class="align-items-center tw-flex">
+                          <img src="assets/temp/bookopen.png" height="16px " alt="" />
+                          <span class="mx-2 tw-text-sm tw-font-medium">Books i am reading</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktob.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="justify-content-between align-items-center tw-flex">
+                        <div class="align-items-center tw-flex">
+                          <img src="assets/temp/bookopen.png" height="16px " alt="" />
+                          <span class="mx-2 tw-text-sm tw-font-medium">Add Investment</span>
+                        </div>
+                        <div>
+                          <img src="assets/temp/ktoi.png" height="13px" alt="" srcset="" />
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- <div
+              style="border-radius:100%;height:32px;width:32px;background-color:white;float:right;text-align:center">
+
+              <img src="plusgrey.png" height="13px" style="margin-top: 3px" width="13px" alt="" srcset="">
+            </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+  </div>
+</form>

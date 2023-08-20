@@ -1,0 +1,305 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <div class="row">
+    <div class="col-lg-7 col-md-7 col-sm-12">
+      <h4 class="tw-text-lg tw-font-semibold tw-text-gray-900">Company Profile</h4>
+      <p class="tw-font-noraml m-0 tw-text-sm tw-text-gray-600">Update your company photo and details here.</p>
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-12">
+      <div class="d-flex align-items-center md-justify-end tw-justify-start lg:tw-justify-end">
+        <button type="submit" class="btn btn-dark tw-mt-5 tw-w-auto tw-bg-primary-600 md:tw-mt-0 lg:tw-mt-0">Save</button>
+      </div>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Public Profile</p>
+      <p class="mt-1 tw-text-sm tw-font-normal tw-text-gray-600">This will be displayed on your profile.</p>
+    </div>
+    <div class="col-lg-7 col-md-6 col-sm-12 d-flex flex-column align-items-center">
+      <input type="text" formControlName="name" class="mt-1 form-control tw-text-gray-900" placeholder="Company name" />
+      <ng-container *ngIf="hasError('name') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Name must not be empty.</div>
+      </ng-container>
+
+      <div class="mt-1 input-group">
+        <select class="form-select fs16 fw500 grey900 mt-1" formControlName="employees">
+          <option [disabled]="true" [selected]="true">Select company size</option>
+          <option value="1">1 Employee</option>
+          <option value="2-10">2-10 Employees</option>
+          <option value="11-50">11-50 Employees</option>
+          <option value="51-200">51-200 Employees</option>
+          <option value="201-500">201-500 Employees</option>
+          <option value="501-1000">501-1000 Employees</option>
+          <option value="1001-5000">1001-5000 Employees</option>
+          <option value="5001-10000">5001-10000 Employees</option>
+          <option value="10000+">10000+ Employees</option>
+        </select>
+      </div>
+      <ng-container *ngIf="hasError('employees') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Company size must not be empty.</div>
+      </ng-container>
+
+      <div class="input-group">
+        <div class="mt-2 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+          <span class="tw-text-gray-600">untitled.com/profile/</span>
+        </div>
+        <input type="text" formControlName="slug" class="grey900 mt-2 fs16 form-control" id="autoSizingInputGroup" placeholder="slug" />
+      </div>
+      <ng-container *ngIf="hasError('slug') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Slug must not be empty.</div>
+        <div class="field-error" *ngIf="c.hasError('invalidSlug')">Slug is not in correct format</div>
+      </ng-container>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Personal Info</p>
+      <p class="mt-1 tw-text-sm tw-font-normal tw-text-gray-600">Your personal information</p>
+    </div>
+    <div class="col-lg-7 col-md-6 col-sm-12 d-flex flex-column align-items-center">
+      <input type="text" formControlName="firstName" class="mt-2 fs16 form-control" placeholder="First Name" />
+      <ng-container *ngIf="hasError('firstName') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">First name must not be empty.</div>
+      </ng-container>
+
+      <input type="text" formControlName="lastName" class="mt-2 fs16 form-control" placeholder="Last Name" />
+      <ng-container *ngIf="hasError('lastName') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Last name must not be empty.</div>
+      </ng-container>
+
+      <input type="text" formControlName="officialEmail" class="mt-2 form-control tw-w-full" id="autoSizingInputGroup" placeholder="Personal Email" />
+      <ng-container *ngIf="hasError('officialEmail') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+        <div class="field-error" *ngIf="c.hasError('email')">Email is not valid.</div>
+      </ng-container>
+
+      <input
+        type="text"
+        formControlName="phoneNumber"
+        class="mt-2 form-control"
+        aria-label="Amount (to the nearest dollar)"
+        placeholder="Personal Phone number"
+      />
+      <ng-container *ngIf="hasError('phoneNumber') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Phone must not be empty.</div>
+      </ng-container>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Company Info</p>
+      <p class="mt-1 tw-text-sm tw-font-normal tw-text-gray-600">Your company information</p>
+    </div>
+    <div class="col-lg-7 col-md-6 col-sm-12 d-flex flex-column align-items-center">
+      <input type="text" formControlName="contactEmail" class="mt-2 form-control tw-w-full" id="autoSizingInputGroup" placeholder="Email" />
+      <ng-container *ngIf="hasError('contactEmail') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+        <div class="field-error" *ngIf="c.hasError('email')">Email is not valid.</div>
+      </ng-container>
+
+      <input type="text" formControlName="phoneNumber" class="mt-2 form-control" aria-label="Amount (to the nearest dollar)" placeholder="Phone number" />
+      <ng-container *ngIf="hasError('phoneNumber') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Phone must not be empty.</div>
+      </ng-container>
+
+      <ng-select class="mt-2" formControlName="topics" [multiple]="true" placeholder="Topics">
+        <ng-option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</ng-option>
+      </ng-select>
+      <ng-container *ngIf="hasError('topics') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Topics must not be empty.</div>
+      </ng-container>
+
+      <select class="form-select fs16 fw500 grey900 mt-2" formControlName="industry">
+        <option [disabled]="true" [selected]="true">Select industry</option>
+        <option *ngFor="let industry of industries" [value]="industry.id">{{ industry.name }}</option>
+      </select>
+      <ng-container *ngIf="hasError('industry') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Industry must not be empty.</div>
+      </ng-container>
+
+      <div class="tw-flex tw-gap-3">
+        <div class="girlimage col-lg-2 col-md-2 col-sm-12" style="margin-top: 24px">
+          <img [attr.src]="imgUrl1 || 'assets/images/image-placeholder.png'" class="img-fluid" style="border-radius: 8px" alt="" />
+        </div>
+        <input #fileInput hidden="true" type="file" onclick="this.value=null" (change)="fileInputChange1($event)" [accept]="acceptTypes" multiple />
+        <div
+          class="co-lg-10 col-md-10 col-sm-12 tw-cursor-pointer"
+          style="margin-top: 24px"
+          (click)="triggerBrowse1()"
+          (dragover)="$event.preventDefault()"
+          (drop)="drop1($event); $event.preventDefault()"
+        >
+          <div
+            style="border-radius: 8px; border: 1px solid #eaecf0; flex-direction: column; padding: 16px"
+            class="d-flex justify-content-between align-items-center"
+          >
+            <img src="assets/temp/cloud.png" style="height: 40px" alt="" />
+            <span class="fs14 fw600 blackcolor">Click to upload <span class="fs14 fw400 greycolor">or drag and drop</span></span>
+            <span class="fs12 fw400 greycolor">SVG, PNG, JPG or GIF (max. 1000x1000px)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Matching</p>
+      <p class="mt-1 tw-text-sm tw-font-normal tw-text-gray-600">Match my Company with other potential Candidates.</p>
+    </div>
+
+    <div class="col-lg-7 col-md-6">
+      <div class="row tw-mt-5 md:tw-mt-0 lg:tw-mt-0">
+        <div class="col-1 tw-pr-0">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" formControlName="isMatched" type="checkbox" id="inlineCheckbox1" />
+          </div>
+        </div>
+        <div class="col-11 p-0">
+          <p class="tw-ml-2 tw-mb-0 tw-text-sm tw-font-medium tw-text-gray-700">Enable</p>
+          <p class="mt-1 tw-ml-2 tw-mb-0 tw-text-sm tw-font-normal tw-text-gray-600">Sending you monthly matches of Future employees and VC's.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Tagline</p>
+      <p class="mt-1 tw-text-sm tw-font-normal tw-text-gray-600">A quick snapshot of your company.</p>
+    </div>
+    <div class="col-lg-7 col-md-6 d-flex flex-column align-items-center">
+      <textarea formControlName="tagline" class="form-control" rows="4" cols="50"> </textarea>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Company logo</p>
+      <p class="mt-1 tw-text-sm tw-font-normal tw-text-gray-600">Update your company logo and then choose where you want it to display.</p>
+    </div>
+    <div class="col-lg-7 col-md-6 d-flex flex-column tw-items-start lg:tw-items-center">
+      <div class="row">
+        <div class="tw-flex tw-gap-3">
+          <div class="girlimage col-lg-2 col-md-2 col-sm-12" style="margin-top: 24px">
+            <img [attr.src]="imgUrl2 || 'assets/images/image-placeholder.png'" class="img-fluid" style="border-radius: 8px" alt="" />
+          </div>
+          <input #fileInput hidden="true" type="file" onclick="this.value=null" (change)="fileInputChange1($event)" [accept]="acceptTypes" multiple />
+          <div
+            class="co-lg-10 col-md-10 col-sm-12 tw-cursor-pointer"
+            style="margin-top: 24px"
+            (click)="triggerBrowse1()"
+            (dragover)="$event.preventDefault()"
+            (drop)="drop1($event); $event.preventDefault()"
+          >
+            <div
+              style="border-radius: 8px; border: 1px solid #eaecf0; flex-direction: column; padding: 16px"
+              class="d-flex justify-content-between align-items-center"
+            >
+              <img src="assets/temp/cloud.png" style="height: 40px" alt="" />
+              <span class="fs14 fw600 blackcolor">Click to upload <span class="fs14 fw400 greycolor">or drag and drop</span></span>
+              <span class="fs12 fw400 greycolor">SVG, PNG, JPG or GIF (max. 1000x1000px)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Branding</p>
+      <p class="mt-1 tw-text-sm tw-font-normal tw-text-gray-600">Add your logo to reports and emails.</p>
+      <p class="m-0 tw-text-sm tw-font-semibold tw-text-primary-700">View Examples</p>
+    </div>
+
+    <div class="col-lg-7 col-md-6">
+      <div class="row tw-mt-5 md:tw-mt-0 lg:tw-mt-0">
+        <div class="col-1 tw-pr-0">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" formControlName="hasReport" />
+          </div>
+        </div>
+        <div class="col-11 p-0">
+          <p class="tw-ml-2 tw-mb-0 tw-text-sm tw-font-medium tw-text-gray-700">Reports</p>
+          <p class="mt-1 tw-ml-2 tw-mb-0 tw-text-sm tw-font-normal tw-text-gray-600">Include my logo in summary reports.</p>
+        </div>
+      </div>
+      <div class="row tw-mt-5 md:tw-mt-0 lg:tw-mt-0">
+        <div class="col-1 tw-pr-0">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" formControlName="hasEmail" />
+          </div>
+        </div>
+        <div class="col-11 p-0">
+          <p class="tw-ml-2 tw-mb-0 tw-text-sm tw-font-medium tw-text-gray-700">Emails</p>
+          <p class="mt-1 tw-ml-2 tw-mb-0 tw-text-sm tw-font-normal tw-text-gray-600">Include my logo in customer emails.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Description</p>
+    </div>
+    <div class="col-lg-7 col-md-6 d-flex flex-column align-items-center">
+      <textarea class="form-control" formControlName="description" rows="4" cols="50"> </textarea>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Country</p>
+    </div>
+    <div class="col-lg-7 col-md-6 d-flex flex-column align-items-center">
+      <select formControlName="country" class="form-select fs16 fw500 grey900 mt-1" style="border-radius: 8px">
+        <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
+      </select>
+    </div>
+
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="col-lg-4 col-md-6">
+      <p class="m-0 tw-text-sm tw-font-medium tw-text-gray-700">Social Profile</p>
+    </div>
+    <div class="col-lg-7 col-md-6 d-flex flex-column align-items-center">
+      <div class="input-group">
+        <div class="mt-2 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+          <span class="tw-text-gray-600">twitter.com/</span>
+        </div>
+        <input type="text" formControlName="twitter" class="grey900 mt-2 fs16 form-control" placeholder="Twitter Url" />
+      </div>
+      <ng-container *ngIf="hasError('twitter') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Twitter must not be empty.</div>
+      </ng-container>
+
+      <div class="input-group">
+        <div class="mt-2 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+          <span class="tw-text-gray-600">facebook.com/</span>
+        </div>
+        <input type="text" formControlName="facebook" class="grey900 mt-2 fs16 form-control" placeholder="Facebook Url" />
+      </div>
+      <ng-container *ngIf="hasError('facebook') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Facebook must not be empty.</div>
+      </ng-container>
+
+      <div class="input-group">
+        <div class="mt-2 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+          <span class="tw-text-gray-600">linkedin.com/</span>
+        </div>
+        <input type="text" formControlName="linkedin" class="grey900 mt-2 fs16 form-control" placeholder="Linkedin Url" />
+      </div>
+      <ng-container *ngIf="hasError('linkedin') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Linkedin must not be empty.</div>
+      </ng-container>
+
+      <div class="input-group">
+        <div class="mt-2 input-group-text" style="background-color: white; border-radius: 8px 0px 0px 8px !important; padding-right: 8px">
+          <span class="tw-text-gray-600">youtube.com/</span>
+        </div>
+        <input type="text" formControlName="youtube" class="grey900 mt-2 fs16 form-control" placeholder="Youtube Url" />
+      </div>
+      <ng-container *ngIf="hasError('youtube') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Youtube must not be empty.</div>
+      </ng-container>
+    </div>
+    <hr class="tw-mt-5 tw-text-gray-400" />
+    <div class="d-flex align-items-center mb-5 md-justify-end tw-justify-end lg:tw-justify-end">
+      <button type="submit" class="btn btn-dark tw-w-auto tw-bg-primary-600 md:tw-w-auto lg:tw-w-auto">Save</button>
+    </div>
+  </div>
+</form>

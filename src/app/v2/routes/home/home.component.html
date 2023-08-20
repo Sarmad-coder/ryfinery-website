@@ -1,0 +1,45 @@
+<div class="tw-flex tw-h-screen tw-flex-col tw-justify-between">
+  <div class="tw-mx-7 tw-mt-[39px] tw-flex tw-items-center tw-justify-between lg:tw-mx-14">
+    <!-- navbar -->
+    <app-navbar></app-navbar>
+
+    <!-- upgrade now -->
+    <div class="tw-hidden tw-items-center tw-rounded-xl tw-border tw-border-gray-300 tw-px-6 tw-py-[0.4rem] xl:tw-flex">
+      <div class="tw tw-font-semibold tw-text-gray-700">Free Trial Expires on 10.06.2022</div>
+      <svg-icon class="tw-ml-2 tw-text-gray-600" [svgStyle]="{ 'width.px': 20 }" src="assets/icons/info-circle.svg"></svg-icon>
+      <button class="btn btn-dark tw-ml-7 tw-border-0 tw-bg-primary-600 tw-py-2 tw-text-sm">
+        Upgrade now <svg-icon class="tw-ml-2" src="assets/icons/arrow-right.svg"></svg-icon>
+      </button>
+    </div>
+
+    <!-- user menu -->
+    <app-user-menu></app-user-menu>
+  </div>
+
+  <div class="tw-mx-auto tw-flex tw-max-w-xl tw-flex-col tw-items-center tw-px-4">
+    <svg-icon src="assets/logo/logo.svg" class="[&_svg]:tw-h-9 md:[&_svg]:tw-h-11"></svg-icon>
+    <app-search-field class="tw-mt-[59px]"></app-search-field>
+
+    <div class="tw-mt-[10px] tw-flex tw-flex-wrap tw-justify-center tw-gap-x-[16px] tw-gap-y-[10px]">
+      <a
+        *ngFor="let company of companies"
+        class="tw-rounded-md tw-bg-gray-100 tw-py-1 tw-px-2 tw-text-xs tw-text-gray-600 active:!tw-bg-black active:!tw-text-white"
+        [routerLink]="['/company', company.id, company.name | slugify]"
+      >
+        {{ company.name }}
+      </a>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="tw-mx-6 tw-mt-[55px] tw-mb-6 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5 lg:tw-mx-14">
+    <select class="form-select location tw-w-auto tw-border-0 tw-text-sm tw-text-gray-900 !tw-shadow-none hover:tw-bg-gray-50" [formControl]="countryControl">
+      <option value="Worldwide">Worldwide</option>
+      <option *ngFor="let item of countries" [value]="item.name">{{ item.name }}</option>
+    </select>
+
+    <div class="tw-ml-2 tw-flex tw-gap-6 tw-justify-self-center tw-text-gray-700 md:tw-gap-8">
+      <a *ngFor="let item of ['Home', 'About', 'News', 'Terms', 'Privacy']">{{ item }}</a>
+    </div>
+  </div>
+</div>

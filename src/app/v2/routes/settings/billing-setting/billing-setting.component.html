@@ -1,0 +1,245 @@
+<div class="tw-mt-[34px]">
+  <div class="tw-text-base tw-font-semibold tw-text-primary-700">Upgrade</div>
+  <div class="tw-mt-3 tw-text-4xl tw-font-semibold tw-text-gray-900">Unlock more features</div>
+  <div class="tw-mt-5 tw-text-lg tw-text-gray-600">Simple, transparent pricing that grows with you. Try any plan free for 30 days.</div>
+
+  <!-- features & basic plan -->
+  <div class="tw-mt-16 tw-flex tw-flex-wrap tw-gap-24 xl:tw-flex-nowrap">
+    <!-- share team inboxes -->
+    <div class="tw-flex tw-grow tw-items-center">
+      <div class="tw-flex tw-flex-col tw-gap-[46px]">
+        <div class="tw-flex tw-items-start tw-gap-4" *ngFor="let item of features">
+          <div class="tw-rounded-full tw-border-8 tw-border-[#333333] tw-p-[10px]">
+            <svg-icon class="tw-text-primary-600" src="assets/icons/{{ item.icon }}.svg"></svg-icon>
+          </div>
+          <div class="tw-mt-4">
+            <div class="tw-text-xl tw-font-semibold tw-text-gray-900">{{ item.title }}</div>
+            <div class="tw-mt-2 tw-text-base tw-text-gray-600">{{ item.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- basic plan -->
+    <div class="tw-rounded-2xl tw-border tw-border-gray-200 tw-shadow-lg">
+      <div class="tw-mt-9 tw-flex tw-flex-wrap tw-items-center tw-gap-8 tw-px-8 lg:tw-flex-nowrap">
+        <div>
+          <div class="tw-flex tw-items-center tw-gap-[18px]">
+            <span class="tw-text-2xl tw-font-semibold tw-text-gray-900">Basic plan</span>
+            <span class="tw-rounded-full tw-bg-primary-50 tw-px-3 tw-pt-[2px] tw-pb-1 tw-font-medium">Popular</span>
+          </div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-600 after:tw-mt-2">Our most popular plan for small teams.</div>
+        </div>
+
+        <div class="tw-flex tw-items-start">
+          <span class="tw-mt-1 tw-text-4xl tw-font-semibold tw-text-gray-900">$</span>
+          <span class="tw-text-6xl tw-font-semibold tw-text-gray-900">10</span>
+          <span class="tw-self-end tw-whitespace-nowrap tw-text-base tw-font-medium tw-text-gray-600">per month</span>
+        </div>
+      </div>
+      <!-- line -->
+      <div class="tw-my-8 tw-w-full tw-border-b tw-border-gray-200"></div>
+
+      <div class="tw-px-8">
+        <div class="tw-text-base tw-font-semibold tw-text-gray-900">FEATURES</div>
+        <div class="tw-mt-1 tw-text-base tw-text-gray-600">Everything in our <span class="tw-font-semibold">free plan</span> plus....</div>
+      </div>
+
+      <div class="tw-mt-6 tw-flex tw-flex-wrap tw-gap-4 tw-px-8 lg:tw-flex-nowrap lg:tw-gap-8">
+        <div class="tw-flex tw-flex-col tw-gap-4">
+          <div class="tw-flex tw-items-center tw-gap-3" *ngFor="let item of basicPlanFeatures | slice : 0 : 5">
+            <svg-icon src="assets/icons/default-success-sm.svg"></svg-icon>
+            <span class="tw-text-base tw-text-gray-600">{{ item }}</span>
+          </div>
+        </div>
+        <div class="tw-flex tw-flex-col tw-gap-4">
+          <div class="tw-flex tw-items-center tw-gap-3" *ngFor="let item of basicPlanFeatures | slice : 5">
+            <svg-icon src="assets/icons/default-success-sm.svg"></svg-icon>
+            <span class="tw-text-base tw-text-gray-600">{{ item }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- line -->
+      <div class="tw-mt-5 tw-w-full tw-border-b tw-border-gray-200"></div>
+
+      <div class="tw-p-8">
+        <button class="btn btn-primary tw-w-full tw-bg-primary-600">Get started</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- payment method -->
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div class="tw-mt-24">
+      <div class="tw-text-lg tw-font-semibold tw-text-gray-900">Payment method</div>
+      <div class="tw-text-gray-600">Update your billing details and address.</div>
+
+      <!-- line -->
+      <div class="tw-my-8 tw-w-full tw-border-b tw-border-gray-200"></div>
+
+      <!-- contact email -->
+      <div class="tw-ml-4 md:tw-ml-9">
+        <div class="tw-flex tw-flex-wrap tw-gap-8">
+          <div class="tw-w-[280px]">
+            <div class="tw-font-medium tw-text-gray-700">Contact email</div>
+            <div class="tw-text-gray-600">Where should invoices be sent?</div>
+          </div>
+          <div class="tw-grow">
+            <div class="form-check">
+              <input class="form-check-input" value="myEmail" formControlName="contactDetailRadio" type="radio" name="contactDetailRadio" id="accountEmail" />
+              <div class="form-check-label">
+                <label for="accountEmail" class="tw-font-medium tw-text-gray-700">Send to my account email</label>
+                <div class="tw-text-gray-600">{{ userEmail }}</div>
+              </div>
+            </div>
+
+            <div class="form-check tw-mt-[18px]">
+              <input
+                class="form-check-input"
+                value="alternateEmail"
+                formControlName="contactDetailRadio"
+                type="radio"
+                name="contactDetailRadio"
+                id="alternativeEmail"
+                checked
+              />
+              <div class="form-check-label">
+                <label for="alternativeEmail" class="tw-font-medium tw-text-gray-700">Send to an alternative email</label>
+
+                <div *ngIf="form.controls['contactDetailRadio'].value == 'alternateEmail'">
+                  <input type="text" formControlName="alternateEmail" class="form-control prefix email tw-mt-3" placeholder="billing@untitledui.com" />
+                  <ng-container *ngIf="hasError('alternateEmail') as c">
+                    <div class="field-error" *ngIf="c.hasError('required')">email must not be empty.</div>
+                    <div class="field-error" *ngIf="c.hasError('email')">Invalid Email type.</div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- line -->
+        <div class="tw-my-8 tw-w-full tw-border-b tw-border-gray-200 md:tw-my-5"></div>
+
+        <!-- Card details -->
+        <div class="tw-flex tw-flex-wrap tw-gap-8">
+          <div class="tw-w-[280px]">
+            <div class="tw-font-medium tw-text-gray-700">Card details</div>
+            <div class="tw-text-gray-600">Select default payment method.</div>
+          </div>
+          <div class="tw-flex tw-grow tw-flex-col tw-gap-3">
+            <!-- visa -->
+            <div class="tw-flex tw-justify-between tw-rounded-2xl tw-border tw-border-gray-cool-300 tw-p-4" for="flexRadioDefault2">
+              <div class="tw-flex tw-items-start tw-gap-3">
+                <div class="tw-flex tw-items-center tw-rounded-md tw-border tw-border-gray-100 tw-py-[10px] tw-px-2">
+                  <img src="assets/images/visa-logo.png" class="tw-w-7" alt="" />
+                </div>
+                <div>
+                  <div class="tw-font-medium tw-text-primary-800">Visa ending in 1234</div>
+                  <div class="tw-text">Expiry 06/2024</div>
+
+                  <div class="tw-mt-2">
+                    <span class="tw-font-semibold tw-text-gray-iron-300">Set as default</span>
+                    <span class="tw-ml-3 tw-text-primary-700">Edit</span>
+                  </div>
+                </div>
+              </div>
+              <input class="form-check-input" type="radio" name="card-details" id="visa-card" checked />
+            </div>
+            <!-- mastercard -->
+            <div class="tw-flex tw-justify-between tw-rounded-2xl tw-border tw-border-gray-true-100 tw-p-4" for="mastercard-card">
+              <div class="tw-flex tw-items-start tw-gap-3">
+                <div class="tw-flex tw-items-center tw-rounded-md tw-border tw-border-gray-100 tw-py-[10px] tw-px-2">
+                  <img src="assets/images/mastercard-logo.png" class="tw-w-7" alt="" />
+                </div>
+                <div>
+                  <div class="tw-font-medium tw-text-primary-800">Mastercard ending in 1234</div>
+                  <div class="tw-text">Expiry 06/2024</div>
+
+                  <div class="tw-mt-2">
+                    <span class="tw-font-semibold tw-text-gray-600">Set as default</span>
+                    <span class="tw-ml-3 tw-text-primary-700">Edit</span>
+                  </div>
+                </div>
+              </div>
+              <input class="form-check-input" type="radio" name="card-details" id="mastercard-card" />
+            </div>
+
+            <div class="tw-mt-4 tw-flex tw-justify-end">
+              <!-- <button
+                                class="btn btn-outline-light tw-flex tw-items-center tw-gap-2 !tw-border-0 tw-font-semibold !tw-text-gray-600">
+                                <svg-icon src="assets/icons/plus-01.svg"></svg-icon>
+                                <span>Add new payment method</span>
+                            </button> -->
+              <button type="submit" class="btn btn-dark tw-flex tw-items-center tw-gap-2 tw-bg-primary-600">
+                <!-- <svg-icon src="assets/icons/mail-01.svg"></svg-icon> -->
+                Pay Bill
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- billing history -->
+  <div class="tw-mt-52">
+    <div class="tw-flex tw-items-center tw-justify-between">
+      <div class="tw-text-lg tw-font-semibold tw-text-gray-900">Billing history</div>
+      <button class="btn btn-outine-dark tw-flex tw-items-center tw-gap-2 tw-border-gray-300 tw-text-gray-700">
+        <svg-icon src="assets/icons/download-cloud-02.svg" [svgStyle]="{ 'width.px': 20 }"></svg-icon>
+        Download all
+      </button>
+    </div>
+  </div>
+  <div
+    class="table-wrapper tw-mt-6 tw-rounded-xl tw-border tw-border-gray-200"
+    [style.box-shadow]="'0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)'"
+  >
+    <table class="table table-responsive tw-mb-0 tw-whitespace-nowrap tw-shadow-sm [&_td]:!tw-py-6">
+      <thead>
+        <tr>
+          <th class="tw-w-[20px] !tw-pr-0"><input class="form-check-input tw-mt-0 tw-text-xl" type="checkbox" /></th>
+          <th class="tw-w-full !tw-pl-3" scope="col">Invoice</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Users on plan</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of [0, 0, 0, 0]; index as i">
+          <td class="tw-w-[20px] !tw-pr-0"><input class="form-check-input tw-mt-0 tw-text-xl" type="checkbox" /></td>
+          <td class="!tw-pl-3 tw-font-medium tw-text-gray-900">Basic Plan - Dec 2022</td>
+          <td class="tw-text-gray-600">USD $10.00</td>
+          <td class="tw-text-gray-600">Dec 1, 2022</td>
+          <td class="tw-text-gray-600">
+            <div
+              class="tw-flex tw-items-center tw-gap-[6px] tw-rounded-2xl tw-border-2 tw-border-success-600 tw-pr-[8px] tw-pl-[6px] tw-text-xs tw-font-medium tw-text-success-700"
+            >
+              <svg-icon class="[&_path]:!tw-stroke-[3px]" [svgStyle]="{ 'width.px': 14 }" src="assets/icons/check.svg"></svg-icon>Paid
+            </div>
+          </td>
+          <td>
+            <div *ngIf="usersOnPlan.length" class="tw-flex tw-items-center tw-px-4">
+              <img
+                *ngFor="let item of usersOnPlan | slice : 0 : 6"
+                class="-tw-ml-2 tw-w-6 tw-rounded-full tw-border-2 tw-border-solid tw-border-white"
+                [src]="(item | imageUrl) || 'assets/images/jeff.png'"
+              />
+              <span
+                *ngIf="usersOnPlan.length - 6 > 0"
+                class="-tw-ml-2 tw-flex tw-h-6 tw-w-6 tw-items-center tw-justify-center tw-rounded-full tw-border-2 tw-border-solid tw-border-white tw-bg-gray-100 tw-text-xs tw-font-medium tw-text-gray-600"
+                >+5</span
+              >
+            </div>
+          </td>
+          <td>
+            <svg-icon class="tw-text-gray-600 [&_svg]:!tw-w-5" src="assets/icons/download-cloud-02.svg"></svg-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

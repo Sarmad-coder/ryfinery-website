@@ -1,0 +1,21 @@
+<div class="container d-none d-md-block">
+  <div class="row my-5"></div>
+</div>
+<div class="row pt-5">
+  <div class="col-12 col-md-4 offset-md-4">
+    <div class="text-center">
+      <img src="assets/images/check-email.png" class="mb-5 mt-3" style="width: 60px" alt="" />
+      <h2 class="font-semi-bold color-gray-900 mb-3">Check your email</h2>
+      <p class="font-light">We sent a verification link to <br /><b>olivia@untitledui.com</b></p>
+    </div>
+    <div class="mt-3">
+      <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="otpConfig"></ng-otp-input>
+    </div>
+    <div class="mt-25">
+      <button class="btn btn-dark" (click)="submit()">Verify Email</button>
+    </div>
+    <div class="mt-5">
+      <button class="btn btn-default" (click)="back()"><img src="assets/images/arrow-left.png" alt="" /> Back to log in</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+// enable bootstrap negative margin which was disabled by default
+$enable-negative-margins: true;
+
+// color
+$primary: #1d2939;
+$info: #3069fe;
+
+// font
+$font-size-base: 0.875rem;
+$font-family-sans-serif: 'Inter', sans-serif;
+$input-btn-font-family: 'Inter', sans-serif;
+
+// border radius
+$border-radius: 0.5rem;
+$border-radius-sm: 0.25rem;
+$border-radius-lg: 0.4rem;
+
+// body
+$body-bg: #ffffff;
+
+// button
+$input-btn-padding-y: 0.6rem;
+$input-btn-padding-x: 1rem;
+$btn-font-weight: 600;
+$input-btn-focus-width: 0.188rem;
+
+// input
+$input-border-color: #e5e3e3;
+$input-padding-y: 0.625rem;
+$input-padding-x: 1rem;
+$input-font-size: 0.938rem;
+$input-placeholder-color: #a69d9d;
+$input-color: #6d6666;
+$input-focus-color: #262424;
+$input-focus-box-shadow: 0 0 0 0.188rem rgba(132, 85, 159, 0.2);
+$input-focus-border-color: #c9c9c9;
+$input-bg: white;
+
+// check
+$form-check-input-checked-bg-color: #3167eb;
+$form-check-input-checked-border-color: #3167eb;
+
+// input group
+$input-group-addon-bg: transparent;
+
+// table
+$table-cell-padding-y: 0.8rem;
+$table-cell-padding-x: 1.5rem;
+$table-color: #6d6666;
+$table-th-font-weight: 400;
+
+// list
+$list-group-bg: transparent;
+$list-group-border-radius: 0;
+$list-group-item-padding-y: 1.5rem;
+$list-group-item-padding-x: 0;
+
+// badges
+$badge-font-weight: 400;
+
+// card
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 1.5rem;
+
+$utilities: (
+  'width': (
+    property: width,
+    responsive: true,
+    class: w,
+    values: (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%,
+      auto: auto,
+    ),
+  ),
+  'height': (
+    property: height,
+    responsive: true,
+    class: h,
+    values: (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%,
+      auto: auto,
+    ),
+  ),
+);
+
+// import bootstrap after variables overriding
+@import 'bootstrap/scss/bootstrap';
+
+// input
+.form-control:hover {
+  border: 1px solid #a69d9d;
+}
+
+.form-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #a69d9d;
+}
+
+// table
+.table {
+  & > :not(:first-child) {
+    border-top: 0;
+  }
+
+  th {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #a69d9d;
+  }
+}
+
+// list
+.list-group-item {
+  border-right-width: 0;
+  border-left-width: 0;
+}
+
+// a tag
+a {
+  color: $info;
+  text-decoration: none;
+}
+
+// badge
+.badge.bg-info {
+  color: $info;
+  background-color: #eef3ff !important;
+}
+
+// card
+.card-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 1.5rem;
+}
+
+hr {
+  opacity: 1;
+}

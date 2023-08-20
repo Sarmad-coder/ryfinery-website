@@ -1,0 +1,24 @@
+<div class="tw-flex tw-gap-8 tw-px-7 tw-pt-[24px] lg:tw-px-14">
+  <a class="tw-hidden md:tw-block" routerLink="">
+    <svg-icon class="tw-mt-2 tw-hidden lg:tw-block" src="assets/logo/logo.svg" [svgStyle]="{ 'height.px': 19 }"></svg-icon>
+    <img class="tw-block tw-h-11 lg:tw-hidden" src="assets/logo/logo-m.png" />
+  </a>
+  <!-- search field -->
+  <div class="tw-grow">
+    <div class="tw-w-full md:tw-w-fit">
+      <app-search-field></app-search-field>
+      <div class="tw-mt-[15px]">
+        <!-- navbar -->
+        <app-navbar></app-navbar>
+      </div>
+    </div>
+  </div>
+  <!-- user menu -->
+  <app-user-menu></app-user-menu>
+</div>
+
+<div class="tw-mx-auto tw-w-full tw-max-w-7xl tw-px-10 tw-py-[72px] xl:tw-px-0">
+  <router-outlet></router-outlet>
+  <app-v2-footer></app-v2-footer>
+  <app-copyright></app-copyright>
+</div>

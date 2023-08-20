@@ -1,0 +1,17 @@
+<div class="container d-none d-md-block">
+  <div class="row my-5"></div>
+</div>
+<div class="container">
+  <div class="row pt-5">
+    <div class="col-12 col-md-4 offset-md-4 mt-5">
+      <div class="text-center">
+        <img src="assets/images/verified-email.png" class="mb-5 mt-3" style="width: 60px" alt="" />
+        <h2 class="font-semi-bold color-gray-900 mb-3">{{ title }}</h2>
+        <p class="font-light">{{ subTitle1 }}<br />{{ subTitle2 }}</p>
+      </div>
+      <div class="mt-5" *ngIf="loginButton">
+        <button class="btn btn-default" routerLink="/login"><img src="assets/images/arrow-left.png" alt="" /> Back to log in</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <div class="tw-flex tw-flex-wrap tw-items-start tw-gap-4">
+    <div>
+      <input type="text" formControlName="email" class="form-control tw-w-full md:tw-w-96" placeholder="Enter your email" />
+      <div *ngIf="!hideHint" class="tw-mt-1 tw-text-start tw-text-gray-600">We care about your data in our privacy policy.</div>
+      <ng-container *ngIf="hasError('email') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Email field is empty.</div>
+        <div class="field-error" *ngIf="c.hasError('email')">This email is incorrect.</div>
+        <div class="field-error" *ngIf="c.hasError('duplicated')">This email is already subscribed</div>
+      </ng-container>
+    </div>
+    <button class="btn btn-dark tw-bg-primary-600">Subscribe</button>
+  </div>
+</form>

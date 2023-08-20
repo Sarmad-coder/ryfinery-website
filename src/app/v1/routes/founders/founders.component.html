@@ -1,0 +1,67 @@
+<!-- mobile filter -->
+<div class="offcanvas offcanvas-start" [ngClass]="{ show: showMobileFilter }" tabindex="-1">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Filters</h5>
+    <button type="button" class="btn-close" (click)="showMobileFilter = false"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ng-container *ngIf="showMobileFilter">
+      <ng-container *ngTemplateOutlet="filters"></ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<!-- filters -->
+<ng-template #filters>
+  <div class="filters">
+    <!-- filter | Has Filters -->
+    <app-filter name="Filters" mode="checkbox" [items]="hasFilters" (selection)="hasFilter($event)"></app-filter>
+  </div>
+</ng-template>
+
+<div class="container my-5">
+  <!-- hero -->
+  <div class="tw-mx-auto tw-flex tw-w-full tw-flex-col tw-justify-center tw-text-center md:tw-w-[610px]">
+    <div class="xbadge-group mx-auto mb-4 tw-bg-success-100">
+      <div class="xbadge tw-bg-success-50">
+        <div class="xtext tw-text-success-700">New feature</div>
+      </div>
+      <div class="xcontent">
+        <div class="xmessage tw-text-success-700">
+          <span>You've updated your profile and details</span>
+          <svg-icon src="assets/icons/arrow-right.svg" [svgStyle]="{ 'width.px': 16 }"></svg-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="tw-mb-4 tw-text-4xl tw-font-medium">Discover founders with similar interests and spark a conversation</div>
+    <div class="tw-text-lg tw-font-light">
+      Global data platform for intelligence on startups, innovation, high-growth companies, ecosystems and investment strategies.
+    </div>
+  </div>
+
+  <div class="tw-mt-8 tw-flex tw-gap-8 md:tw-mt-28 lg:tw-gap-16">
+    <!-- filters -->
+    <div class="tw-hidden md:tw-block">
+      <ng-container *ngTemplateOutlet="filters"></ng-container>
+    </div>
+    <div class="tw-flex-auto">
+      <!-- sorter -->
+      <app-sorter [sorts]="sorts" (sort)="sort($event)" totalName="founders" [total]="page.total"></app-sorter>
+
+      <app-filter-tags [selectedFilters]="selectedFilters" (clear)="clearFilter($event)" (clearAll)="clearAllFilters()"></app-filter-tags>
+
+      <button class="btn btn-outline-light tw-mx-auto tw-block tw-w-[300px] md:tw-hidden" type="button" (click)="showMobileFilter = true">
+        <svg-icon class="tw-mr-2" src="assets/icons/filter-lines.svg"></svg-icon>More filters
+      </button>
+
+      <!-- cards -->
+      <div class="card-list">
+        <app-founder-card *ngFor="let item of data" [founder]="item"></app-founder-card>
+      </div>
+
+      <!-- load more -->
+      <app-load-more [paginator]="paginator"></app-load-more>
+    </div>
+  </div>
+</div>

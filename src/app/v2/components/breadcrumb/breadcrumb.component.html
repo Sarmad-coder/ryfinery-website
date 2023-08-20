@@ -1,0 +1,9 @@
+<div class="tw-mt-4 tw-flex tw-items-center tw-gap-[11px] tw-font-medium">
+  <a class="tw-text-primary-600" routerLink="/">HOME</a>
+  <svg-icon class="tw-text-gray-500" src="assets/icons/breadcrumb-arrow.svg" [svgStyle]="{ 'width.px': 5 }"></svg-icon>
+
+  <ng-container *ngFor="let item of items; index as i">
+    <a class="tw-text-primary-600" [routerLink]="item.routerLink">{{ item.title }}</a>
+    <svg-icon *ngIf="i !== items.length - 1" class="tw-text-gray-500" src="assets/icons/breadcrumb-arrow.svg" [svgStyle]="{ 'width.px': 5 }"></svg-icon>
+  </ng-container>
+</div>

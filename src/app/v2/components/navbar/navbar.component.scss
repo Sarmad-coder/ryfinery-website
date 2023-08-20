@@ -1,0 +1,9 @@
+.active-link {
+  svg-icon {
+    @apply tw-text-gray-700;
+  }
+
+  div {
+    @apply tw-font-semibold tw-text-gray-800;
+  }
+}

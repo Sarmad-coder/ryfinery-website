@@ -1,0 +1,21 @@
+:host {
+  width: 100%;
+}
+
+.tabs {
+  & > ul {
+    @apply tw-flex tw-gap-6 tw-border-b tw-border-gray-200;
+    & > li {
+      margin-bottom: -2px;
+      & > a {
+        @apply tw-flex tw-px-1 tw-pb-[10px] tw-font-semibold tw-text-gray-500;
+        &.active {
+          @apply tw-border-b-2 tw-border-primary-700 tw-text-primary-700 #{!important};
+        }
+        & > .counter {
+          @apply tw-ml-2 tw-h-fit tw-rounded-full tw-bg-gray-100 tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-text-gray-700;
+        }
+      }
+    }
+  }
+}

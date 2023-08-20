@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row col-12 mt-5">
+    <h2>Import Module</h2>
+    <hr />
+  </div>
+  <div class="row offset-3 col-6">
+    <button disabled (click)="importCompanies()" class="btn btn-primary">Import UAE Companies</button>
+    <button disabled (click)="importEvents()" class="btn btn-primary mt-2">Import Events</button>
+    <button (click)="importFounders()" class="btn btn-primary mt-2">Import Founders</button>
+    <button disabled (click)="connectFoundersAndCompany()" class="btn btn-primary mt-2">Connect Founder/Company</button>
+    <!-- <button disabled (click)="uploadImagesCompany()" class="btn btn-primary mt-2">Import Company Images</button> -->
+    <!-- <button disabled (click)="uploadImagesFounder()" class="btn btn-primary mt-2">Import Founder Images</button> -->
+  </div>
+  <div class="row col-4">
+    <div *ngFor="let item of companyAttributes"><input type="checkbox" [(ngModel)]="item.checked" /> {{ item.text }}</div>
+  </div>
+</div>

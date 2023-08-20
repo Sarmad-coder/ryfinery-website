@@ -1,0 +1,265 @@
+<div class="page-layout">
+  <!-- LEFT SIDE -->
+  <div>
+    <div class="tw-mb-8 tw-flex lg:tw-flex-nowrap tw-flex-wrap tw-gap-2" *ngIf="!showSearch">
+     <app-search-field></app-search-field><app-search-field></app-search-field>
+    </div>
+    <div class="tw-mb-8" *ngIf="showSearch">
+      <app-search-field [company1]="company?.name" [company2]="company2?.data[0]?.attributes?.name" [id1]="id1"
+        [id2]="id2"></app-search-field>
+    </div>
+    <div class="tw-grid tw-gap-12"
+      [ngClass]="{ 'lg:tw-grid-cols-2': revenueChartOptions.show && employeeChartOptions.show }">
+      <!-- revenue chart -->
+      <div class="tw-w-full" *ngIf="revenueChartOptions.show">
+        <div class="chart-header">
+          <div class="chart-title">Revenue <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Revenue')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg"
+              (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Revenue')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">Company revenue</div>
+        <div class="tw-h-72">
+          <canvas baseChart #chartCanvas="base-chart" [type]="revenueChartOptions.type"
+            [data]="revenueChartOptions.data" [labels]="revenueChartOptions.data.labels"
+            [datasets]="revenueChartOptions.data.datasets" [options]="revenueChartOptions.options"
+            [plugins]="revenueChartOptions.plugins">
+          </canvas>
+        </div>
+
+        <ng-container *ngIf="revenueGrowth.length">
+          <!-- table -->
+          <div class="tw-mt-11 tw-flex tw-items-center tw-text-lg tw-font-medium">
+            Revenue YoY growth <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400"
+              src="assets/icons/info-circle-fill.svg"></svg-icon>
+          </div>
+          <div class="tw-mb-5 tw-text-gray-modern-500">Per Year In Percentage (%)</div>
+          <div class="tw-mt-4">
+            <ng-container *ngFor="let item of revenueGrowth;let i = index">
+              <div class="tw-mx-6 tw-flex">
+                <div class="tw-grow">{{ item.year }}</div>
+                <ng-container *ngIf="company2.data[0].attributes.revenueGrowth[i]">
+                  <app-growth [value]="item.value" class="tw-mr-4"></app-growth>
+                  <app-growth class="tw-bg-error-100"
+                    [value]="company2.data[0].attributes.revenueGrowth[i].value"></app-growth>
+                </ng-container>
+                <ng-container *ngIf="!company2.data[0].attributes.revenueGrowth[i]">
+                  <app-growth [value]="revenueGrowth[i].value" class="tw-mr-4"></app-growth>
+                  <app-growth class="tw-bg-error-100" value="0"></app-growth>
+                </ng-container>
+              </div>
+              <hr
+                class="tw-mx-auto tw-my-2 tw-w-[96%] tw-justify-self-center tw-border-b tw-px-6 tw-text-gray-true-300" />
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+      <!-- employee chart -->
+      <div class="tw-w-full" *ngIf="employeeChartOptions.show">
+        <div class="chart-header">
+          <div class="chart-title">Employees <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+          <div class="chart-options">
+            <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Employees')"></svg-icon>
+            <svg-icon src="assets/icons/full-screen.svg"
+              (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Employees')"></svg-icon>
+          </div>
+        </div>
+        <div class="tw-mb-5 tw-text-gray-modern-500">Yearly Employee Count</div>
+        <div class="tw-h-72">
+          <canvas baseChart #chartCanvas="base-chart" [type]="employeeChartOptions.type"
+            [data]="employeeChartOptions.data" [labels]="employeeChartOptions.data.labels"
+            [datasets]="employeeChartOptions.data.datasets" [options]="employeeChartOptions.options"
+            [plugins]="employeeChartOptions.plugins">
+          </canvas>
+        </div>
+
+        <!-- table -->
+        <ng-container *ngIf="revenuePerEmployee.length">
+          <div class="tw-mt-11 tw-flex tw-items-center tw-text-lg tw-font-medium">
+            Revenue per employee <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400"
+              src="assets/icons/info-circle-fill.svg"></svg-icon>
+          </div>
+          <div class="tw-mb-5 tw-text-gray-modern-500">Per Year In Thousand USD (US$)</div>
+          <div class="tw-mt-4">
+            <ng-container *ngFor="let item of revenuePerEmployee;let i = index">
+              <div class="tw-mx-6 tw-flex">
+                <div class="tw-grow">{{ item.year }}</div>
+                <ng-container *ngIf="company2.data[0].attributes.revenuePerEmployee[i]">
+                  <app-growth [value]="item.value" class="tw-mr-4"></app-growth>
+                  <app-growth class="tw-bg-error-100"
+                    [value]="company2.data[0].attributes.revenuePerEmployee[i].value"></app-growth>
+                </ng-container>
+                <ng-container *ngIf="!company2.data[0].attributes.revenuePerEmployee[i]">
+                  <app-growth [value]="revenuePerEmployee[i].value" class="tw-mr-4"></app-growth>
+                  <app-growth class="tw-bg-error-100" value="0"></app-growth>
+                </ng-container>
+              </div>
+              <hr
+                class="tw-mx-auto tw-my-2 tw-w-[96%] tw-justify-self-center tw-border-b tw-px-6 tw-text-gray-true-300" />
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- FULL SCREEN MODAL -->
+      <ng-template #fullScreenModalTpl let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">{{ fullScreenImageName }}</h4>
+          <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <img class="tw-w-full tw-py-6 tw-px-12" [src]="fullScreenImage" />
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Profitability Metrics Overview Headers table -->
+    <ng-container *ngIf="profitabilityMetricsOverviewHeaders.length">
+      <div class="tw-mt-11 tw-flex tw-items-center tw-text-lg tw-font-medium">
+        Overview <svg-icon class="tw-ml-[4px] tw-text-gray-cool-400" src="assets/icons/info-circle-fill.svg"></svg-icon>
+      </div>
+      <div class="tw-mb-5 tw-text-gray-modern-500">Yearly company overview</div>
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col" *ngFor="let header of profitabilityMetricsOverviewHeaders">
+                <div class="tw-flex tw-items-center">
+                  {{ header }} <svg-icon class="tw-ml-[4px] tw-text-gray-iron-500"
+                    src="assets/icons/info-circle-2.svg"></svg-icon>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="tw-font-semibold tw-text-black">
+            <tr *ngFor="let title of profitabilityMetricsOverviewTitles">
+              <td>
+                <div class="tw-flex tw-items-center">
+                  {{ title }}<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500"
+                    src="assets/icons/info-circle-2.svg"></svg-icon>
+                </div>
+              </td>
+              <td *ngFor="let header of profitabilityMetricsOverviewHeaders">{{
+                profitabilityMetricsOverview[title][header] }}</td>
+
+              <!-- <td>
+            <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-green-700">
+              <svg-icon class="-tw-mt-[2px]" src="assets/icons/increment.svg"></svg-icon>
+              <div>20%</div>
+            </div>
+          </td> -->
+            </tr>
+            <!-- <tr>
+          <td>
+            <div class="tw-flex tw-items-center">
+              Return on average equity<svg-icon class="tw-ml-[4px] tw-text-gray-iron-500" src="assets/icons/info-circle-2.svg"></svg-icon>
+            </div>
+          </td>
+          <td>121.23B</td>
+          <td>121.23B</td>
+          <td>121.23B</td>
+          <td>121.23B</td>
+          <td>
+            <div class="tw-flex tw-items-center tw-gap-x-1 tw-text-orange-dark-800">
+              <svg-icon class="-tw-mt-[2px]" src="assets/icons/decrement.svg"></svg-icon>
+              <div>-120%</div>
+            </div>
+          </td>
+        </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <!-- Ebitda & Ebit chart -->
+    <ng-container *ngIf="ebitdaEbitOptions.show">
+      <div class="chart-header tw-mt-11">
+        <div class="chart-title">EBITDA and EBIT <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+        <div class="chart-options">
+          <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'EBITDA and EBIT')"></svg-icon>
+          <svg-icon src="assets/icons/full-screen.svg"
+            (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'EBITDA and EBIT')"></svg-icon>
+        </div>
+      </div>
+      <div class="tw-mb-5 tw-text-gray-modern-500">With Earnings YOY growth and EBITDA margins</div>
+      <div class="tw-h-[500px]">
+        <canvas baseChart #chartCanvas="base-chart" [type]="ebitdaEbitOptions.type" [data]="ebitdaEbitOptions.data"
+          [labels]="ebitdaEbitOptions.data.labels" [datasets]="ebitdaEbitOptions.data.datasets"
+          [options]="ebitdaEbitOptions.options" [plugins]="ebitdaEbitOptions.plugins">
+        </canvas>
+      </div>
+    </ng-container>
+
+    <!-- Earnings chart -->
+    <ng-container *ngIf="earningsChartOptions.show">
+      <div class="chart-header tw-mt-11">
+        <div class="chart-title">Earnings <svg-icon src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+        <div class="chart-options">
+          <svg-icon src="assets/icons/download.svg" (click)="download(chartCanvas, 'Earnings')"></svg-icon>
+          <svg-icon src="assets/icons/full-screen.svg"
+            (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Earnings')"></svg-icon>
+        </div>
+      </div>
+      <div class="tw-mb-5 tw-text-gray-modern-500">PER YEAR IN BILLION USD (US$)</div>
+      <div class="tw-h-72">
+        <canvas baseChart #chartCanvas="base-chart" [type]="earningsChartOptions.type"
+          [data]="earningsChartOptions.data" [labels]="earningsChartOptions.data.labels"
+          [datasets]="earningsChartOptions.data.datasets" [options]="earningsChartOptions.options"
+          [plugins]="earningsChartOptions.plugins">
+        </canvas>
+      </div>
+    </ng-container>
+
+    <!-- Total expenses, Total liabilities and Total debt chart -->
+    <ng-container *ngIf="expensesLiabilitiesDebtChartOptions.show">
+      <div class="chart-header tw-mt-11">
+        <div class="chart-title">Total expenses, Total liabilities and Total debt <svg-icon
+            src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+        <div class="chart-options">
+          <svg-icon src="assets/icons/download.svg"
+            (click)="download(chartCanvas, 'Total expenses, Total liabilities and Total debt')"></svg-icon>
+          <svg-icon src="assets/icons/full-screen.svg"
+            (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Total expenses, Total liabilities and Total debt')"></svg-icon>
+        </div>
+      </div>
+      <div class="tw-mb-5 tw-text-gray-modern-500">PER YEAR IN BILLION USD (US$)</div>
+      <div class="tw-h-72">
+        <canvas baseChart #chartCanvas="base-chart" [type]="expensesLiabilitiesDebtChartOptions.type"
+          [data]="expensesLiabilitiesDebtChartOptions.data" [labels]="expensesLiabilitiesDebtChartOptions.data.labels"
+          [datasets]="expensesLiabilitiesDebtChartOptions.data.datasets"
+          [options]="expensesLiabilitiesDebtChartOptions.options"
+          [plugins]="expensesLiabilitiesDebtChartOptions.plugins">
+        </canvas>
+      </div>
+    </ng-container>
+
+    <!-- Quick ratio and Current ratio -->
+    <ng-container *ngIf="quickRatioAndCurrentRatioChartOptions.show">
+      <div class="chart-header tw-mt-11">
+        <div class="chart-title">Quick ratio and Current ratio <svg-icon
+            src="assets/icons/info-circle-fill.svg"></svg-icon></div>
+        <div class="chart-options">
+          <svg-icon src="assets/icons/download.svg"
+            (click)="download(chartCanvas, 'Quick ratio and Current ratio')"></svg-icon>
+          <svg-icon src="assets/icons/full-screen.svg"
+            (click)="fullScreen(fullScreenModalTpl, chartCanvas, 'Quick ratio and Current ratio')"></svg-icon>
+        </div>
+      </div>
+      <div class="tw-mb-5 tw-text-gray-modern-500">As Ratio</div>
+      <div class="tw-mt-8 tw-h-[350px]">
+        <canvas baseChart #chartCanvas="base-chart" [type]="quickRatioAndCurrentRatioChartOptions.type"
+          [data]="quickRatioAndCurrentRatioChartOptions.data"
+          [labels]="quickRatioAndCurrentRatioChartOptions.data.labels"
+          [datasets]="quickRatioAndCurrentRatioChartOptions.data.datasets"
+          [options]="quickRatioAndCurrentRatioChartOptions.options"
+          [plugins]="quickRatioAndCurrentRatioChartOptions.plugins">
+        </canvas>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- <h1>hello</h1> -->

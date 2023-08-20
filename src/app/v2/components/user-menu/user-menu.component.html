@@ -1,0 +1,55 @@
+<!-- <a href="javascript:void(0)" *ngIf="!isLoggedIn" routerLink="register"><span *ngIf="!isLoggedIn" class="fs16 fw400 grey700">Register</span></a> -->
+<!-- <a href="javascript:void(0)" *ngIf="!isLoggedIn" routerLink="login"><span class="fs16 fw400 grey700">Login</span></a> -->
+
+<div *ngIf="!isLoggedIn" class="tw-flex tw-gap-2">
+  <button type="button" class="btn btn-outline-dark !tw-border-0 tw-text-base tw-font-normal" routerLink="/register">Register</button>
+  <button type="button" class="btn btn-outline-dark !tw-border-0 tw-text-base tw-font-normal" routerLink="/login">Login</button>
+</div>
+
+<div *ngIf="isLoggedIn" ngbDropdown>
+  <div class="tw-flex tw-cursor-pointer tw-items-center" id="main-dropdown-menu" ngbDropdownToggle>
+    <img class="tw-h-[40px] tw-w-[40px] tw-rounded-full" [src]="(user?.image?.url | imageUrl) || 'assets/images/user-placeholder.png'" />
+    <!-- <div class="tw-mt-[20px] -tw-ml-[10px] tw-h-fit tw-w-fit tw-rounded-full tw-bg-error-400 tw-px-[6px] tw-font-semibold tw-text-white">4</div> -->
+  </div>
+  <div ngbDropdownMenu aria-labelledby="main-dropdown-menu" class="tw-border tw-border-gray-200">
+    <div ngbDropdownItem class="tw-flex tw-gap-3 tw-pr-10">
+      <div>
+        <img class="tw-h-[40px] tw-w-[40px] tw-rounded-full" [src]="(user?.image?.url | imageUrl) || 'assets/images/user-placeholder.png'" />
+        <div class="tw-absolute tw-z-10 -tw-mt-[10px] tw-ml-[30px] tw-h-[10px] tw-w-[10px] tw-rounded-full tw-border tw-border-white tw-bg-success-500"></div>
+      </div>
+      <div>
+        <div class="tw-font-semibold tw-text-gray-700">{{ user?.username }}</div>
+        <div class="tw-text-gray-600">{{ user?.email }}</div>
+      </div>
+    </div>
+    <hr class="tw-my-2 tw-w-full tw-text-gray-neutral-400" />
+    <ng-container *ngFor="let item of menu">
+      <button *ngIf="item.label" ngbDropdownItem class="dropdownitems" [routerLink]="item.routerLink">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <svg-icon [src]="'assets/icons/' + item.icon + '.svg'" [svgStyle]="{ 'width.px': 18 }"></svg-icon>
+            <span class="mx-2 fs14 fw500">{{ item.label }}</span>
+          </div>
+          <div>
+            <svg-icon class="tw-text-gray-500" [src]="'assets/shortcuts/' + item.shortcut + '.svg'" [svgStyle]="{ 'height.px': 30 }"></svg-icon>
+          </div>
+        </div>
+      </button>
+
+      <hr *ngIf="item.line" class="tw-my-2 tw-w-full tw-text-gray-neutral-400" />
+    </ng-container>
+
+    <!-- logout -->
+    <button ngbDropdownItem class="dropdownitems" (click)="logout()">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <svg-icon src="assets/icons/log-out-01.svg" [svgStyle]="{ 'width.px': 18 }"></svg-icon>
+          <span class="mx-2 fs14 fw500">Log out</span>
+        </div>
+        <div>
+          <svg-icon class="tw-text-gray-500" src="assets/shortcuts/logout-shortcut.svg" [svgStyle]="{ 'height.px': 30 }"></svg-icon>
+        </div>
+      </div>
+    </button>
+  </div>
+</div>

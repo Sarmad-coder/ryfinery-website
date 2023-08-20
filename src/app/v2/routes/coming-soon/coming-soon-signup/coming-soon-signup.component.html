@@ -1,0 +1,54 @@
+<div class="tw-flex tw-max-w-[451px] tw-flex-col tw-items-center tw-rounded-xl tw-border tw-border-gray-iron-300 tw-px-10 tw-pt-[34px] tw-pb-[28px]">
+  <img class="tw-h-[20px]" src="assets/images/transparent-logo.png" alt="" />
+  <div class="tw-mt-4 tw-text-[23px] tw-font-semibold">Join #1 Market research platform</div>
+  <div class="tw-mb-2 tw-text-[13px]">Decode the future of your market and Trends</div>
+
+  <hr class="tw-m-0 tw-w-full tw-text-gray-neutral-400" />
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div class="tw-w-[345px]">
+      <input type="text" formControlName="name" class="form-control tw-mt-8 tw-px-[0.8rem]" placeholder="Your Name" />
+      <ng-container *ngIf="hasError('name') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Name must not be empty.</div>
+      </ng-container>
+
+      <input type="text" formControlName="email" class="form-control tw-mt-8" placeholder="Email Address" />
+      <ng-container *ngIf="hasError('email') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Email field is empty.</div>
+        <div class="field-error" *ngIf="c.hasError('email')">This email is incorrect.</div>
+        <div class="field-error" *ngIf="c.hasError('duplicated')">This email is already exist.</div>
+      </ng-container>
+
+      <select formControlName="industry" class="form-select tw-mt-8">
+        <option [disabled]="true" [selected]="true" [value]="null">Select your industry</option>
+        <option *ngFor="let industry of industries" [value]="industry.id">{{ industry.name }}</option>
+      </select>
+      <ng-container *ngIf="hasError('industry') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Industry must not be empty.</div>
+      </ng-container>
+
+      <input type="text" formControlName="company" class="form-control tw-mt-8 tw-px-[0.8rem]" placeholder="Company name" />
+      <ng-container *ngIf="hasError('company') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Company name must not be empty.</div>
+      </ng-container>
+      <!-- <ngx-intl-tel-input
+        class="tw-mt-8 tw-block"
+        formControlName="phone"
+        [searchCountryFlag]="true"
+        [selectedCountryISO]="intlDefaultCountry"
+      ></ngx-intl-tel-input>
+      <ng-container *ngIf="hasError('phone') as c">
+        <div class="field-error" *ngIf="c.hasError('required')">Phone must not be empty.</div>
+        <div class="field-error" *ngIf="c.hasError('validatePhoneNumber')">Phone format is not valid</div>
+      </ng-container> -->
+    </div>
+
+    <div class="tw-flex tw-justify-center">
+      <button type="submit" class="btn btn-dark tw-mt-8 tw-border-0 tw-bg-primary-600">Join the waitlist</button>
+    </div>
+  </form>
+  <div class="tw-mt-[64px] -tw-mb-[100px] tw-flex tw-gap-5">
+    <img src="assets/images/twitter.png" alt="" />
+    <img src="assets/images/linkedin.png" alt="" />
+  </div>
+</div>

@@ -1,0 +1,173 @@
+<div class="container tw-mt-40" *ngIf="founder">
+  <div class="tw-flex tw-flex-wrap tw-gap-24 lg:tw-flex-nowrap">
+    <!-- tabs -->
+    <div class="tw-grow">
+      <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" [activeId]="0" class="tw-flex tw-gap-4">
+        <!-- description tab -->
+        <li [ngbNavItem]="0">
+          <a ngbNavLink class="tab">
+            <div class="text">Description</div>
+          </a>
+          <ng-template ngbNavContent>
+            <app-founder-description [founder]="founder"></app-founder-description>
+          </ng-template>
+        </li>
+        <!-- fans tab -->
+        <li [ngbNavItem]="1">
+          <a ngbNavLink class="tab">
+            <div class="text">
+              <div>Fans</div>
+              <div class="counter">{{ founder.votes || 0 }}</div>
+            </div>
+          </a>
+          <ng-template ngbNavContent>
+            <app-founder-fans [founder]="founder"></app-founder-fans>
+          </ng-template>
+        </li>
+        <!-- followers tab -->
+        <!-- <li [ngbNavItem]="2">
+          <a ngbNavLink class="tab">
+            <div class="text">
+              <div>Followers</div>
+              <div class="counter">2109</div>
+            </div>
+          </a>
+          <ng-template ngbNavContent>
+            <app-founder-investors [company]="founder"></app-founder-investors>
+          </ng-template>
+        </li> -->
+        <!-- discussions tab -->
+        <li [ngbNavItem]="3">
+          <a ngbNavLink class="tab">
+            <div class="text">
+              <div>Discussions</div>
+              <div class="counter">{{ discussionCount || 0 }}</div>
+            </div>
+          </a>
+          <ng-template ngbNavContent>
+            <app-founder-discussions [founder]="founder" (count)="discussionCount = $event"></app-founder-discussions>
+          </ng-template>
+        </li>
+        <!-- widgets tab -->
+        <li [ngbNavItem]="4">
+          <a ngbNavLink class="tab">
+            <div class="text">
+              <div>Widgets</div>
+              <div class="counter">0</div>
+            </div>
+          </a>
+          <ng-template ngbNavContent>
+            <app-founder-widgets></app-founder-widgets>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div class="tw-mt-28" [ngbNavOutlet]="nav"></div>
+    </div>
+    <!-- left side -->
+    <div class="tw-mt-[151px] tw-w-64 tw-flex-none">
+      <!-- likes -->
+      <div class="tw-flex tw-items-center tw-justify-between tw-rounded-lg tw-bg-gray-modern-300 tw-py-3 tw-px-7">
+        <div>
+          <button class="btn btn-light tw-bg-white tw-px-7 tw-text-gray-700" (click)="vote()">
+            <svg-icon src="assets/icons/rocket-02.svg"></svg-icon>
+          </button>
+          <span class="tw-ml-4 tw-text-base">{{ founder.votes || 0 }}</span>
+        </div>
+        <span class="-tw-mt-1 tw-text-base tw-font-semibold">Votes</span>
+      </div>
+
+      <button class="btn btn-dark tw-mt-8 tw-w-full tw-bg-primary-600 tw-font-medium" (click)="shareProfile()">
+        <svg-icon class="tw-mr-2" [svgStyle]="{ 'width.px': 20 }" src="assets/icons/share-07.svg"></svg-icon>
+        Share profile
+      </button>
+
+      <div class="tw-mt-12 tw-mb-2 tw-flex tw-items-center">
+        <span class="tw-text-lg tw-font-medium">Contact Info</span>
+        <svg-icon class="tw-ml-2 tw-text-gray-true-500" [svgStyle]="{ 'width.px': 18 }" src="assets/icons/info-circle.svg"></svg-icon>
+      </div>
+      <div class="tw-flex tw-flex-col tw-gap-3 tw-rounded-lg tw-border tw-border-solid tw-border-gray-300 tw-py-4 tw-px-2">
+        <!-- website -->
+        <div class="tw-flex tw-pl-2 tw-pr-4" *ngIf="founder.website as v">
+          <svg-icon [svgStyle]="{ 'width.px': 22 }" src="assets/icons/globe-02.svg"></svg-icon>
+          <div class="tw-ml-2 tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap">
+            <div class="tw-text-base tw-text-gray-true-400">Website</div>
+            <div class="tw-font-medium tw-text-primary-700">{{ v }}</div>
+          </div>
+        </div>
+        <!-- email -->
+        <div class="tw-flex tw-pl-2 tw-pr-4" *ngIf="founder.officialEmail as v">
+          <svg-icon [svgStyle]="{ 'width.px': 22 }" src="assets/icons/mail-01.svg"></svg-icon>
+          <div class="tw-ml-2">
+            <div class="tw-text-base tw-text-gray-true-400">Email</div>
+            <div class="tw-font-medium tw-text-primary-700">{{ v }}</div>
+          </div>
+        </div>
+        <!-- phone number -->
+        <div class="tw-flex tw-pl-2 tw-pr-4" *ngIf="founder.phoneNumber as v">
+          <svg-icon [svgStyle]="{ 'width.px': 22 }" src="assets/icons/phone.svg"></svg-icon>
+          <div class="tw-ml-2">
+            <div class="tw-text-base tw-text-gray-true-400">Phone number</div>
+            <div class="tw-font-medium tw-text-primary-700">{{ v }}</div>
+          </div>
+        </div>
+        <!-- social -->
+        <div class="tw-flex tw-pl-2 tw-pr-4">
+          <svg-icon [svgStyle]="{ 'width.px': 22 }" src="assets/icons/face-content.svg"></svg-icon>
+          <div class="tw-ml-2">
+            <div class="tw-text-base tw-text-gray-true-400">Social</div>
+            <div class="tw-mt-2 tw-flex tw-gap-3">
+              <a *ngIf="founder.facebook as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/facebook.png" alt="" /></a>
+              <a *ngIf="founder.twitter as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/twitter.png" alt="" /></a>
+              <a *ngIf="founder.linkedin as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/linkedin.png" alt="" /></a>
+              <a *ngIf="founder.youtube as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/youtube.png" alt="" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tw-mt-12 tw-mb-2 tw-flex tw-items-center">
+        <span class="tw-text-lg tw-font-medium">Similar People</span>
+        <svg-icon class="tw-ml-2 tw-text-gray-true-500" [svgStyle]="{ 'width.px': 18 }" src="assets/icons/info-circle.svg"></svg-icon>
+      </div>
+      <div class="tw-flex tw-flex-col tw-gap-3 tw-rounded-lg tw-border tw-border-solid tw-border-gray-300 tw-py-4">
+        <div class="tw-flex tw-items-center tw-pl-4 tw-pr-4" *ngFor="let item of similarFounders">
+          <img class="tw-w-7" [src]="(item.image.data?.attributes.url | imageUrl) || 'assets/images/user-placeholder.png'" />
+          <div
+            class="tw-ml-2 tw-flex-grow tw-cursor-pointer tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-font-medium"
+            (click)="routeFounder(item)"
+          >
+            {{ item.fullname }}
+          </div>
+          <div>
+            <svg-icon class="tw-text-gray-700" src="assets/icons/rocket-02.svg" [svgStyle]="{ 'width.px': 18 }"></svg-icon>
+            <span class="tw-ml-1">{{ item.votes || 0 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- email subscriber -->
+  <div
+    class="tw-mt-24 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5 tw-rounded-lg tw-border tw-border-solid tw-border-gray-200 tw-bg-gray-50 tw-py-2 tw-pl-2 tw-pr-2 md:tw-pr-12"
+  >
+    <div class="tw-flex">
+      <div class="tw-mr-2 tw-h-fit tw-w-fit tw-rounded-full tw-bg-gray-200 tw-p-3 tw-text-center tw-text-xs tw-font-medium tw-text-primary-600">
+        <svg-icon src="assets/icons/mail-01.svg"></svg-icon>
+      </div>
+      <div>
+        <div class="tw-text-base tw-font-semibold tw-text-primary-700">Stay up to date with the latest news and updates</div>
+        <div class="tw-text-base tw-text-primary-600">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+      </div>
+    </div>
+    <app-subscriber [hideHint]="true"></app-subscriber>
+  </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

@@ -1,0 +1,48 @@
+<div>
+  <div class="container">
+    <div class="d-flex justify-content-start">
+      <h5 class="tw-mt-12 tw-mb-0 tw-text-3xl tw-font-semibold">Settings</h5>
+    </div>
+    <hr class="tw-text-gray-400" />
+
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="mainSidebar d-flex tw-flex-row md:tw-flex-col lg:tw-flex-col">
+          <div class="sidbarItem tw-whitespace-nowrap tw-pt-2 tw-pb-2 tw-pl-0 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500 md:tw-pl-3 lg:tw-pl-3">
+            My details
+          </div>
+          <div
+            routerLink="profile"
+            routerLinkActive="active-link"
+            class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500"
+          >
+            Profile
+          </div>
+          <div
+            routerLinkActive="active-link"
+            routerLink="password"
+            class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500"
+          >
+            Password
+          </div>
+          <div class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500">Team</div>
+          <div class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500">Plan</div>
+          <div class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500">Billing</div>
+          <div class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500">Email</div>
+          <div
+            routerLink="notification"
+            routerLinkActive="active-link"
+            class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500"
+          >
+            Notifications
+          </div>
+          <div class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500">Integrations</div>
+          <div class="sidbarItem tw-pt-2 tw-pb-2 tw-pl-3 tw-pr-3 tw-text-sm tw-font-semibold tw-text-gray-500">API</div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-9 col-sm-12 tw-mt-4 md:tw-mt-0 lg:tw-mt-0">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

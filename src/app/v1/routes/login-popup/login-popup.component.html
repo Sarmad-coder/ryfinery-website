@@ -1,0 +1,8 @@
+<ng-container *ngIf="loginPopupService.show">
+  <div class="blur-wrapper">
+    <button class="btn btn-outline-light tw-absolute tw-top-7 tw-right-7 -tw-mb-16 !tw-border-0 tw-bg-none" (click)="loginPopupService.show = false">
+      <svg-icon [svgStyle]="{ 'width.px': 44, 'height.px': 44 }" src="assets/icons/x-sm.svg"></svg-icon>
+    </button>
+    <app-login-form (done)="loginPopupService.show = false"></app-login-form>
+  </div>
+</ng-container>

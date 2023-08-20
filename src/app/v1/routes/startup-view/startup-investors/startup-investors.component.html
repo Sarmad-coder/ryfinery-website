@@ -1,0 +1,23 @@
+<div class="tw-mt-16 tw-flex tw-flex-wrap tw-gap-x-6 tw-gap-y-12">
+  <!-- card -->
+  <div
+    class="tw-flex tw-w-[23rem] tw-flex-col tw-rounded-lg tw-border tw-border-solid tw-border-gray-200 tw-px-4 tw-py-6"
+    *ngFor="let item of company.topFiveInvestors.data"
+  >
+    <div class="tw-flex tw-items-center tw-gap-4">
+      <img class="tw-h-14 tw-w-14 tw-rounded-full" src="assets/images/user-placeholder.png" alt="" />
+      <div>
+        <div class="tw-flex tw-items-center tw-gap-2">
+          <div class="tw-text-lg tw-font-semibold tw-text-gray-900">{{ item.attributes.name }}</div>
+          <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-primary-50 tw-px-2 tw-text-xs tw-font-medium tw-text-primary-700">New Investor</div>
+        </div>
+        <div class="tw-text-gray-600">olivia@Ryfinery.com</div>
+      </div>
+    </div>
+
+    <div class="tw-mt-4 tw-flex tw-gap-3">
+      <button class="btn btn-outline-light">View Profile</button>
+      <button class="btn btn-dark tw-bg-primary-600 tw-px-5 tw-font-medium">Follow</button>
+    </div>
+  </div>
+</div>

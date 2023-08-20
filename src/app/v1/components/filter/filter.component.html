@@ -1,0 +1,49 @@
+<div class="tw-text-zinc-900 tw-mb-3 tw-text-lg tw-font-semibold">{{ title }}</div>
+
+<!-- <div *ngIf="search.observed" class="form-group tw-mb-3">
+  <input type="text" class="form-control form-control-sm" [formControl]="searchControl" placeholder="Search here" />
+  <span class="input-group-text" id="basic-addon2">@example.com</span>
+</div> -->
+
+<div *ngIf="search.observed" class="tw-mb-3 tw-flex">
+  <input type="text" class="form-control form-control-sm" [formControl]="searchControl" placeholder="Search here" />
+  <svg-icon
+    *ngIf="searchControl.value"
+    class="-tw-ml-6 tw-mt-[2px] tw-cursor-pointer tw-text-gray-true-400"
+    [svgStyle]="{ 'width.px': 16 }"
+    src="assets/icons/x-sm.svg"
+    (click)="searchControl.reset()"
+  ></svg-icon>
+</div>
+
+<!-- tw-max-h-64 tw-overflow-y-auto -->
+<div class="tw-block tw-w-full">
+  <div class="tw-mb-2 tw-flex tw-items-center tw-justify-between" *ngFor="let item of items; index as index">
+    <a *ngIf="mode === 'default'" class="form-check-label tw-text-neutral-600 tw-ml-1 tw-text-black" (click)="selection.emit(item)">
+      {{ item.name }}
+    </a>
+
+    <div *ngIf="mode === 'checkbox'" class="form-check">
+      <input
+        class="form-check-input tw-h-[18px] tw-w-[18px]"
+        type="checkbox"
+        [id]="'checkbox' + index"
+        [(ngModel)]="item.checked"
+        (change)="onCheckboxChange(item, $event)"
+      />
+      <label class="form-check-label tw-text-neutral-600 tw-ml-1" [for]="'checkbox' + index">{{ item.name }}</label>
+    </div>
+
+    <!-- <div class="tw-rounded-full tw-border tw-border-solid tw-border-gray-300 tw-px-2 tw-text-xs tw-text-gray-500">{{ item.total }}</div> -->
+  </div>
+  <a
+    *ngIf="!loading && loadMore.observed && canLoadMore"
+    class="tw-mt-5 tw-block tw-text-center tw-text-xs tw-text-gray-400 tw-underline"
+    (click)="loadMore.emit()"
+  >
+    Load more
+  </a>
+  <div *ngIf="loading" class="tw-mt-5 tw-flex tw-justify-center">
+    <div class="spinner-border spinner-border-sm tw-text-gray-400"></div>
+  </div>
+</div>

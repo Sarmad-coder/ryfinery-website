@@ -1,0 +1,8 @@
+<!-- loading -->
+<div *ngIf="paginator.loading$ | async" class="tw-flex tw-justify-center">
+  <div class="spinner-border tw-text-gray-400"></div>
+</div>
+<!-- load more -->
+<div *ngIf="(paginator.canLoadMore$ | async) && !(paginator.loading$ | async)" class="tw-mt-24 tw-flex tw-justify-center">
+  <button type="button" class="btn btn-outline-light tw-px-10" (click)="paginator.next()">Load more</button>
+</div>

@@ -1,0 +1,83 @@
+<div *ngIf="!company2" class="tw-relative">
+  <img class="tw-pointer-events-none tw-absolute tw-top-2.5 tw-right-[15px] tw-z-[9991] tw-opacity-[20%]"
+    [ngClass]="{ 'tw-pointer-events-auto tw-cursor-pointer': activeTab === 0 }"
+    src="../../../../assets/icons/search-lg.svg" (click)="openResults()" />
+  <ng-select [(ngModel)]="company1" class="tw-h-[44px] tw-cursor-text" [clearable]="false"
+    [loading]="(loading$ | async)!" (search)="search($event)" (change)="filter($event)"
+    (keydown)="$event.which === 13 ? openResults() : true" [markFirst]="false">
+    <ng-option *ngFor="let item of data$ | async" [value]="item.item">{{ item.name }}</ng-option>
+    <ng-container *ngIf="!compare">
+      <ng-template ng-header-tmp>
+        <div class="tabs">
+          <ul ngbNav [destroyOnHide]="false" [activeId]="activeTab" (activeIdChange)="tabChange($event)">
+            <li *ngFor="let value of ['Companies', 'Markets', 'Peoples']; index as index" [ngbNavItem]="index">
+              <a ngbNavLink>{{ value }}</a>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="compare">
+      <ng-template ng-header-tmp>
+        <div class="tabs">
+          <ul ngbNav [destroyOnHide]="false" [activeId]="activeTab" (activeIdChange)="tabChange($event)">
+            <li *ngFor="let value of ['Companies']; index as index" [ngbNavItem]="index">
+              <a ngbNavLink>{{ value }}</a>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </ng-container>
+  </ng-select>
+</div>
+
+<div *ngIf="company2" class="tw-flex tw-w-full tw-gap-2 lg:tw-flex-nowrap tw-flex-wrap">
+  <div class="tw-relative tw-w-full">
+    <img class="tw-pointer-events-none tw-absolute tw-top-2.5 tw-right-[15px] tw-z-[9991] tw-opacity-[20%]"
+      [ngClass]="{ 'tw-pointer-events-auto tw-cursor-pointer': activeTab === 0 }"
+      src="../../../../assets/icons/search-lg.svg" (click)="openResults()" />
+    <ng-select [(ngModel)]="company1" class="tw-h-[44px] tw-cursor-text" [clearable]="false"
+      [loading]="(loading$ | async)!" (search)="search($event)" (change)="filter($event)"
+      (keydown)="$event.which === 13 ? openResults() : true" [markFirst]="false">
+      <ng-option *ngFor="let item of data$ | async" [value]="item.item">{{ item.name }}</ng-option>
+      <ng-container>
+        <ng-template ng-header-tmp>
+          <div class="tabs">
+            <ul ngbNav [destroyOnHide]="false" [activeId]="activeTab" (activeIdChange)="tabChange($event)">
+              <li *ngFor="let value of ['Companies']; index as index" [ngbNavItem]="index">
+                <a ngbNavLink>{{ value }}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-template>
+      </ng-container>
+
+
+    </ng-select>
+  </div>
+
+  <div class="tw-relative tw-w-full">
+    <img class="tw-pointer-events-none tw-absolute tw-top-2.5 tw-right-[15px] tw-z-[9991] tw-opacity-[20%]"
+      [ngClass]="{ 'tw-pointer-events-auto tw-cursor-pointer': activeTab === 0 }"
+      src="../../../../assets/icons/search-lg.svg" (click)="openResults()" />
+    <ng-select [(ngModel)]="company2" class="tw-h-[44px] tw-cursor-text" [clearable]="false"
+      [loading]="(loading$ | async)!" (search)="search($event)" (change)="filter2($event)"
+      (keydown)="$event.which === 13 ? openResults() : true" [markFirst]="false">
+      <ng-option *ngFor="let item of data$ | async" [value]="item.item">{{ item.name }}</ng-option>
+      <ng-container>
+        <ng-template ng-header-tmp>
+          <div class="tabs">
+            <ul ngbNav [destroyOnHide]="false" [activeId]="activeTab" (activeIdChange)="tabChange($event)">
+              <li *ngFor="let value of ['Companies']; index as index" [ngbNavItem]="index">
+                <a ngbNavLink>{{ value }}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-template>
+      </ng-container>
+
+    </ng-select>
+  </div>
+
+</div>

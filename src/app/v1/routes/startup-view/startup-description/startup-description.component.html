@@ -1,0 +1,130 @@
+<div class="tw-mt-8">
+  <div class="tw-mb-2 tw-flex tw-items-center">
+    <span class="tw-text-lg tw-font-semibold tw-text-primary-700">Company Info</span>
+    <svg-icon class="tw-ml-2 tw-text-gray-true-500" [svgStyle]="{ 'width.px': 18 }" src="assets/icons/info-circle.svg"></svg-icon>
+  </div>
+
+  <div class="tw-rounded-lg tw-border tw-border-solid tw-border-gray-300 tw-p-6">
+    <div class="tw-flex tw-flex-wrap tw-gap-y-7 tw-gap-x-6">
+      <!-- Company type -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.companyType.data.attributes.name as v">
+        <svg-icon src="assets/icons/building-07.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Company type</div>
+          <div class="tw-text-base tw-font-semibold">{{ v }}</div>
+        </div>
+      </div>
+      <!-- Industory -->
+      <!-- <div class="tw-flex tw-w-[205px] tw-gap-3">
+        <svg-icon src="assets/icons/building-07.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Industory</div>
+          <div class="tw-text-base tw-font-semibold">TODO</div>
+        </div>
+      </div> -->
+      <!-- Funding Status -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.fundingStatus as v">
+        <svg-icon src="assets/icons/file-03.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Funding Status</div>
+          <div class="tw-text-base tw-font-semibold">{{ v }}</div>
+        </div>
+      </div>
+      <!-- Number of investors -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.totalInvestors as v">
+        <svg-icon src="assets/icons/user-circle.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Number of investors</div>
+          <div class="tw-text-base tw-font-semibold">{{ v }}</div>
+        </div>
+      </div>
+      <!-- Location -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3">
+        <svg-icon src="assets/icons/marker-pin-02.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Location</div>
+          <div class="tw-text-base tw-font-semibold">{{ company.city + ',' + company.country }}</div>
+        </div>
+      </div>
+      <!-- Founding date -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.foundingDate as v">
+        <svg-icon src="assets/icons/calendar-date.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Founding date</div>
+          <div class="tw-text-base tw-font-semibold">{{ v | date }}</div>
+        </div>
+      </div>
+      <!-- Last funding date -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.lastFundingDate as v">
+        <svg-icon src="assets/icons/calendar-date.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Last funding date</div>
+          <div class="tw-text-base tw-font-semibold">{{ v | date }}</div>
+        </div>
+      </div>
+      <!-- Investor type -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.investorTypes.data[company.investorTypes.data.length - 1]?.attributes.name as v">
+        <svg-icon src="assets/icons/wallet-03.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Investor type</div>
+          <div class="tw-text-base tw-font-semibold">
+            {{ v }}
+          </div>
+        </div>
+      </div>
+      <!-- employees -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.employees as v">
+        <svg-icon src="assets/icons/users-03.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Employees</div>
+          <div class="tw-text-base tw-font-semibold">{{ v }}</div>
+        </div>
+      </div>
+      <!-- Number of founders -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.numberOfFounders as v">
+        <svg-icon src="assets/icons/user-square.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Number of founders</div>
+          <div class="tw-text-base tw-font-semibold">{{ v }}</div>
+        </div>
+      </div>
+      <!-- Funding rounds -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.fundingRounds as v">
+        <svg-icon src="assets/icons/refresh-cw-05.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Funding rounds</div>
+          <div class="tw-text-base tw-font-semibold">{{ v }}</div>
+        </div>
+      </div>
+      <!-- Investor stage -->
+      <div class="tw-flex tw-w-[205px] tw-gap-3" *ngIf="company.investorStages.data[company.investorStages.data.length - 1]?.attributes.name as v">
+        <svg-icon src="assets/icons/hurricane-01.svg"></svg-icon>
+        <div>
+          <div class="tw-whitespace-nowrap tw-text-base tw-text-gray-true-400">Investor stage</div>
+          <div class="tw-text-base tw-font-semibold">
+            {{ v }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tw-mt-8 tw-flex tw-items-center" *ngIf="industryNames.length">
+      <svg-icon class="tw-ml-2 tw-text-gray-600" [svgStyle]="{ 'width.px': 16 }" src="assets/icons/mark.svg"></svg-icon>
+      <div class="tw-ml-3 tw-mr-4 tw-font-medium">Industries:</div>
+      <div class="attributes dark tw-font-medium">
+        <div *ngFor="let item of industryNames | slice : 0 : 6">{{ item }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tw-mt-64 tw-text-lg tw-font-semibold">
+    <div>
+      Have you tried Ryfinery? <br /><br />
+      Help others know if Influencity is the product for them by leaving a review. What can Influencity do better? What do you like about it?
+    </div>
+    <br />
+    <div class="tw-flex tw-items-center tw-gap-4">
+      <span>Leave a review</span>
+      <ng-rating-bar [value]="3.5" [ratingCount]="5" colorActive="#FDB022" [styles]="{ fontSize: '24px' }"></ng-rating-bar>
+    </div>
+  </div>
+</div>

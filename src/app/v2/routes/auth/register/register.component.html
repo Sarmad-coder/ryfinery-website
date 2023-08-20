@@ -1,0 +1,67 @@
+<div class="container d-none d-md-block">
+  <div class="row my-5">
+    <div class="col-4">
+      <div class="col-4">
+        <a routerLink=""><img class="transparent-logo" src="assets/images/transparent-logo.png" alt="" /></a>
+      </div>
+    </div>
+    <div class="col-4 offset-4 text-end">
+      <p>Already have an account? <a href="javascript:void()" routerLink="/login">Sign In</a></p>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="justify-content-md-center tw-mx-auto tw-max-w-sm tw-pt-6 lg:tw-pt-0 2xl:tw-pt-6">
+    <div class="text-center">
+      <img src="assets/images/app-logo.png" class="mb-4" style="width: 60px" alt="" />
+      <h2 class="mb-3 tw-font-semibold tw-text-gray-900">Create an account</h2>
+      <p class="font-light tw-text-gray-modern-600">Start your 30-day free trial.</p>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="form-group tw-mt-4">
+        <label for="name" class="tw-text-gray-700">Full Name*</label>
+        <input type="text" formControlName="fullName" class="form-control tw-text-gray-900" id="name" placeholder="Enter your name" />
+        <ng-container *ngIf="hasError('fullName') as c">
+          <div class="field-error" *ngIf="c.hasError('required')">Full Name must not be empty.</div>
+        </ng-container>
+      </div>
+      <div class="form-group tw-mt-4">
+        <label for="username" class="tw-text-gray-700">Username*</label>
+        <input type="email" formControlName="username" class="form-control tw-text-gray-900" id="username" placeholder="Enter username" />
+        <ng-container *ngIf="hasError('username') as c">
+          <div class="field-error" *ngIf="c.hasError('required')">Username must not be empty.</div>
+        </ng-container>
+      </div>
+
+      <div class="form-group tw-mt-4">
+        <label for="email" class="tw-text-gray-700">Email*</label>
+        <input type="email" formControlName="email" class="form-control tw-text-gray-900" id="email" placeholder="Enter your email" />
+        <ng-container *ngIf="hasError('email') as c">
+          <div class="field-error" *ngIf="c.hasError('required')">Email must not be empty.</div>
+          <div class="field-error" *ngIf="c.hasError('pattern')">This email is incorrect.</div>
+          <div class="field-error" *ngIf="c.hasError('duplicated')">This email is already exist.</div>
+        </ng-container>
+      </div>
+
+      <button class="btn btn-primary w-100 mt-3" type="submit" [disabled]="loading">
+        <span class="spinner-border spinner-border-sm tw-mr-2" *ngIf="loading"></span>
+        Register
+      </button>
+    </form>
+
+    <div class="tw-my-7 tw-flex tw-items-center">
+      <div class="bg tw-h-0.5 tw-flex-grow tw-bg-gray-200"></div>
+      <div class="text tw-mx-5 tw-flex-grow-0 tw-text-gray-modern-600">OR</div>
+      <div class="bg tw-h-0.5 tw-flex-grow tw-bg-gray-200"></div>
+    </div>
+
+    <app-social-login></app-social-login>
+
+    <!-- <button class="btn btn-outline-light w-100 login-btn"><img src="assets/images/google.png" alt="" /> Continue with Google</button>
+    <button class="mt-3 btn btn-outline-light w-100 login-btn"><img src="assets/images/facebook.png" alt="" /> Continue with Facebook</button>
+    <button class="mt-3 btn btn-outline-light w-100 login-btn"><img src="assets/images/apple.png" alt="" /> Continue with Apple</button>
+   <div class="tw-mt-6 tw-text-center">
+      <span class="tw-ml-2 tw-cursor-pointer tw-font-semibold tw-text-gray-600">Continue with SAML SSO</span>
+    </div> -->
+  </div>
+</div>

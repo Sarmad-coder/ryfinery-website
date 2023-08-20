@@ -1,0 +1,23 @@
+<div class="tw-mt-12 tw-text-center">
+  <div class="tw-flex tw-flex-wrap tw-gap-x-6 tw-gap-y-12">
+    <!-- card -->
+    <div *ngFor="let item of company.founders.data" class="tw-flex tw-w-[208px] tw-flex-col tw-items-center tw-bg-gray-50 tw-p-6">
+      <img
+        class="tw-w-20 tw-cursor-pointer tw-rounded-full"
+        [src]="(item.attributes.image.data?.attributes.url | imageUrl) || 'assets/images/user-placeholder.png'"
+        [routerLink]="['/founder-view', item.id]"
+        alt=""
+      />
+      <div class="tw-mt-4 tw-cursor-pointer tw-text-lg tw-font-semibold tw-text-gray-900" [routerLink]="['/founder-view', item.id]">
+        {{ item.attributes.fullname }}
+      </div>
+      <div class="tw-text-base tw-text-primary-700">{{ item.attributes.position }}</div>
+      <div class="tw-mt-2 tw-w-40 tw-text-gray-600 tw-line-clamp-4">{{ item.attributes.bio }}</div>
+      <div class="tw-mt-3 tw-flex tw-w-fit tw-gap-4 tw-text-gray-400">
+        <svg-icon *ngIf="item.attributes.linkedin" [svgStyle]="{ 'width.px': 20 }" [src]="'assets/icons/linkedin.svg'"></svg-icon>
+        <svg-icon *ngIf="item.attributes.twitter" [svgStyle]="{ 'width.px': 20 }" [src]="'assets/icons/twitter.svg'"></svg-icon>
+        <svg-icon *ngIf="item.attributes.facebook" [svgStyle]="{ 'width.px': 20 }" [src]="'assets/icons/facebook.svg'"></svg-icon>
+      </div>
+    </div>
+  </div>
+</div>

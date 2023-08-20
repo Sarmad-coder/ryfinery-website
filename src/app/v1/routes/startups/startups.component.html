@@ -1,0 +1,96 @@
+<!-- mobile filter -->
+<div class="offcanvas offcanvas-start" [ngClass]="{ show: showMobileFilter }" tabindex="-1">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Filters</h5>
+    <button type="button" class="btn-close" (click)="showMobileFilter = false"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ng-container *ngIf="showMobileFilter">
+      <ng-container *ngTemplateOutlet="filters"></ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<!-- filters -->
+<ng-template #filters>
+  <div class="filters">
+    <!-- filter | Industory -->
+    <app-filter
+      title="Industry"
+      [items]="industries"
+      [loading]="industryPaginator.loading$ | async"
+      [canLoadMore]="industryPaginator.canLoadMore$ | async"
+      (loadMore)="industryPaginator.next()"
+      (selection)="industryFilter($event)"
+      (search)="industrySearch($event)"
+    ></app-filter>
+    <!-- filter | Investor Types -->
+    <app-filter
+      title="Investor Type"
+      [items]="investorTypes"
+      [loading]="investorTypePaginator.loading$ | async"
+      [canLoadMore]="investorTypePaginator.canLoadMore$ | async"
+      (loadMore)="investorTypePaginator.next()"
+      (selection)="investorTypeFilter($event)"
+      (search)="investorTypeSearch($event)"
+    ></app-filter>
+    <!-- filter | Countries Filters -->
+    <app-filter
+      title="Country"
+      mode="checkbox"
+      [items]="countries"
+      [loading]="countryPaginator.loading$ | async"
+      (selection)="countryFilter($event)"
+    ></app-filter>
+    <!-- filter | Has Filters -->
+    <app-filter title="Filters" mode="checkbox" [items]="hasFilters" (selection)="hasFilter($event)"></app-filter>
+  </div>
+</ng-template>
+
+<div class="container my-5">
+  <!-- hero -->
+  <div class="tw-mx-auto tw-flex tw-w-full tw-flex-col tw-justify-center tw-text-center md:tw-w-[610px]">
+    <div class="tw-mb-4 tw-text-4xl tw-font-medium">Your mission control to Discover & Value startups</div>
+    <div class="tw-text-lg tw-font-light">
+      Global data platform for intelligence on startups, innovation, high-growth companies, ecosystems and investment strategies.
+    </div>
+  </div>
+
+  <div class="tw-mt-8 tw-flex tw-gap-8 md:tw-mt-28 lg:tw-gap-16">
+    <!-- filters -->
+    <div class="tw-hidden md:tw-block">
+      <ng-container *ngTemplateOutlet="filters"></ng-container>
+    </div>
+    <div class="tw-flex-auto">
+      <!-- sorter -->
+      <app-sorter [sorts]="sorts" (sort)="sort($event)" totalName="companies" [total]="page.total"></app-sorter>
+
+      <app-filter-tags [selectedFilters]="selectedFilters" (clear)="clearFilter($event)" (clearAll)="clearAllFilters()"></app-filter-tags>
+
+      <button class="btn btn-outline-light tw-mx-auto tw-block tw-w-[300px] md:tw-hidden" type="button" (click)="showMobileFilter = true">
+        <svg-icon class="tw-mr-2" src="assets/icons/filter-lines.svg"></svg-icon>More filters
+      </button>
+
+      <!-- cards -->
+      <div class="card-list">
+        <app-startup-card *ngFor="let item of data | slice : 0 : 2" [startup]="item"></app-startup-card>
+        <div
+          *ngIf="data?.length && !userService.hasUser"
+          class="join-tribe-shadow tw-flex tw-w-[300px] tw-flex-col tw-rounded-lg tw-bg-teal-50 tw-pb-6 tw-text-center"
+        >
+          <img src="assets/images/join-tribe.png" alt="" />
+          <div class="tw-pb-2 tw-text-xl tw-font-light">Join the tribe!</div>
+          <div class="tw-px-3 tw-text-xs tw-font-light">
+            Ryfinery is a community of Enterpreneurs, Founders and early adopters to share, learn & discuss the latest products and ideas. It is a place to
+            discover and get early access to exciting new startups.
+          </div>
+          <button type="button" class="btn btn-dark tw-mx-10 tw-mt-4 tw-font-light" routerLink="setting/profile">Add my startup</button>
+        </div>
+        <app-startup-card *ngFor="let item of data | slice : 2" [startup]="item"></app-startup-card>
+      </div>
+
+      <!-- load more -->
+      <app-load-more [paginator]="paginator"></app-load-more>
+    </div>
+  </div>
+</div>

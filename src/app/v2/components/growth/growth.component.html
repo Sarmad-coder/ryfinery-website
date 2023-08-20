@@ -1,0 +1,26 @@
+<ng-container *ngIf="value">
+  <!-- filled -->
+  <div
+    *ngIf="fill"
+    class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded tw-py-[6px] tw-px-2 tw-font-medium"
+    [ngClass]="{
+      'tw-bg-rose-100 tw-text-orange-dark-800': isDown,
+      'tw-bg-[#E6F4EA] tw-text-[#4D8A59]': !isDown,
+      'tw-px-2 tw-text-xs': size === 'sm',
+      'tw-px-3': size === 'lg'
+    }"
+  >
+    <svg-icon class="[&_svg]:tw-h-3 [&_svg]:tw-w-3" src="assets/icons/{{ !isDown ? 'increment' : 'decrement' }}.svg"></svg-icon>
+    {{ value }}
+  </div>
+
+  <!-- not filled -->
+  <div
+    *ngIf="!fill"
+    class="tw-flex tw-w-[74px] tw-items-center tw-justify-between"
+    [ngClass]="{ 'tw-text-orange-dark-800': isDown, 'tw-text-green-700': !isDown }"
+  >
+    <svg-icon class="[&_svg]:tw-h-3 [&_svg]:tw-w-3" src="assets/icons/{{ !isDown ? 'increment' : 'decrement' }}.svg"></svg-icon>
+    {{ value }}
+  </div>
+</ng-container>

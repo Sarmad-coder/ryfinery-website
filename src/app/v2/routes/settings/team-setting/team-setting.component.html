@@ -1,0 +1,97 @@
+<div class="tw-mt-[76px]">
+  <div class="tw-text-[30px] tw-font-semibold tw-text-gray-900">Team management</div>
+  <div class="tw-mt-1 tw-text-base tw-text-gray-600">Manage your team members and their account permissions here.</div>
+
+  <!-- Invite team members -->
+  <div class="tw-my-7 tw-w-full tw-border-b tw-border-gray-200"></div>
+  <div class="tw-flex tw-flex-wrap tw-gap-8 md:tw-gap-16">
+    <div class="tw-w-[280px]">
+      <div class="tw-font-medium tw-text-gray-700">Invite team members</div>
+      <div class="tw-text-gray-600">Get your projects up and running faster by inviting your team to collaborate.</div>
+    </div>
+    <div class="tw-flex tw-grow tw-flex-col tw-gap-4">
+      <form [formGroup]="inviteForm" (ngSubmit)="sendInvite()">
+        <div formArrayName="inviteInput" class="">
+          <div *ngFor="let form of inviteForm.controls.inviteInput.controls; index as i">
+            <input type="text" class="form-control prefix email tw-mb-3 tw-grow" placeholder="billing@untitledui.com" [formControlName]="i" />
+          </div>
+        </div>
+
+        <div class="tw-flex tw-justify-between">
+          <button class="btn btn-outline-light tw-flex tw-items-center tw-gap-2 !tw-border-0 tw-text-gray-600" type="button" (click)="addInput()">
+            <svg-icon src="assets/icons/plus-01.svg"></svg-icon>
+            Add another
+          </button>
+          <button type="submit" class="btn btn-dark tw-flex tw-items-center tw-gap-2 tw-bg-primary-600">
+            <svg-icon src="assets/icons/mail-01.svg"></svg-icon>
+            Send invites
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Team members -->
+  <div class="tw-my-7 tw-w-full tw-border-b tw-border-gray-200"></div>
+  <div class="tw-flex tw-flex-wrap tw-gap-8 md:tw-gap-16">
+    <div class="tw-w-[280px]">
+      <div class="tw-font-medium tw-text-gray-700">Team members</div>
+      <div class="tw-text-gray-600">Manage your existing team and change roles/permissions.</div>
+    </div>
+    <div class="tw-flex tw-grow tw-flex-col tw-gap-4">
+      <div
+        class="table-wrapper tw-rounded-xl tw-border tw-border-gray-200"
+        [style.box-shadow]="'0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)'"
+      >
+        <table class="table table-responsive tw-mb-0 tw-whitespace-nowrap tw-shadow-sm [&_td]:!tw-py-4">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th class="tw-w-full !tw-pl-3" scope="col">Name</th>
+              <th scope="col">
+                <div class="tw-flex tw-gap-1">
+                  Role <svg-icon class="tw-text-gray-400 [&_svg]:tw-h-4 [&_svg]:tw-w-4" src="assets/icons/help-circle.svg"></svg-icon>
+                </div>
+              </th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of invitedUsers.data; index as i">
+              <td scope="" class="!tw-pt-20">{{ i + 1 }}</td>
+              <td class="!tw-pl-3 tw-font-medium tw-text-gray-900">
+                <div class="tw-flex tw-gap-3">
+                  <img class="tw-w-10 tw-rounded-full" src="assets/images/avatar-1.png" alt="" />
+                  <div>
+                    <div class="tw-font-medium tw-text-gray-900">{{ item.attributes.name }}</div>
+                    <div class="tw-text-gray-600">{{ item.attributes.email }}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="tw-text-gray-600">{{ item.attributes.status }}</td>
+              <!-- Role: Admin, Read Only -->
+              <td class="">
+                <ng-template #popContent>
+                  <p>Are you sure to delete this Member?</p>
+                  <div class="tw-flex tw-justify-end">
+                    <button class="btn btn-outline-light btn-sm tw-mr-2 tw-flex tw-items-center" style="pointer-events: auto">Cancel</button>
+
+                    <button class="btn btn-dark btn-sm tw-ml-2 tw-bg-primary-600" (click)="deleteMember(item.id)">
+                      <div class="spinner-border tw-h-3 tw-w-3" role="status" *ngIf="loading">
+                        <span class="visually-hidden"></span>
+                      </div>
+                      {{ loading ? 'Loading...' : 'Delete' }}
+                    </button>
+                  </div>
+                </ng-template>
+                <ng-template #popTitle><b>Delete</b>?</ng-template>
+                <span class="tw-cursor-pointer tw-font-semibold tw-text-gray-600" [ngbPopover]="popContent" [popoverTitle]="popTitle">Delete</span>
+                <!-- <span class="tw-ml-3 tw-font-semibold tw-text-primary-700 tw-cursor-pointer">Edit</span> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

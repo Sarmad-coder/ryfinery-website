@@ -1,0 +1,81 @@
+<!-- mobile filter -->
+<div class="offcanvas offcanvas-start" [ngClass]="{ show: showMobileFilter }" tabindex="-1">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Filters</h5>
+    <button type="button" class="btn-close" (click)="showMobileFilter = false"></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-filter *ngIf="showMobileFilter"></app-filter>
+  </div>
+</div>
+
+<div class="container my-5">
+  <!-- hero -->
+  <div class="tw-mx-auto tw-flex tw-w-full tw-flex-col tw-justify-center tw-text-center md:tw-w-[610px]">
+    <div class="xbadge-group mx-auto mb-5 tw-bg-success-100">
+      <div class="xbadge tw-bg-success-50">
+        <div class="xtext tw-text-success-700">New feature</div>
+      </div>
+      <div class="xcontent">
+        <div class="xmessage tw-text-success-700">
+          <span>You've updated your profile and details</span>
+          <svg-icon src="assets/icons/arrow-right.svg" [svgStyle]="{ 'width.px': 16 }"></svg-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="tw-mb-4 tw-text-4xl tw-font-medium">Find Influencers with similar interests, like-minded people to follow online</div>
+    <div class="tw-text-lg tw-font-light">
+      Global data platform for intelligence on startups, innovation, high-growth companies, ecosystems and investment strategies.
+    </div>
+  </div>
+
+  <div class="tw-mt-8 tw-flex tw-gap-8 md:tw-mt-28 lg:tw-gap-16">
+    <!-- filters -->
+    <app-filter class="tw-hidden md:tw-block"></app-filter>
+
+    <div class="tw-flex-auto">
+      <!-- sorting -->
+      <div class="tw-hidden tw-flex-wrap tw-items-end tw-justify-between tw-gap-3 md:tw-flex">
+        <div>
+          <span class="tw-mr-1 tw-font-bold">15,165</span>
+          <span>Companies</span>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked />
+          <label class="btn btn-outline-dark !tw-border-gray-300 !tw-font-medium" for="btnradio1">
+            <svg-icon class="tw-mr-2" src="assets/icons/arrow-down.svg"></svg-icon>Latest
+          </label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" />
+          <label class="btn btn-outline-dark !tw-border-gray-300 !tw-font-medium" for="btnradio2"
+            ><svg-icon class="tw-mr-2" src="assets/icons/arrow-narrow-up.svg"></svg-icon>Oldest
+          </label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" />
+          <label class="btn btn-outline-dark !tw-border-gray-300 !tw-font-medium" for="btnradio3">
+            <svg-icon class="tw-mr-2" src="assets/icons/certificate-01.svg"></svg-icon>Verified
+          </label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" />
+          <label class="btn btn-outline-dark !tw-border-gray-300 !tw-font-medium" for="btnradio4">
+            <svg-icon class="tw-mr-2" src="assets/icons/edit-04.svg"></svg-icon>Recently updated
+          </label>
+        </div>
+      </div>
+
+      <button class="btn btn-outline-light tw-mx-auto tw-block tw-w-[300px] md:tw-hidden" type="button" (click)="showMobileFilter = true">
+        <svg-icon class="tw-mr-2" src="assets/icons/filter-lines.svg"></svg-icon>More filters
+      </button>
+
+      <!-- cards -->
+      <div class="tw-mt-12 tw-flex tw-flex-wrap tw-justify-center tw-gap-x-9 tw-gap-y-6 md:tw-justify-start">
+        <app-influencer-card *ngFor="let item of influencers" [name]="item"></app-influencer-card>
+      </div>
+      <!-- load more -->
+      <div class="tw-mt-24 tw-flex tw-justify-center">
+        <button type="button" class="btn btn-outline-light tw-px-10">Load more</button>
+      </div>
+    </div>
+  </div>
+</div>

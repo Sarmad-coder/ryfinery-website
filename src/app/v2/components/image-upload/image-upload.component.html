@@ -1,0 +1,17 @@
+<input #fileInput hidden="true" type="file" onclick="this.value=null" (change)="fileInputChange($event)" [accept]="acceptTypes" multiple />
+
+<div class="tw-full flex-wrap tw-mt-7 tw-flex tw-justify-center tw-gap-5 lg:tw-flex-nowrap">
+  <img [attr.src]="src || 'assets/images/image-placeholder.png'" class="tw-h-24 tw-w-32 tw-rounded-xl tw-object-contain" alt="" />
+  <div
+    class="tw-flex tw-grow tw-cursor-pointer tw-flex-col tw-items-center tw-justify-center tw-gap-3 tw-rounded-xl tw-border tw-border-gray-200 tw-p-4 tw-text-center"
+    (click)="triggerBrowse()"
+    (dragover)="$event.preventDefault()"
+    (drop)="drop($event); $event.preventDefault()"
+  >
+    <img src="assets/temp/cloud.png" style="height: 40px" alt="" />
+    <span class="tw-text-sm tw-font-semibold tw-text-primary-700">
+      Click to upload <span class="tw-text-sm tw-font-normal tw-text-gray-600">or drag and drop</span>
+    </span>
+    <span class="tw-text-xs tw-font-normal tw-text-gray-600">SVG, PNG, JPG or GIF (max. 1000x1000px)</span>
+  </div>
+</div>

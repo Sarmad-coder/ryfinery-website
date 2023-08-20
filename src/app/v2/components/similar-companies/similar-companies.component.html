@@ -1,0 +1,23 @@
+<!-- similar companies -->
+<div *ngIf="similarCompanies.length" class="tw-flex tw-flex-col tw-rounded-md tw-border tw-border-gray-cool-200 tw-px-[12px] tw-pt-[14px] tw-pb-5">
+  <div class="tw-text-lg tw-font-medium">Similar Companies</div>
+
+  <div
+    class="tw-mx-2 tw-mt-[14px] tw-mb-1 tw-flex tw-items-center tw-justify-between tw-border-t tw-border-gray-cool-200 tw-pt-7"
+    *ngFor="let item of similarCompanies"
+  >
+    <div>
+      <div class="tw-w-44 tw-cursor-pointer tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-font-medium" (click)="routeCompany(item)">
+        {{ item.name }}
+      </div>
+      <div class="gray-true-500 tw-text-[13px]">{{ item.followers || 0 }} following</div>
+    </div>
+    <div class="tw-flex tw-items-center tw-gap-7">
+      <app-growth [value]="item.lastRevenueGrowth" [fill]="true"></app-growth>
+
+      <div class="tw-cursor-pointer tw-rounded-full tw-border-[2px] tw-border-gray-modern-500" (click)="routeCompany(item)">
+        <svg-icon class="svg-path-stroke-width-3 tw-text-gray-modern-500" src="assets/icons/arrow-right.svg" [svgStyle]="{ 'width.px': 14 }"></svg-icon>
+      </div>
+    </div>
+  </div>
+</div>

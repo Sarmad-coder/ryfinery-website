@@ -1,0 +1,57 @@
+<div *ngIf="startup?.attributes as value" class="card-shadow tw-flex tw-w-[300px] tw-flex-col tw-rounded-lg tw-bg-white tw-pb-6 tw-pt-3">
+  <div
+    *ngIf="value.isTrending"
+    class="-tw-mb-6 tw-mr-3 tw-w-fit tw-self-end tw-rounded-lg tw-bg-warning-200 tw-py-1 tw-px-2 tw-text-xs tw-font-medium tw-text-warning-500"
+  >
+    Trending
+  </div>
+  <div
+    *ngIf="value.isLatest"
+    class="-tw-mb-6 tw-mr-3 tw-w-fit tw-self-end tw-rounded-lg tw-bg-green-50 tw-py-1 tw-px-2 tw-text-xs tw-font-medium tw-text-success-500"
+  >
+    Latest
+  </div>
+  <a class="tw-mb-2 tw-w-24 tw-self-center tw-rounded-lg tw-border tw-border-solid tw-border-[#F5F5F5] tw-p-2" (click)="view()">
+    <img class="tw-w-full tw-rounded-lg" [src]="(value.logo.data?.attributes.url | imageUrl) || 'assets/images/image-placeholder.png'" />
+  </a>
+  <div class="tw-mb-3 tw-flex tw-items-center tw-self-center">
+    <a class="tw-mx-2 tw-text-center tw-text-xl tw-font-semibold tw-text-black" (click)="view()">{{ value.name }}</a>
+    <img *ngIf="value.isVerified" class="tw-mr-2 tw-w-6" src="assets/images/check-verified-01.png" alt="" />
+    <!-- <div
+      class="tw-h-fit tw-rounded-full tw-border tw-border-solid tw-border-[#F98600] tw-bg-[#FFF5E8] tw-px-1 tw-text-xs tw-text-[#F98600]"
+    >
+      537K
+    </div> -->
+  </div>
+
+  <div class="tw-mb-5 tw-flex tw-gap-2 tw-self-center">
+    <a *ngIf="value.facebook as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/facebook.png" alt="" /></a>
+    <a *ngIf="value.twitter as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/twitter.png" alt="" /></a>
+    <a *ngIf="value.linkedin as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/linkedin.png" alt="" /></a>
+    <a *ngIf="value.youtube as v" [href]="v" target="_blank"><img class="tw-w-5" src="assets/images/youtube.png" alt="" /></a>
+  </div>
+
+  <div class="tw-px-5">
+    <div class="tw-mb-5 tw-line-clamp-2">{{ value.about }}</div>
+    <div>
+      <img class="tw-w-4" src="assets/images/map-pin.png" />
+      <span class="tw-pl-3 tw-text-xs tw-font-light tw-text-gray-400">{{ value.streetAddress }}</span>
+    </div>
+    <div class="tw-mt-2">
+      <img class="tw-w-4" src="assets/images/clock.png" />
+      <span class="tw-pl-3 tw-text-xs tw-font-light tw-text-gray-400">{{ value.foundingDate | date : 'Y' }}</span>
+    </div>
+  </div>
+  <div class="attributes mt-4">
+    <div *ngFor="let item of industryNames | slice : 0 : 6">{{ item }}</div>
+  </div>
+  <div *ngIf="founderImages.length" class="tw-mt-7 tw-flex tw-items-center tw-px-4">
+    <div class="tw-mr-4 tw-text-gray-iron-900">Founders:</div>
+    <img
+      *ngFor="let item of founderImages | slice : 0 : 6"
+      class="-tw-ml-2 tw-w-8 tw-rounded-full tw-border-[3px] tw-border-solid tw-border-white"
+      [src]="(item | imageUrl) || 'assets/images/jeff.png'"
+    />
+    <span *ngIf="founderImages.length - 6 > 0" class="tw-ml-2 tw-text-blue-600">+ {{ value.founders.data.length - 6 }}</span>
+  </div>
+</div>
